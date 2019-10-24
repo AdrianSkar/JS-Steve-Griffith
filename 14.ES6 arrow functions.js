@@ -1,3 +1,5 @@
+/*jshint esversion: 6*/
+
 // ES6 (fat) arrow functions
 // work best in callback function scenarios
 // parentheses around input if more than one
@@ -9,14 +11,23 @@ let names = ['Alex', 'Bree', 'Cara', 'Cole', 'Devon', 'Riley'];
 
 //simple function sintax
 //create a new array of the valyes from the array greater than 300
-let big
+let big = numbers.filter(function (item) {
+	return item > 300;
+});
 
 
 //arrow function version
 
-let bigA
+let bigA = numbers.filter(item => item > 300);
 
 
 console.log(big);
 console.log(bigA);
+
+names.forEach(function (item, index) {
+	console.log(index, item);
+
+})
+
+names.forEach((item, index) => console.log(index, item));
 
