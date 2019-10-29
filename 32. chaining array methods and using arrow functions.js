@@ -26,7 +26,7 @@ console.log('List of replicant names:', names);
 
 //chain the two steps 
 let replicantNames = people.filter(function (person) {
-	return person.email.indexOf('@replicant.io') > -1
+	return person.email.indexOf('@replicant.io') > -1;
 }).map(function (val) { return val.name; });
 console.log('List of replicant names:', replicantNames);
 
