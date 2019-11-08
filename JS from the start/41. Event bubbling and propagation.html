@@ -15,19 +15,33 @@
 		}
 
 		main {
-			width: 1000px;
+			width: 400px;
+			min-height: 400px;
+			background-color: rgb(15, 15, 15);
 		}
 
-		#d {
-			width: 800px;
+		div {
+			width: 300px;
+			min-height: 300px;
+			background-color: rgb(75, 71, 71);
 		}
 
 		p {
-			width: 600px;
+			width: 250px;
+			min-height: 250px;
+			background-color: rgb(153, 150, 150);
 		}
 
 		span {
-			width: 400px;
+			display: inline-block;
+			min-width: 100px;
+			min-height: 100px;
+			padding: 3em;
+			background-color: white;
+		}
+
+		.gold {
+			background-color: gold;
 		}
 	</style>
 </head>
@@ -37,7 +51,7 @@
 	<main id="m">
 		<div id="d">
 			<p id="p">
-				<span id="s"></span>
+				<span id="s">test</span>
 			</p>
 		</div>
 	</main>
