@@ -12,7 +12,7 @@ let highlight = (ev) => {
 	// Add CSS class gold to the clicked element
 	let target = ev.currentTarget;
 	target.className = 'gold';
-	// ev.stopPropagation(); // stops the bubbling 
+	ev.stopPropagation(); // stops the bubbling 
 	reset(target); // resets the background class after 2secs
 };
 
@@ -25,8 +25,16 @@ let reset = (_element) => {
 d.addEventListener('click', (ev) => {
 	// ev.stopImmediatePropagation(); //stops other elements from listening to click events from this point, including the below ones
 	console.log('Hi, I am a DIV');
-}, false);
+});
+p.addEventListener('click', (ev) => {
+	// ev.stopImmediatePropagation(); //stops other elements from listening to click events from this point, including the below ones
+	console.log('Hi, I am a paragraph');
+});
+s.addEventListener('click', (ev) => {
+	// ev.stopImmediatePropagation(); //stops other elements from listening to click events from this point, including the below ones
+	console.log('Hi, I am a span');
+});
 
 [m, d, p, s].forEach((element) => {
-	element.addEventListener('click', highlight, true);
+	element.addEventListener('click', highlight);
 });
