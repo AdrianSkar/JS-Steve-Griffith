@@ -8,8 +8,8 @@
 try {
 	// throw 'ErrorMessage';
 	// throw {name: 'Bubba', message: 'Salmon'};
-	throw new Error('A stick')
-	console.log('Hello'); // Doesn't run because an error ocurred before
+	throw new Error('A stick');
+	// console.log('Hello'); // Doesn't run because an error ocurred before
 } catch (err) {
 	// console.log('Caught', err.name, err.message); 
 	console.log('Caught', err.name, err.message);
