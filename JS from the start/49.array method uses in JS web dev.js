@@ -4,9 +4,10 @@
 // build a grid of temps over the news 24 hours
 // blue background in hours where precipitation possibility ir higher than 70%
 
-let uri = 'http://files.adrianskar.com/test/49.darksky%20data%20sample.json';
+let uri = './49.darksky%20data%20sample.json';
 let req = new Request(uri, { method: 'GET' });
 let container, df;
+
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -30,7 +31,7 @@ function init() {
 
 				//show the time
 				let span = document.createElement('span');
-				span.textContent('00:00');
+				span.textContent = '00:00';
 
 				div.appendChild(span);
 				df.appendChild(div);
@@ -42,7 +43,7 @@ function init() {
 			// highest temp
 		})
 		.catch((err) => {
-			console.log(err.message);
+			console.log(err.message, err);
 
 		});
 }
