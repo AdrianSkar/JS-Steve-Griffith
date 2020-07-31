@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 let tony = {
 	colorDiv: function (ev) {
 		let target = ev.currentTarget;
@@ -14,19 +12,19 @@ let tony = {
 
 tony.init();
 
-
-
+// Base:
 // let abc = {
 // 	a: 123,
 // 	b: 'string',
 // 	c: true,
 // 	d: function () {
 // 		console.log('d');
-
 // 	}
 // };
 
 // abc.d();
+
+// What you can avoid using namespaces:
 
 // let colorDiv = function (ev) {
 // 	let target = ev.currentTarget;

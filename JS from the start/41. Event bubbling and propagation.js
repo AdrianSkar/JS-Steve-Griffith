@@ -1,4 +1,3 @@
-/*jshint esversion: 6*/
 // element.addEventListener(type, func, useCapture);
 // Capture: from outside 
 // Bubbling: from inside (default, false)
@@ -20,7 +19,7 @@ let reset = (_element) => {
 	setTimeout(() => {
 		_element.className = '';
 	}, 2000);
-}
+};
 
 d.addEventListener('click', (ev) => {
 	// ev.stopImmediatePropagation(); //stops other elements from listening to click events from this point, including the below ones

@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 //Array concat method
 
 const a = [2, 4, 6, 8];

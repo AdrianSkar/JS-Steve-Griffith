@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Event-driven programming: your program waits for events and uses them as triggers to run the next function(s)
 
 // object.addEventListener(event, function)
@@ -26,7 +24,7 @@ function init() {
 
 	lnk.addEventListener('click', lnkClicked);
 	function lnkClicked(ev) {
-		event.preventDefault(); // Prevents the link to redirect/follow when cliked
+		event.preventDefault(); // Prevents the link to redirect/follow when clicked
 		console.log(ev.type, ev.target, ev.currentTarget);
 	}
 

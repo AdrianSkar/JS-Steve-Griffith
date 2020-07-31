@@ -1,7 +1,5 @@
-/*jshint esversion: 6*/
-
 // built-in callback functions
-// setTimeout, Arr.forEach, geolocation.getCurrentPostition
+// setTimeout, Arr.forEach, geolocation.getCurrentPosition
 // make your own callback functions
 
 function doThing(other) {
@@ -11,19 +9,17 @@ function doThing(other) {
 	let name = 'Steve';
 
 	other(name);
-
 }
 
 function hello(nm, idx, arr) {
 	console.log('Hello', nm);
-
 }
 
+hello("stever");
 doThing(hello);
 
-//
 
-setTimeout(hello, 2000, 'Bob'); //hello is the callbkack function
+setTimeout(hello, 2000, 'Bob'); //hello is the callback function
 
 let names = ['Inga', 'Tom', 'Mattias', 'Carlos'];
 

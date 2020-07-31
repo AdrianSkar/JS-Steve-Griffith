@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 let steve = {
 	colorDiv: function (ev) {
 		let target = ev.currentTarget;
@@ -14,6 +12,8 @@ let steve = {
 
 steve.init();
 
+
+// What you can avoid using namespaces:
 
 // let colorDivB = function (ev) {
 // 	let target = ev.currentTarget;

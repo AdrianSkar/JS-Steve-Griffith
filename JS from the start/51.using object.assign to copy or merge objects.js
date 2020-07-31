@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Object.assign(target, sources...) method
 // Used to copy objects OR to merge objects
 

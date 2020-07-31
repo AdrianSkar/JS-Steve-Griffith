@@ -1,6 +1,4 @@
-/*jshint esversion: 6*/
-
-// NaN is a property of the globla object. It represents a value which is 
+// NaN is a property of the global object. It represents a value which is 
 // Not A Number. It will be unequal !== to ANYTHING inside if()
 
 // isNaN() first converts the value to a Number and tests it for NaN

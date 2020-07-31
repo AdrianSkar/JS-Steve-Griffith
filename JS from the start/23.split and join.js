@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // String split and Array join methods
 // Converting strings to arrays and arrays to strings
 // str.split()

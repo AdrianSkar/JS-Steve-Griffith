@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 //Array map() method
 
 let dwarves = ['Bifur', 'Bofur', 'Bombur', 'Fili', 'Kili', 'Oin', 'Gloin', 'Thorin', 'Balin', 'Dwalin', 'Nori', 'Dori'];

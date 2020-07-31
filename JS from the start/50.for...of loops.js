@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // for ... of loops vs for ... in loops
 
 let supernatural = {
@@ -15,8 +13,9 @@ for (const prop in supernatural) {
 }
 
 for (const prop in supernatural.actors) {
-	console.log(prop, supernatural.actors[prop]); // 1 Jared Padelecki, ` Jensen Ackles, etc
+	console.log(prop, supernatural.actors[prop]); // 0 Jared Padelecki, 1` Jensen Ackles, etc
 }
 
 for (const chars of supernatural.characters) {
-	console.log(chars);// Sam Winchester, Dean... 
+	console.log(chars);
+} // Sam Winchester, Dean... 

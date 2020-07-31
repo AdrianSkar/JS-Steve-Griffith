@@ -1,6 +1,3 @@
-/*jshint esversion: 6*/
-
-
 // Keyboard events in the browser
 // ev.char || ev.charCode || ev.which
 // keydown, keyup, keypress
@@ -24,20 +21,18 @@ function anyKey(ev) {
 	switch (char) {
 		case 37:
 			console.log('Left');
-
 			break;
+
 		case 38:
 			console.log('Up');
-
 			break;
+
 		case 39:
 			console.log('Right');
-
 			break;
+
 		case 40:
 			console.log('Down');
-
 			break;
-
 	}
 }

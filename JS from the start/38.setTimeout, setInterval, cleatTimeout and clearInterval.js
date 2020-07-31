@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 function log(msg) {
 	console.log('Message', msg);
 	clearInterval(tommy);// clears tommy

@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Tips for debugging JS
 const DEBUG_MODE = true;
 

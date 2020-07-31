@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // food prices
 const beerCost = 6.25;
 const burguerCost = 6.75;

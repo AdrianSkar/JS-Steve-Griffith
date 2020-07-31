@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // nested loops and multidimensional objects
 // we can use nested loops to access all the elements inside multidimensional
 // arrays or objects
@@ -33,6 +31,7 @@ for (let i = 0; i < chars.length; i++) {
 	// console.log(chars[i].name);
 	// console.log(chars[i].voice);
 	for (const prop in chars[i]) {
+		// can't use the dot notation because "prop" is a variable and not a string, you have to use [] notation
 		console.log(prop, chars[i].prop, chars[i][prop]);
 	}
 }

@@ -1,6 +1,4 @@
-/*jshint esversion: 6*/
-
-//variable scope, create some global variables
+// Variable scope, create some global variables
 
 var ranger = 'Aragorn';
 let elf = 'Legolas';
@@ -28,9 +26,8 @@ function visitLothLorien() {
 	console.log(hobbit);
 
 	// DWARF = 'Gloin';//ERR Assignment to constant var
-	// let hobbit = 'Bilbo'; TDZ for the previous console.log and ERRs for being used before declared, doesn't behave as reasignment
+	// let hobbit = 'Bilbo'; // TDZ for the previous console.log and ERRs for being used before declared, doesn't behave as reasignment
 	console.log(hobbit);
-
 }
 
 goToMountDoom();

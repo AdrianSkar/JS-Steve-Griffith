@@ -1,7 +1,5 @@
-/*jshint esversion: 6*/
-
 //Array includes() method
-//check ro see if something is inside an array
+//check to see if something is inside an array
 //returns boolean value
 
 const dwarves = ['Grumpy', 'Sneezy', 'Happy', 'Bashful', 'Doc', 'Dopey', 'Sleepy'];
@@ -20,3 +18,5 @@ console.log('Contains Kenny', check(name2));
 console.log('Contains Happy', check(name3));
 console.log('Contains Happy from index 3', check(name3, 3));
 
+let x = dwarves.includes('Happy');
+console.log(x);

@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Object.create(prototype, propertiesObject) method
 // propertiesObject same as 2nd arg from Object.defineProperties()
 
@@ -26,6 +24,6 @@ let obj3 = Object.create(obj2, {
 	}
 });
 
-console.log(obj3); // {fullName: 'JeffLebowski', canBowl: true}
+console.log(obj3); // {fullName: 'Jeff Lebowski', canBowl: true}
 console.log(obj3.name); // The dude
 

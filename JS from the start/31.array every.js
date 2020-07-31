@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Array every()
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
 // checks every element to see if it returns true

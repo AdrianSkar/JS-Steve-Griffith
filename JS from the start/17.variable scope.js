@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 //Variable scope
 
 var name = 'Aragorn'; //Global
@@ -13,6 +11,7 @@ x(); //Gimli
 console.log(name); //Aragorn
 x(); //Gimli
 y(); //Aragorn
+
 function y() {
 	name = 'Legolas'; // Changes the global value of name to 'Legolas' in the absence of the keyword var 
 	console.log(name);

@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 //Promises basics 
 // wrappers for anything async
 // ajax calls, reading files, timeouts, geolocation, talk to a database or anything that would use a callback function

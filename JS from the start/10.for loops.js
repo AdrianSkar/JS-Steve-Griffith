@@ -1,4 +1,3 @@
-/* jshint esversion: 6*/
 
 const names = ['Jeff Lebowski', 'Donnie Kerabastsos', 'Walter Sobchak', 'Bunny Lebowski', 'Karl Hungus', 'Brandt', 'Maude Lebowski', 'Jackie Treehorn'];
 

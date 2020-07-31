@@ -1,6 +1,4 @@
-/*jshint esversion: 6*/
-
-//basic fetch using jsinplaceholder for the data
+//basic fetch using jsonplaceholder for the data
 // Remember that fetch returns a promise'
 // http status codes: https://www.restapitutorial.com/httpstatuscodes.html
 // Promises playlist https://www.youtube.com/watch?v=SmPouEFKOBg&list=PLyuRouwmQCjngZXVn48vYmPK_1yAF-fLw

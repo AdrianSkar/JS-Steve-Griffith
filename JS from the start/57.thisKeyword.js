@@ -1,6 +1,4 @@
-/*jshint esversion: 6*/
-
-// "use strict"; // Prevents global context from being infered at myFunc, myFunc()
+// "use strict"; // Prevents global context from being inferred at myFunc, myFunc()
 // has to be 'explicit'.
 
 let box = document.querySelector('.box');

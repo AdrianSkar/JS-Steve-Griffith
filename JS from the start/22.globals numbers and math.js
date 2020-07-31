@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 const r = parseInt('234');
 console.log(r);
 

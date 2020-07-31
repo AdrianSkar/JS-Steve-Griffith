@@ -1,13 +1,10 @@
-/*jshint esversion: 6*/
-
 // load the sample weather JSON data
 // build a grid of temps over the news 24 hours
-// blue background in hours where precipitation possibility ir higher than 70%
+// blue background in hours where precipitation possibility is higher than 70%
 
 let uri = './49.darksky%20data%20sample.json';
 let req = new Request(uri, { method: 'GET' });
 let container, df;
-
 
 document.addEventListener('DOMContentLoaded', init);
 

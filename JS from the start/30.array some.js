@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Array some()
 // Wider availability than includes()
 // functional approach like map, filter, and forEach

@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
 let d = new Date();
@@ -37,7 +35,6 @@ d5.toDateString() - date portion UTC time
 d5.toTimeString() - date portion UTC time
 d5.toISOString() - date simplified
 d5.toJSON() - date for use in JSON string. UTC
-
 d5.toLocaleString() - local time and date
 d5.toLocaleString('en-CA') - local time and date with specified formatting
 d5.toUTCString()

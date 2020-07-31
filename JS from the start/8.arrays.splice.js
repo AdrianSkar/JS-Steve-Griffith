@@ -1,6 +1,3 @@
-/*jshint esversion: 6*/
-console.log("test");
-
 
 const chars = ["One", "two", "three", "four"];
 console.log(chars);
@@ -17,7 +14,7 @@ console.log(chars);
 chars.splice(1, 1, 'seven', 'eight');
 console.log(chars);
 
-//Remove 'seven; and 'eight'
+//Remove 'seven' and 'eight'
 chars.splice(1, 2);
 console.log(chars);
 

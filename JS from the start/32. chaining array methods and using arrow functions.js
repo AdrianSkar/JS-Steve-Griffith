@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Arrays of objects
 // Efficiently combining and chaining array methods and arrow functions
 // person.email.indexOf('@replicant.io') > -1
@@ -13,7 +11,6 @@ const people = [
 ];
 
 //Two step version
-
 let replicants = people.filter(function (person) {
 	return person.email.indexOf('@replicant.io') > -1;
 });

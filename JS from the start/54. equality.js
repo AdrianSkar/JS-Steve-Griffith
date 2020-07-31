@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // == vs === and != vs !==
 
 let a, b, obj, obj2, copy1, copy2, html1, html2;
@@ -43,7 +41,7 @@ if (copy1 == copy2) {
 	console.log('copy1 and copy2 are not double equal');
 }
 if (copy1 === copy2) {
-	console.log('copy1 and copy2 are triple equal'); // They are equal (theypoint to the exact same variable/object)
+	console.log('copy1 and copy2 are triple equal'); // They are equal (they point to the exact same variable/object)
 } else {
 	console.log('copy1 and copy2 are not triple equal');
 }

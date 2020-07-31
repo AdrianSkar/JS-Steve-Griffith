@@ -1,6 +1,4 @@
-/*jshint esversion: 6*/
-
-// IIFE - Inmediately invoked function expressions
+// IIFE - Immediately invoked function expressions
 
 (function doSomething() {
 	// function declaration

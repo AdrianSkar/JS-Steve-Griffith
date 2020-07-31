@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // EvalError, InternalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError
 
 // throw 'test';

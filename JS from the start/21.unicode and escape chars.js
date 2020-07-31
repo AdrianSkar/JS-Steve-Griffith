@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // https://unicode.org/charts/
 //String.fromCharCode(num [, numnj num])
 //myString.charCodeAt(index)
@@ -9,7 +7,7 @@ let yesRu = '\u0434\u0430'; // Russian - yes
 let milkDK = 'm\u00E6lk'; // milk
 let breadNO = 'br\u00F8d'; // bread
 let tomorrowES = 'ma\u00F1ana'; // tomorrow
-let emojiJP = '\u3047\u3082\u3058'; //Hiragana - emoji 
+let emojiJP = '\u3047\u3082\u3058'; // Hiragana - emoji 
 
 console.log(yesRu);
 console.log(milkDK, '\t', 'after');

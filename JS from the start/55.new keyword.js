@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Using "new" with functions
 // new does 4 things:
 // new object created;

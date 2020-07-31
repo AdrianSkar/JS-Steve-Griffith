@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 //Array filter() method
 
 const numbers = [23, 45, 14, 66, 94, 33, 4, 9];

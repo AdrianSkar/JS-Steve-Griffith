@@ -1,5 +1,3 @@
-/*jshint esversion: 6*/
-
 // Boolean-ish
 // null, undefined, 0, false, '', "", NaM -> False
 // "Anything" else evaluates to true
