@@ -48,12 +48,15 @@ Object.defineProperty(obj, 'test', {
 	configurable: true,
 	enumerable: false // wont' show up on the for loop but will show up if obj.test is called
 });
-Object.preventExtensions(obj);
-let test = Object.isExtensible(obj);
-console.log(test);
 
-obj.new = 3;
-console.log(obj.new);
+Object.defineProperty(obj, 'frank', {
+	configurable: true,
+	enumerable: true,
+	get: () => this.value,
+	set: (_val) => {
+		this.value = _val + " baby!";
+	}
+});
 
 for (let prop in obj) {
 	console.log(prop);
