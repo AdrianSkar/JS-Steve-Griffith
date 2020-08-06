@@ -11,7 +11,7 @@ let bigNumbers = numbers.filter(function (item) {
 
 // let oddNumbers = numbers.filter(item => ((item % 2) !== 0));
 let oddNumbers = numbers.filter(item => ((item % 2))); //Same as before (returns true)
-// let oddNumbers = numbers.filter(item => ((item & 1))) //Bitwise operator returning only binary numbers endind in 1, that happen to be odd ones.
+// let oddNumbers = numbers.filter(item => ((item & 1))) //Bitwise operator returning only binary numbers ending in 1, that happen to be odd ones.
 
 console.log('\nSmaller than 30: ', smallNumbers);
 console.log('\n Larger than 30: ', bigNumbers);
