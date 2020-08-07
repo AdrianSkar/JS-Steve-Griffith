@@ -1,19 +1,6 @@
-/* 
-1. removing duplicates from an array
-2. generating an array without duplicates
-3. arr.reduce or filter?
-*/
+const arr = [1, 2, [3, [5, 6]]];
 
-let names = ['Aaron', 'BByron', 'Jaquelin', 'Minsk'];
+// To flat single level array
+let result = arr.flat(Infinity);
 
-for (let i = 0, tmpnames = names, ln = names.length; i < ln; i++) {
-	let rnd = Math.floor(Math.random() * tmpnames.length);
-	console.log(tmpnames[rnd]);
-
-	//remove element from temp array so it doesn't show up again
-	tmpnames = tmpnames.filter(item => item != tmpnames[rnd]);
-	console.log(tmpnames);
-	// tmpnames.splice(rnd, 1);
-}
-
-
+console.log(result);

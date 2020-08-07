@@ -1,7 +1,6 @@
 /* 
-1. removing duplicates from an array
+1. removing duplicates from an array using splice and/or arr.reduce or filter
 2. generating an array without duplicates
-3. arr.reduce or filter?
 */
 
 let names = ['Aaron', 'BByron', 'Jaquelin', 'Minsk'];
@@ -18,6 +17,17 @@ for (let i = 0, tmpnames = names, ln = names.length; i < ln; i++) {
 	console.log(tmpnames[rnd]);
 	//remove element from temp array so it doesn't show up again
 	tmpnames.splice(rnd, 1);
+
+	// Using .filter()
+	// tmpnames = tmpnames.filter(item => item != tmpnames[rnd]);
+
+	// Using .reduce()
+	// tmpnames = tmpnames.reduce((acc, cur) => {
+	// 	if (cur !== tmpnames[rnd]) {
+	// 		acc.push(cur);
+	// 	}
+	// 	return acc;
+	// }, []);
 }
 
 /////////////////////////////////////////////
