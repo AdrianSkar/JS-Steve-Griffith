@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Synchronous vs. asynchronous</title>
+</head>
+
+<body>
+	<h1>Heading</h1>
+
+	<script>
+		let a = 5;
+		let b = 50;
+
+		let a1 = (function () { return 5; })();
+		let b1 = (function () { return 50; })();
+
+		console.log(a1); //5
+		console.log(b1); //50
+
+		let a2 = function (num) { return num * 5 };
+		let b2 = function () { return 50 }
+
+		console.log(a2(b2()));//b2 (inner) is resolved first
+
+		/*
+		setTimeout, callbacks for geolocation, promises,
+		fetch, ajax, filesystem interaction, db calls and even
+		DOM event listeners are asynchronous
+		*/
+
+		let a3 = 100;
+		setTimeout(function () { a3++; }, 0);//asynchronous (after main thread)
+		console.log(a3); //logged first -> 100
+
+		let p = new Promise(function (resolve, reject) {
+			setTimeout(function () {
+				resolve("Yo!");
+			}, 0)
+		});
+		console.log(p); // 1 Promise{<pending>} 
+		setTimeout(() => {
+			console.log(p); // 4 {<fulfilled>: "Yo!"}
+		}, 10);
+		console.log(p); // 2 Promise{<pending>}
+		p.then(function (val) {
+			console.log(val); // 3 Yo!
+		})
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Callback functions</title>
+</head>
+
+<body>
+	<h1>What are callback functions?</h1>
+	<h2>How do they work?</h2>
+	<script>
+		const app = {
+			geolocation: (good, bad) => {
+				//requires two functions to be passed in
+				try {
+					//try to do something
+					let pos = {
+						latitude: 0, longitude: 0
+					}
+					pos.latitude = (Math.random() * 180) - 90;
+					pos.longitude = (Math.random() * 360) - 180;
+
+					if (Math.round(Math.random()) === 1) {
+						throw new Error('my simulated geolocation failure');
+					} else {
+						good.call(app.geolocation, pos, 'anotherParam')
+					}
+				}
+				catch (error) {
+					//if it fails we call the 'bad' function and pass along the error obj
+					bad.call(app.geolocation, error, 'yetAnotherParam');
+				}
+			}
+		}
+
+		// Using if/else instead of try/catch
+		// const app = {
+		// 	geolocation: (good, bad) => {
+		// 		//requires two functions to be passed in
+
+		// 		if (Math.round(Math.random()) === 1) {
+		// 			let pos = {
+		// 				latitude: 0, longitude: 0
+		// 			}
+		// 			pos.latitude = (Math.random() * 180) - 90;
+		// 			pos.longitude = (Math.random() * 360) - 180;
+		// 			good.call(app.geolocation, pos, 'anotherParam')
+
+		// 		} else {
+		// 			let error = "can't get your location";
+		// 			bad.call(app.geolocation, error, 'yetAnotherParam');
+		// 		}
+
+		// 	}
+		// }
+
+		let success = (position, param) => {
+			console.log(`Param is ${param} Your position is ${position.latitude} and ${position.longitude}`);
+		}
+
+		let fail = (err, param2) => {
+			console.log('The error was', err.message, param2);
+		}
+
+		app.geolocation(success, fail); // Here we define the callback functions that will be passed depending on the result.
+	</script>
+</body>
+
+</html>
