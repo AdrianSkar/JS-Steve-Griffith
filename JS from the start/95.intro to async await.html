@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Intro to async await</title>
+</head>
+<header>
+	<h1>Intro to async await</h1>
+</header>
+
+<body>
+	<main>
+		<p id="output">Output area</p>
+	</main>
+</body>
+<script>
+	// async function getUser() {  // async turns the function in to a promise
+	// 	let counter = 0;
+	// 	let output = document.getElementById('output');
+	// 	let userid = Math.floor(Math.random() * 10) + 1;
+	// 	let url = `https://jsonplaceholder.typicode.com/users/${userid}`;
+	// 	fetch(url)
+	// 		.then(response => response.json())
+	// 		.then(data => {
+	// 			output.innerHTML += JSON.stringify(data, null, 2) + '<br>';
+	// 			console.log(data); // 2nd thing logged (asynchronous)
+	// 		})
+	// 	output.innerHTML += "<br> Request sent";
+	// 	return 42; // 1st thing logged (inside a promise if async before function)
+	// }
+	async function getUser() {  // async turns the function in to a promise
+		let counter = 0;
+		let output = document.getElementById('output');
+		let userid = Math.floor(Math.random() * 10) + 1;
+		let url = `https://jsonplaceholder.typicode.com/users/${userid}`;
+
+		let response = await fetch(url);
+		let data = await response.json(); // didn't have time to process the previous line so we add await for both
+
+		output.innerHTML += "<br> Request sent";
+		output.textContent += JSON.stringify(data)
+		return 42; // 1st thing logged (inside a promise if async before function)
+	}
+
+	let ret = getUser();
+	console.log(ret);
+</script>
+
+</html>

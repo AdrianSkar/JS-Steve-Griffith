@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Find and replace with string methods</title>
+</head>
+
+<body>
+	<header>
+		<h1>Find and replace with string methods</h1>
+	</header>
+	<main>
+		<form action="#" method="post">
+			<div><label for="find">Find: </label>
+				<input type="text" id="find">
+			</div>
+			<div><label for="replace">Replace</label>
+				<input type="text" id="replace">
+			</div>
+			<div><button id="btnSearch">Go</button></div>
+		</form>
+		<p class="target">
+			Lorem ipsum dolor sit amet consectetur adipisicing Apple elit. Dolorum magni explicabo, dolore molesti apple as
+			delectus magnam facilis ducimus quo veniam ipsa qui enim velit quidem et omnis fugit fuga quasi repellat?
+			Lorem ipsum dolor apple sit amet, consect apple etur adipisicing elit. Ad, earum asperiores apple alias
+			consequuntur
+			ipsum dolores voluptates neque rerdum vel ratione atque quod n apple esciunt laudantium mollitia qui quae o apple
+			fficia ipsa voluptatem? OO
+		</p>
+	</main>
+</body>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		let btn = document.getElementById('btnSearch');
+		btn.addEventListener('click', doFindAndReplace);
+	})
+
+	function doFindAndReplace(ev) {
+		ev.preventDefault();
+		let find = document.getElementById('find').value;
+		let replace = document.getElementById('replace').value;
+
+		// let p = document.getElementsByClassName('target')[0];
+		let p = document.querySelector('.target');
+		// let txt = p.textContent;
+
+		while (p.textContent.indexOf(find) !== -1) { // case sensitive; use toLowerCase to find all
+			p.textContent = p.textContent.replace(find, replace); //only replaces the first instance; you need to iterate over all matches
+		}
+
+	}
+</script>
+
+</html>
