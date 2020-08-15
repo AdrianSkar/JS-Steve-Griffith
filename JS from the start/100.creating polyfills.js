@@ -1,6 +1,5 @@
 /*
 Polyfill
-
 */
 
 if (!Array.prototype.justLetter) {

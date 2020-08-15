@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Async iterators</title>
+</head>
+
+<body>
+	<header>
+		<h1>Async iterators</h1>
+		<h2>Handling data streams</h2>
+	</header>
+	<main>
+		<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto esse, fugit perspiciatis quidem laborum ad
+			explicabo, minus optio odit dolorum officia cumque doloremque nisi fuga facere deleniti dolores voluptatum
+			blanditiis.</p>
+		<pre id="output">
+
+		</pre>
+	</main>
+
+	<script>
+		//https://jsonplaceholder.typicode.com/posts retrieves 100 records
+
+		let posts = {};
+		posts[Symbol.iterator] = function () {
+			const URL = "//jsonplaceholder.typicode.com/posts";
+			return {
+				next: async function () {
+					let rand = Math.random();
+					if (rand > 0.7) {
+						return {
+							value: undefined,
+							done: true
+						}
+					}
+					let request = new Request(URL, { // + `?r=${rand}1`  old reference in jsonplaceholder.com??
+						method: 'GET',
+						mode: 'cors'
+					});
+					let response = await fetch(request);
+					//need to add catch()
+					let data = await response.json();
+					console.log('array of posts fetched', data);
+					console.log('request is ', request);
+					return {
+						value: data,
+						done: false
+					}
+
+				}
+			}
+		}
+
+		let output = document.getElementById('output');
+		let main = document.querySelector('main');
+		main.addEventListener('click', d);
+
+		function d(ev) {
+			//start getting data
+
+			let iterator = posts[Symbol.iterator]();
+
+			(async function getData() {
+				let data = await (iterator.next());
+				if (data.value && !data.done) {
+					output.textContent += '\r\n' + JSON.stringify(data.value);
+					console.log('getData', data.value);
+					setTimeout(getData, 2000);
+				} else {
+					console.log('Done: ', data.done);
+					output.textContent += '\r\n Done';
+				}
+			})();
+			// IIFE for await
+			// next JS version will allow: for await ( let val of obj){}
+		}
+	</script>
+</body>
+
+</html>
