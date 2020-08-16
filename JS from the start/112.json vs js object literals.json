@@ -1,0 +1,20 @@
+{
+	"prop1": "string",
+	"prop2": "string",
+	"prop3": 123,
+	"prop4": [
+		"array",
+		"value",
+		"obj2",
+		123
+	],
+	"prop5": {
+		"p1": "v1",
+		"p2": "v2",
+		"p3": false,
+		"p4": 654,
+		"p5": null
+	},
+	"prop6": null,
+	"prop7": true
+}
