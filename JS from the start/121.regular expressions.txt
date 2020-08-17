@@ -1,0 +1,25 @@
+*        0 or more matches
++        1 or more matches
+?        0 or 1 match
+^        Matches the start of the string or line
+$        Matches the end of the string or line
+\        Signifies an escape sequence
+.        Matches any single character except newline
+()       Capturing group. Save to reuse later
+|        Used as a logic OR inside a capturing group
+[abc]    Character set. Matches one of the things in the brackets
+[^abc]   Negated character set. Matches anything except...
+[a-zA-Z] Range of characters. In this case, any upper/lowercase letter
+{1}      Exact number of matches; 1
+{1, 5}   Inclusive range for number of matches
+{1,}     Minimum number of matches
+{,5}     Maximum number of matches
+\s       Any whitespace character
+\S       Any NON whitespace character
+\d       Any digit. Same as [0-9]
+\D       Any NON digit
+\w       Any word character. Same as [a-zA-Z0-9_]
+\W       Any NON word character: [^a-zA-Z0-9_]
+\b       Word boundary
+\B       NON word boundary
+[\b]     Escape sequence for a backspace character

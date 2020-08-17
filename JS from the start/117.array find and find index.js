@@ -1,4 +1,4 @@
-let cities = ['Ankara', 'Istanbul', 'Antalya', 'Bursa', 'Trazbon'];
+let cities = ['Ankara', 'Istanbul', 'Antalya', 'Bursa', 'Trabzon'];
 let city = 'Bursa';
 
 // let match1 = cities.find(item => {
@@ -14,8 +14,8 @@ let chars = 7;
 let match2 = cities.find(item => chars === item.length);
 console.log('.find item chars vs length: ', match2);
 
-// let index = cities.findIndex(item=>item===city);
-// console.log(index);
+let index0 = cities.findIndex(item => item === city);
+console.log(index0);
 
 let index = cities.findIndex(item => item.toLocaleLowerCase().indexOf('t') > -1);
 console.log(`letter "t" found in item at index ${index}`);

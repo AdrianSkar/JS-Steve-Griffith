@@ -25,7 +25,7 @@ let movies = [
 
 let manUp = { id: 2, title: 'Man up' };
 pos = movies.indexOf(manUp);
-console.log('Man up in position', pos);
+console.log('Man up in position', pos); // String !== [Object object]
 
 let iterations = 0;
 
