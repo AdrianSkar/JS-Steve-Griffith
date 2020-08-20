@@ -29,6 +29,7 @@ let car1 = new Vehicle(6);
 console.log(car1);
 Vehicle.accelerate();
 // car1.justAMethod();
+// car.justAMethod();
 
 class Car extends Vehicle { //Car from prototype Vehicle
 	constructor(_wheels, _make, _model, _year) {// _ convention to say its local
