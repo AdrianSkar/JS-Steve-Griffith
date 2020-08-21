@@ -17,11 +17,12 @@ console.log(Object.getPrototypeOf(Object.prototype));
 
 function Animal() { }
 
+
+// Object.setPrototypeOf(Cat, Animal); // This won't work as Cat and Animal are functions and objects must be passed to work properly; you must point to the prototype object
+// console.log(Object.getPrototypeOf(Cat));
+
 Object.setPrototypeOf(Cat.prototype, Animal.prototype);
 console.log(Object.getPrototypeOf(Cat.prototype));
-
-Object.setPrototypeOf(Cat, Animal);
-console.log(Object.getPrototypeOf(Cat));
 
 console.log(Object.getPrototypeOf(kitty));
 console.log(Object.getPrototypeOf(Object.getPrototypeOf(kitty)));

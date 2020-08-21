@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Optional chaining: ?.</title>
+	<style>
+		html {
+			font-size: 1.5em;
+			line-height: 1.7;
+			font-weight: 700;
+			font-family: 'Segoe UI', Roboto, Ubuntu, sans-serif;
+		}
+
+		body {
+			min-height: 100vh;
+		}
+
+		p {
+			border: 1px solid #ccc;
+			padding: 0.5rem 1rem;
+		}
+
+		;
+	</style>
+</head>
+
+<body>
+	<p id="_1">
+		One
+	</p>
+	<p id="_2">
+		Two
+	</p>
+	<p id="_3">
+		Three
+	</p>
+</body>
+<script>
+	const dataArr = [
+		{ label: 'One' },
+		{ label: 'Two' },
+		{ label: 'Three' },
+		{ label: 'Four' },
+		{ label: 'Five' }
+	];
+	const dataObj = {
+		6: { label: 'I am number six.' },
+		7: { label: "What's in the box." },
+		m: () => { console.log('Custom method.'); },
+		top: { mid: { deep: 123 } }
+	};
+
+	const addPara = (num, hex) => {
+		let txt = 'default';
+		// if (dataArr && dataArr[num - 1]) { txt = dataArr[num - 1].label }
+		// txt = dataArr[num - 1]?.label;
+		txt = dataObj[num]?.label;
+		if (txt) {
+			let p = document.createElement('p');
+			p.style.backgroundColor = hex; //8 digit hex
+			p.id = `_${num}`; // _4, _5, _6, _7
+			p.textContent = txt;
+			document.body.appendChild(p);
+		}
+		// console.log(dataObj?.toplevel?.mid?.deep);
+		// if (dataObj && dataObj.top && dataObj.top.mid && dataObj.top.mid.deep) { }
+		dataObj.m?.();
+		dataObj.f?.();
+	}
+
+	const handleClick = () => {
+		let num = Math.floor(Math.random() * 7) + 1; // 1-7
+		let id = '_'.concat(num); // _3
+		let hex = randColour(); // 8 digit hex
+		console.log(id, hex);
+		let div = document.getElementById(id);
+		div ? (div.style.backgroundColor = hex) : addPara(num, hex); // or void 0
+		//addPara.call(null, num, hex); //addPara(num,hex)
+	}
+
+	const randColour = () => {
+		let clr = Math.floor(Math.random() * Math.pow(2, 24));
+		let red = (clr >> 16).toString(16).padStart(2, '0');
+		let green = ((clr >> 8) & 255).toString(16).padStart(2, '0');
+		let blue = (clr & 255).toString(16).padStart(2, '0');
+		let alpha = Math.floor(Math.random() * 200 + 55)
+			.toString(16)
+			.padStart(2, '0'); //alpha is a value 0-100% but written as num 0-255
+		// and in hex that means 00 - FF. 50% is 128 in decimal or 80 in Hex
+		// https://codepen.io/chriscoyier/pen/XjbzAW - ref chart for percentages
+		//console.log(red, green, blue, alpha);
+		return `#${red}${green}${blue}${alpha}`;
+	};
+
+	document.addEventListener('DOMContentLoaded', () => {
+		document.body.addEventListener('click', handleClick);
+	});
+</script>
+
+</html>
