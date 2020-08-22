@@ -22,13 +22,13 @@ function byId(a, b) {//numerically by id
 	return parseInt(a.id) - parseInt(b.id);
 }
 
-// console.log(people.sort(byId));
+console.log(people.sort(byId));
 
 function byDate(a, b) {//chronologically by year, month, then day
 	return new Date(a.dob).valueOf() - new Date(b.dob).valueOf();
 }
 
-// console.log(people.sort(byDate));
+console.log(people.sort(byDate));
 
 function byBday(a, b) {//by month, then by day
 	let d1 = new Date(a.dob); // 1993-02-15T00:00:00Z => 1993-03-14T20:00:00EST

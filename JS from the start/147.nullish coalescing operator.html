@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nullish coalescing operator</title>
+</head>
+
+<body>
+
+</body>
+<script>
+	// Node doesn't support it as of v14.0.0
+	//let result null ? 'yes' : 'no' //ternary: truthy or falsey
+
+	//null or undefined
+	let result = null ?? 'yes'; //'yes' if testing is null/undefined
+
+	let current = null;
+
+	function f() {
+		let result = current ?? getNum();
+		console.log(result);
+	}
+	console.log(current);
+	getNum();
+	console.log(current);
+	// f();
+	// f();
+	// f();
+
+	function getNum() {
+		current = Math.floor(Math.random() * 100);
+		return current;
+	}
+</script>
+
+</html>
