@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>globalThis</title>
+</head>
+
+<body>
+
+</body>
+<script>
+	let lll = 'declared with let';
+	var vvv = 'declared with var';
+	(function () {
+		nnn = 'declared without either';
+		console.log(this);
+		console.log(window);
+		console.log(globalThis);
+		console.log(lll, globalThis.lll);
+		console.log(vvv, globalThis.vvv);
+		console.log(nnn, globalThis.nnn);
+	})();
+</script>
+
+</html>
