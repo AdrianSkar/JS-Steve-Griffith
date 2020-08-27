@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Finding HTML elements</title>
+	<style>
+		.some {
+			background-color: khaki;
+		}
+
+		.other {
+			background-color: azure;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<!--  Element node -->
+		<h1 role="heading">Finding HTML elements</h1> <!-- 'Finding...' text node -->
+	</header>
+	<main role='main' class='main'>
+		<h2>Loading movies</h2>
+		<ul>
+			<li>The shawshank redemption</li>
+			<li>Pulp fiction</li>
+			<li>Fight club</li>
+			<li>Forrest gump</li>
+			<li>The usual suspects</li>
+			<li>Apocalypse not</li>
+			<li>Reservoir dogs</li>
+			<li>Toy story</li>
+			<li>Monty Python and the holy grail</li>
+			<li>Die hard</li>
+			<li>The bridge on the river Kwai</li>
+			<li>Boondock saints</li>
+		</ul>
+	</main>
+	<footer role="contentinfo" id="foot">
+		<p class="other">&copy; 2020</p>
+	</footer>
+	<script src="movies.js" async></script>
+	<script src="dom.js" async></script>
+
+</body>
+
+</html>
