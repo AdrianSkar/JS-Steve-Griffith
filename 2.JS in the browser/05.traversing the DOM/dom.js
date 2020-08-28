@@ -15,9 +15,22 @@ let c2 = main.childNodes;
 // console.log('children', c.length);//2
 // console.log('childNodes', c2.length); //5 (including carriage returns)
 
+// let ul = main.children[1];
+// let h2 = main.firstElementChild;
+// let ul2 = h2.nextElementSibling;
+// console.log(ul2);
+// let h2a = ul2.previousElementSibling;
+// console.log(h2a); 
+
 let ul = main.children[1];
-let h2 = main.firstElementChild;
-let ul2 = h2.nextElementSibling;
-console.log(ul2);
-let h2a = ul2.previousElementSibling;
-console.log(h2a); 
+let lis = ul.children;
+let firstLi = lis[0]; //=ul.firstElementChild
+
+let txt = firstLi.textContent;
+let txt2 = firstLi.firstChild.nodeValue; //= txt
+console.log(txt, txt2);
+
+firstLi.firstChild.nodeValue = txt.toLowerCase();
+
+let bool = main.contains(firstLi);
+console.log(bool);
