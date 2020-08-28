@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Styling with JS</title>
+	<style>
+		.some {
+			background-color: khaki;
+			font-family: sans-serif;
+			font-weight: bold;
+			padding: 1rem 2 rem;
+		}
+
+		.other {
+			color: blueviolet;
+			font-size: 2.4rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1 role="heading">Fun with styles</h1>
+	</header>
+	<main role="main" class="some" id="main">
+		<h2>Classic movies</h2>
+		<ul>
+			<li data-year="1994">The sawshank redemption</li>
+			<li data-year="1994">Pulp fiction</li>
+			<li data-year="1999">Fight club</li>
+			<li data-year="1994">Forrest gump</li>
+			<li data-year="1995">The usual suspects</li>
+		</ul>
+	</main>
+	<footer role="contentinfo" id="foot">
+		<p class="other">&copy; 2020</p>
+	</footer>
+	<script src="script.js" async></script>
+</body>
+
+</html>

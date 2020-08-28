@@ -1,0 +1,20 @@
+{
+	"fargo": {
+		"movie": {
+			"year": 1996,
+			"directors": "Cohen brothers",
+			"cast": [
+				"William H macy",
+				"Frances McDormand",
+				"\u0414\u0434"
+			]
+		},
+		"tv-series": {
+			"year": 2014,
+			"cast": [
+				"Colin Hanks",
+				"Martin Freeman"
+			]
+		}
+	}
+}
