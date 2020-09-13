@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>15.Fetch request</title>
+</head>
+
+<body>
+	<div id="output"></div>
+	<script>
+		// fetch using a Request and a Headers object using jsonplaceholder for the data
+
+		const uri = 'http://jsonplaceholder.typicode.com/users';
+
+		/*
+		new Request(uri)
+		new Request(uri, options)
+		options - method, headers, body, mode
+		methods: GET, POST, PUT, DELETE, OPTIONS
+		
+		new Headers()
+		heders.append(name, value)
+		Content-Type, Content-Length, Accept, Accept-Language, X-Requested-With,
+		 User-Agent
+		*/
+
+		let h = new Headers();
+		h.append('Accept', 'application/json');
+
+		let req = new Request(uri, {
+			method: 'POST',
+			headers: h,
+			mode: 'cors'
+		});
+
+		fetch(req)
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error('Bad http stuff');
+				}
+			})
+			.then((jsonData) => {
+				console.log(jsonData);
+			})
+			.catch((err) => {
+				console.log('Error: ', err.message);
+			})
+
+
+	</script>
+</body>
+
+</html>
