@@ -11,15 +11,15 @@ let bigHero = {
 	]
 };
 
-//nested for loops
-// let rows = twoD.length;
-// for (let i = 0; i < rows; i++) {
-// 	let items = twoD[i].length;
-// 	console.log(i, items);
-// 	for (let n = 0; n < items; n++) { // todo test using i too
-// 		console.log(n, twoD[i][n]);
-// 	}
-// }
+// nested for loops
+let rows = twoD.length;
+for (let i = 0; i < rows; i++) {
+	let items = twoD[i].length;
+	console.log(i, items);
+	for (let n = 0; n < items; n++) {
+		console.log(n, twoD[i][n]);
+	}
+}
 
 let chars = bigHero.characters; //bigHero.['characters']
 for (let i = 0, len = chars.length; i < len; i++) {
