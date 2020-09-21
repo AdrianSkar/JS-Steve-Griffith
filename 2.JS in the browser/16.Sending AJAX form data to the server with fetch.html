@@ -10,7 +10,46 @@
 <body>
 	<div id="output"></div>
 	<script>
+		/*
+		Sending data to the server using fetch() and jsonplaceholder
 
+		- GET - queryStrings
+			http://jsonplaceholder.typicode.com/posts?userId=1&postId=65
+			http://jsonplaceholder.typicode.com/posts?userId=2
+		- POST
+			http://jsonplaceholder.typicode.com/posts
+
+		*/
+
+		const root = 'http://jsonplaceholder.typicode.com/';
+		let uri = root + 'posts';
+
+		let formData = new FormData();
+		formData.append('userId', 3);
+		formData.append('title', 'new post title');
+		formData.append('body', 'This is the main text of the post.');
+
+		let options = {
+			method: 'POST',
+			mode: 'cors',
+			body: formData
+		}
+		let req = new Request(uri, options);
+
+		fetch(req)
+			.then((response) => {
+				if (response.ok) {
+					response.json()
+				} else {
+					throw new Error('Bad http!')
+				}
+			})
+			.then((j) => {
+				console.log(j);
+			}).catch((err) => {
+				console.log('Error', err.message);
+			}
+			);
 	</script>
 </body>
 
