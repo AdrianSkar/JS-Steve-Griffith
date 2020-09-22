@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>21. localStorage</title>
+</head>
+
+<body>
+	See the console and the storage section
+</body>
+<script>
+	/* Web Storage
+	localStorage
+	sessionStorage
+	JSON
+	setItem()
+	getItem()
+	clear() - erase everything
+	remoteItem(key) - delete one item
+	key(index) - get the name of one item
+	*/
+
+	localStorage.setItem('dude', 'Jeffrey');
+	let val = localStorage.getItem('dude');
+	console.log(val);
+
+	let key = 'pacman_highscore';
+	localStorage.setItem(key, 12341234);
+
+	let options = {
+		"name": "Walter",
+		"game": "bowling",
+		"weapons": ["uzi", "pistol", "anger"]
+	};
+	let str = JSON.stringify(options);
+
+	localStorage.setItem('TheDude', str);
+
+	let original = localStorage.getItem("TheDude");
+	console.log(original);
+
+	let obj = JSON.parse(original);
+	console.log(obj);
+	console.log(obj.weapons[2]);
+
+
+</script>
+
+</html>

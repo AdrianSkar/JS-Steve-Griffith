@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>20.JS and geolocation</title>
+</head>
+
+<body>
+
+	<h1>We see you</h1>
+
+	<p>Lat: <span></span></p>
+	<p>Long: <span></span></p>
+	<p>Accuracy: <span></span></p>
+	<p>Heading: <span></span></p>
+	<p>Speed: <span></span></p>
+	<p>Altitude: <span></span></p>
+	<p>Time: <span></span></p>
+
+</body>
+<script>
+	let options, spans;
+
+	document.addEventListener('DOMContentLoaded', init)
+
+	function init() {
+		if (navigator.geolocation) {
+			let giveUp = 1000 * 30; // 30 seconds
+			let tooOld = 1000 * 60 * 60 // one hour
+			options = {
+				enableHighAccuracy: true,
+				timeout: giveUp,
+				maximumAge: tooOld
+			}
+			navigator.geolocation.getCurrentPosition(gotPos, posFail, options);
+		} else {
+			//Using an old browser that doesn't support geolocation
+		}
+	}
+	function gotPos(position) {
+		spans = document.querySelectorAll('p span');
+		spans[0].textContent = position.coords.latitude;
+		spans[1].textContent = position.coords.longitude;
+		spans[2].textContent = position.coords.accuracy + ' meters';
+		spans[3].textContent = position.coords.altitude || 'not given';
+		spans[4].textContent = position.coords.heading || 'not given';
+		spans[5].textContent = position.coords.speed || 'not given';
+
+		let d = new Date(position.timestamp);
+		spans[6].textContent = d;
+	}
+	function posFail(err) {
+		//err is a number
+		let errors = {
+			1: 'No permission',
+			2: 'Unable to determine',
+			3: 'Took too long'
+		}
+		document.querySelector('h1').textContent = errors[err];
+	}
+
+</script>
+
+</html>

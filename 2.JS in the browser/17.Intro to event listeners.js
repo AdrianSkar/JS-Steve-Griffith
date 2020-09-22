@@ -21,10 +21,9 @@ function init() {
 		console.log(ev.type, ev.target, ev.currentTarget);
 
 	}
-
 	lnk.addEventListener('click', lnkClicked);
 	function lnkClicked(ev) {
-		event.preventDefault(); // Prevents the link to redirect/follow when clicked
+		ev.preventDefault(); // Prevents the link to redirect/follow when clicked
 		console.log(ev.type, ev.target, ev.currentTarget);
 	}
 
