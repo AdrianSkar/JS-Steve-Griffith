@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>24. Real world AJAX fetch to live HTML & CSS</title>
+</head>
+<style>
+	#users {
+		max-width: 40rem;
+	}
+
+	#users li {
+		background: #FFF;
+		border: 1px solid #bbb;
+		list-style: none;
+		margin: 1rem;
+		border-top-right-radius: 20px;
+	}
+
+	#users p {
+		padding: 0.5rem 2rem;
+	}
+
+	#users .name {
+		color: #000;
+		font-size: 2rem;
+	}
+
+	#users .info {
+		background: #ddd;
+		color: #666;
+		font-size: 1.4rem;
+	}
+</style>
+
+<body>
+	<main>
+		<div id="output">
+			<ul id="users">
+
+
+			</ul>
+		</div>
+	</main>
+	<footer>
+		<a href="https://www.youtube.com/watch?v=QYQs-Z4_tcs&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=24"
+			target="_blank" rel="noopener noreferrer">Video</a>
+	</footer>
+	<script>
+		/*
+		Fetch user data from jsonplaceholder. Generate a user list on the webpage.
+		*/
+
+		const uri = 'http://jsonplaceholder.typicode.com/users';
+
+		let req = new Request(uri, {
+			method: 'GET',
+			mode: 'cors'
+		})
+
+		fetch(req)
+			.then((response) => {
+				if (response.ok) {
+					return response.json();
+				} else {
+					throw new Error('Bad HTTP')
+				}
+			}
+			)
+			.then((jsonData) => {
+				// console.log(jsonData);
+				let ul = document.querySelector('#users'),
+					df = new DocumentFragment();
+				jsonData.forEach(user => {
+					let li = document.createElement('li'),
+						pn = document.createElement('p'), // paragraph name
+						pue = document.createElement('p') // paragraph user and email;
+					pn.textContent = user.name;
+					pue.textContent = user.username + ' - ' + user.email;
+					pn.className = 'name'; // Overrides any other classes 
+					pue.classList.add('info'); // Adds the class to already existing ones
+					li.append(pn, pue)
+					// li.appendChild(pn);
+					// li.appendChild(pue);
+					df.appendChild(li);
+				});
+				ul.appendChild(df);
+
+			})
+			.catch((err) => {
+				console.log('Error', err.message);
+			}
+			)
+	</script>
+</body>
+
+</html>
