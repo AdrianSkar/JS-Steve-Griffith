@@ -85,16 +85,19 @@ function init() {
 			// highest temp
 
 			let highObj = json.hourly.data.reduce((acc, curr) => {
-				if (curr.temperature > acc.temperature) {
-					return curr;
-				}
-				else {
-					return acc;
-				}
+				return (curr.temperature > acc.temperature) ? curr : acc;
 			}, { temperature: -100 });
+			// let highObj = json.hourly.data.reduce((acc, curr) => {
+			// 	if (curr.temperature > acc.temperature) {
+			// 		return curr;
+			// 	}
+			// 	else {
+			// 		return acc;
+			// 	}
+			// }, { temperature: -100 });
 			console.log(highObj);
 
-			let hotestId = 'ts_'.concat(highObj.time);
+			let hotestId = 'ts_' + highObj.time;
 			document.getElementById(hotestId).classList.add('hotest');
 		})
 		.catch((err) => {
