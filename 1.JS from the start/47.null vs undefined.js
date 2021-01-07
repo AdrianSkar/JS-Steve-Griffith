@@ -4,10 +4,10 @@
 // functions with no return statement will return undefined by default
 
 console.log(typeof null);								// 'object'
-console.log(typeof undefined);  				// 'undefined'
+console.log(typeof undefined);					// 'undefined'
 
 console.log(null === undefined);				// 'false'
-console.log(null == undefined);				// 'true'
+console.log(null == undefined);					// 'true'
 
 console.log(null === null);							// 'true'
 console.log(null == null);							// 'true'

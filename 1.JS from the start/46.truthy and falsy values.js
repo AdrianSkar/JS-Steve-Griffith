@@ -1,5 +1,5 @@
 // Boolean-ish
-// null, undefined, 0, false, '', "", NaM -> False
+// null, undefined, 0, false, '', "", NaN -> False
 // "Anything" else evaluates to true
 
 const es = "";
