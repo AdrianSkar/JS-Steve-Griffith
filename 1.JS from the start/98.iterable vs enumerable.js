@@ -29,7 +29,7 @@ for (const p in middleEarth) { //loops through enumerable props
 	console.log('in middleEarth', p);
 }
 
-for (const p of names) {//loops trough values of iterable (won't get access to elf nor ent)
+for (const p of names) {//loops through values of iterable (won't get access to elf nor ent)
 	console.log(' names prop', p);
 }
 for (const p of middleEarth) {//objects (middleEarth) is not iterable 

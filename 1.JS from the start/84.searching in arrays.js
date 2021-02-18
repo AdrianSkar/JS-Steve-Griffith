@@ -19,7 +19,7 @@ console.log(inD);
 let som = names.some((name) => {
 	if (name.indexOf('M') > -1) {
 		return name;
-	} //return false; // undefined will be return
+	} // return false; // undefined will be returned
 });
 console.log(som);
 
