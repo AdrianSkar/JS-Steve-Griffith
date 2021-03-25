@@ -24,9 +24,13 @@ function greet(msg) {
 		//console.log('Hi', name)
 	};
 }
+// The return element becomes the inner function you can use to pass the name.
+let english = greet('Hi');
+// I.e. english = function(name) { console.log('Hi', name);}
 
-let english = greet('Hi'); //The return element becomes the inner function you can use to pass the name.
 english('Tom');
+
+
 
 let svenska = greet('Hej');
 let español = greet('Hola');
