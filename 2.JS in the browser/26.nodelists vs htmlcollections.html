@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- Document's child comment -->
+<html lang="en">
+<!-- HTML's child comment -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Head's child comment -->
+	<title>Nodelists vs HTMLCollections</title>
+</head>
+
+<body>
+	<h1>Heading</h1>
+	<main id="main">
+		<section id="a">
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis doloribus soluta eos cum nesciunt, facilis
+				a delectus, perspiciatis natus adipisci saepe ad molestiae! Necessitatibus delectus dolor quasi culpa architecto
+				aliquid!</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis doloribus soluta eos cum nesciunt, facilis
+				a delectus, perspiciatis natus adipisci saepe ad molestiae! Necessitatibus delectus dolor quasi culpa architecto
+				aliquid!</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis doloribus soluta eos cum nesciunt, facilis
+				a delectus, perspiciatis natus adipisci saepe ad molestiae! Necessitatibus delectus dolor quasi culpa architecto
+				aliquid!</p>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis doloribus soluta eos cum nesciunt, facilis
+				a delectus, perspiciatis natus adipisci saepe ad molestiae! Necessitatibus delectus dolor quasi culpa architecto
+				aliquid!</p>
+		</section>
+		<section id="b">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure repellendus at assumenda, tempora aspernatur
+				similique, omnis odio nemo sapiente quia dolore accusamus alias! Incidunt et earum nulla minus ipsa obcaecati.
+			</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure repellendus at assumenda, tempora aspernatur
+				similique, omnis odio nemo sapiente quia dolore accusamus alias! Incidunt et earum nulla minus ipsa obcaecati.
+			</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure repellendus at assumenda, tempora aspernatur
+				similique, omnis odio nemo sapiente quia dolore accusamus alias! Incidunt et earum nulla minus ipsa obcaecati.
+			</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure repellendus at assumenda, tempora aspernatur
+				similique, omnis odio nemo sapiente quia dolore accusamus alias! Incidunt et earum nulla minus ipsa obcaecati.
+			</p>
+		</section>
+		<!-- Comment after sections -->
+	</main>
+
+	<script>
+		const main = document.querySelector('#main'),
+			d = main.ownerDocument, // the document object that main belongs to
+			html = document.documentElement, // ref to the root element (HTML)
+			body = document.body; // the body
+
+		let df = new DocumentFragment(),
+			txt = document.createTextNode('a text node');
+		df.appendChild(txt);
+		main.appendChild(df);
+		const nodeTypes = { // https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType
+			1: 'Element',
+			3: 'Text',
+			8: 'Comment',
+			9: 'Document',
+			10: 'DocType',
+			11: 'Document fragment'
+		}
+
+
+		console.log('----main.children----');
+		let mainChildren = main.children, // Elements only, HTML collection
+			num = mainChildren.length;
+		for (let i = 0; i < num; i++) {
+			let nt = mainChildren[i].nodeType;
+			console.log('main.children', i, nodeTypes[nt]);
+			console.log(mainChildren[i]);
+		}
+
+		console.log('----main.childNodes----');
+		let mainChildNodes = main.childNodes, // Nodes, NodeList (live only in this case)
+			numNodes = mainChildNodes.length;
+		for (let n = 0; n < numNodes; n++) {
+			let nt = mainChildNodes[n].nodeType;
+			console.log('main.childNodes', n, nodeTypes[nt]);
+			console.log(mainChildNodes[n]);
+			
+		}
+
+		console.log('----document.childNodes----');
+		let doc = document.childNodes,
+			numDocNodes = doc.length;
+		for (let c = 0; c < numDocNodes; c++) {
+			let nt = doc[c].nodeType;
+			console.log('document.childNodes', c, nodeTypes[nt], doc[c].nodeName);
+			console.log(doc[c]);
+		}
+
+		// NodeList
+		document.querySelectorAll('1');
+		document.body.childNodes
+
+		// HTMLCollections
+		main.getElementsByClassName('class');
+		main.getElementsByTagName('tag');
+		main.getElementsByTagNameNS('xml');
+		main.children
+
+		/*
+		Be careful and note return value when using:
+		NODES 					vs. 		ELEMENTS
+		
+		firstChild 			vs.			firstElementChild
+		lastChild 			vs. 		lastElementChild
+		nextSibling 		vs. 		nextElementSibling
+		previousSibling vs. 		previousElementSibling
+		*/
+
+	</script>
+</body>
+
+</html>
