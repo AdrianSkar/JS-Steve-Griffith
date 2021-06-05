@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>History API, part 1</title>
+</head>
+
+<body>
+	<h1>Using the history API</h1>
+	<h2>Part one - The basics</h2>
+	<div id="output">
+
+
+	</div>
+
+	<script>
+		// window.history
+		// window.location
+
+		// http:// sub.example.com :80 /path/filenamt.html #hash ?query=string&num=1
+		// 127.0.0.1 localhost
+
+		function show(output) {
+			document.getElementById('output').innerHTML += '<p>' + output + '</p>';
+		}
+
+		show('location.href: ' + location.href);
+		show('location.search: ' + location.search); // ?query=string
+		show('location.hash: ' + location.hash); // #hash
+		show('history.state: ' + history.state); // previous page (null if none)
+
+		// history.go(-2); // go back two pages
+		// history.back() // browse backwards
+		// history.forward() // browse forward
+		// location.reload() // reload
+		// location.replace('https://adrianskar.com') // go to adrianskar.com
+
+
+
+	</script>
+</body>
+
+</html>

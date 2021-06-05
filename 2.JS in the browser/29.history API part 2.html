@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>History API - part 2</title>
+</head>
+
+<body>
+	<h1>Using the history API</h1>
+	<h2>Part two - Controlling navigation</h2>
+	<p><button id="btn">Navigate</button><br>
+		<a href="list" data-person="456" id="link">Navigate</a>
+		<a href="#test" data-person="456" id="link">Just hash</a>
+	</p>
+
+	<div id="output"></div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// history.pushState({"abc":123}, "title", url); // add to the array
+			// history.replaceState({"abc":123}, "title", url); // replace current entry
+			// history.pushState(null, "title", "pretend.html");
+
+			/// Add listeners to buttons and links that navigate
+			document.getElementById('link').addEventListener('click', c);
+
+			/// Add listeners for hashchange and popstate events
+			window.addEventListener('hashchange', hc);
+			window.addEventListener('popstate', ps);
+
+		});
+
+		function c(ev) {
+			show('clicked');
+
+			/// Prevent actual redirects when clicking on a link
+			ev.preventDefault();
+
+			let href = ev.currentTarget.href,
+				pid = ev.currentTarget.getAttribute("data-person");
+
+			show(href);
+			history.replaceState({ "pid": pid }, "title",);
+			// history.replaceState({ "pid": pid }, "title", href);
+			loadPerson(ev);
+		}
+
+		function loadPerson(ev) {
+			show('LoadPerson');
+			console.log(ev);
+			console.log(history.state);
+			let data = history.state
+
+			console.log(data.pid);
+			show(data.pid);
+
+			// let hs = JSON.stringify(history.state),
+			// 	data = JSON.parse(hs);
+			// console.log(data.pid);
+			// show(data.pid);
+
+		}
+
+		function hc(ev) {
+			// ev.newURL ev.oldURL
+			console.log(ev.newURL, ev.oldURL);
+			show("hashchange");
+		}
+
+		function ps(ev) {
+			show('popstate');
+		}
+
+		function show(output) {
+			let p = document.createElement('p');
+			p.textContent = output;
+			document.getElementById('output').appendChild(p);
+			setTimeout(() => {
+				document.getElementById('output').removeChild(p);
+			}, 4000);
+		}
+
+	</script>
+</body>
+
+</html>
