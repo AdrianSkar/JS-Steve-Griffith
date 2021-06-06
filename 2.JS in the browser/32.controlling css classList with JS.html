@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>classList</title>
+	<style>
+		.a {
+			/* color: aquamarine; */
+			background-color: rgb(145, 202, 157);
+			border: 1px solid red;
+		}
+
+		.b {
+			/* color: bisque; */
+			background-color: burlywood;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>classList</h1>
+	<code>classList.add()</code><br>
+	<code>classList.remove()</code><br>
+	<code>classList.toggle()</code><br>
+
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad non ipsa iste sunt cumque, fugiat laborum deserunt
+		adipisci esse expedita voluptatibus est culpa eligendi magni totam quod minus accusantium nemo!Lorem Lorem ipsum
+		dolor sit amet consectetur adipisicing elit. Delectus incidunt autem veritatis ex voluptas sapiente facere vel
+		provident perspiciatis quo quidem ducimus deleniti, repudiandae quisquam harum et architecto fugiat obcaecati!</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad non ipsa iste sunt cumque, fugiat laborum deserunt
+		adipisci esse expedita voluptatibus est culpa eligendi magni totam quod minus accusantium nemo!Lorem Lorem ipsum
+		dolor sit amet consectetur adipisicing elit. Delectus incidunt autem veritatis ex voluptas sapiente facere vel
+		provident perspiciatis quo quidem ducimus deleniti, repudiandae quisquam harum et architecto fugiat obcaecati!</p>
+	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad non ipsa iste sunt cumque, fugiat laborum deserunt
+		adipisci esse expedita voluptatibus est culpa eligendi magni totam quod minus accusantium nemo!Lorem Lorem ipsum
+		dolor sit amet consectetur adipisicing elit. Delectus incidunt autem veritatis ex voluptas sapiente facere vel
+		provident perspiciatis quo quidem ducimus deleniti, repudiandae quisquam harum et architecto fugiat obcaecati!</p>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const paras = document.querySelectorAll('p');
+
+			// for (let p in paras) { // throws 'Uncaught TypeError: paras[p].addEventListener is not a function' error
+			// 	paras[p].addEventListener('click', toggleF);
+			// 	paras[p].addEventListener('mouseover', addF);
+			// 	paras[p].addEventListener('mouseout', removeF);
+			// }
+
+			paras.forEach(ele => {
+				ele.addEventListener('click', toggleF);
+				ele.addEventListener('mouseover', addF);
+				ele.addEventListener('mouseout', removeF);
+			});
+		})
+		function toggleF(ev) {
+			const p = ev.currentTarget;
+			p.classList.toggle('a');
+		}
+		function addF(ev) {
+			const p = ev.currentTarget;
+			p.classList.add('b');
+		}
+		function removeF(ev) {
+			const p = ev.currentTarget;
+			p.classList.remove('b');
+		}
+	</script>
+</body>
+
+</html>
