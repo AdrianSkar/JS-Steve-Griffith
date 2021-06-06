@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>online/offline event handling</title>
+	<style>
+		h1 {
+			text-align: center;
+		}
+
+		p.img {
+			min-height: 20vh;
+			max-width: 50vw;
+			margin: 1rem auto;
+			text-align: center;
+			font-size: 2rem;
+			color: white;
+			text-shadow: 2px 2px 2px #333;
+			padding-top: 3rem;
+			background-image: url('https://picsum.photos/g/500/300?image=0&blur');
+			background-color: #999;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.img.online {
+			/* Both classes present */
+			background-image: url('https://picsum.photos/500/300?image=0');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>You are currently <span id="status">unknown</span></h1>
+
+	<p class="img"></p>
+
+	<script>
+		window.addEventListener('online', changeStatus);
+		window.addEventListener('offline', changeStatus);
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// Check for original/starting status 
+			if (navigator.onLine && navigator.onLine === true) {
+				changeStatus({ type: 'online' });
+			}
+			else {
+				changeStatus({ type: 'offline' });
+			}
+		});
+
+		function changeStatus(ev) {
+			// Handle status change;  ev.type -> online OR offline
+
+			// Put status in the heading
+			document.getElementById('status').textContent = ev.type;
+
+			// Create an img element to save the src in cache for when use goes offline
+			// (no fetch available then).
+			const img = document.createElement('img'),
+				p = document.querySelector('p.img');
+			img.src = "https://picsum.photos/g/500/300?image=0&blur";
+			p.className = 'img';
+
+			if (ev.type === 'online') {
+				p.classList.add('online');
+			}
+			p.textContent = 'Status is ' + ev.type;
+		}
+	</script>
+</body>
+
+</html>

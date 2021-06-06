@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adjacent DOM manipulation</title>
+	<style>
+		p {
+			border: 1px solid #888;
+			padding: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Adjacent DOM manipulation</h1>
+	<main>
+		<p id="para"><br> Original paragraph content. <br></p>
+	</main>
+
+	<script>
+		// span object
+		let span = document.createElement('span');
+		span.textContent = 'This is a span element.';
+
+		const html = '<span> HTML span in a string. </span>',
+			txt = 'Regular text in a string.',
+			p = document.querySelector('#para');
+
+		p.insertAdjacentElement('beforebegin', span);
+		// This moves span rather than creating another copy because span refers
+		// to a single object/element, not a string that can be parsed/copied
+		p.insertAdjacentElement('afterend', span);
+
+		p.insertAdjacentHTML('beforebegin', 'beforebegin: ' + html);
+		p.insertAdjacentHTML('afterend', 'afterend: ' + html);
+		p.insertAdjacentText('afterbegin', 'afterbegin: ' + txt);
+		p.insertAdjacentText('beforeend', 'beforeend: ' + txt);
+
+		/*
+		let position = 'beforebegin' | 'afterbegin' | 'beforeend' | 'afterend'
+		Element.insertAdjacentHTML(position, htmlString);
+		Element.insertAdjacentElement(position, Element);
+		Element.insertAdjacentText(position, someText);
+		*/
+	</script>
+</body>
+
+</html>
