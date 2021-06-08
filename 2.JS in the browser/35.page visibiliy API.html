@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Page visibility API - active tab tracking</title>
+</head>
+
+<body>
+	<h1>Page visibility API</h1>
+	<p>As long as this tab has the focus, nothing happens. When the user switches to another tab, it triggers the
+		visibilitychange event on the document object</p>
+	<ul>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/hidden">Document.hidden (historical)</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilityState">Document.visibilityState
+				(current)</a>
+		</li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event">visibilitychange
+				event</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API">Page visibility API</a></li>
+	</ul>
+</body>
+<script>
+	let hidden, vChange;
+	// can't do `if(document.hidden)` because it will return false when out of focus
+	if (typeof document.hidden !== 'undefined') {
+		hidden = 'hidden';
+		vChange = 'visibilitychange';
+	}
+	else if (typeof document.webkitHidden !== 'undefined') {
+		hidden = 'webkitHidden';
+		vChange = 'webkitvisibilitychange';
+	}
+	else if (typeof document.msHidden !== 'undefined') {
+		hidden = 'msHidden';
+		vChange = 'msvisibilitychange';
+	}
+	else { // no support
+		hidden = null;
+		vChange = null;
+	}
+
+	if (hidden !== null) {
+		document.addEventListener(vChange, function (ev) {
+			console.log('visibilitychange', document[hidden]);
+			console.log('visibilityState', document.visibilityState);
+			if (document[hidden]) {
+				// page has lost focus; eg: stop audio/video
+			}
+			else {
+				// page regained focus; eg: resume audio/video
+			}
+		})
+	}
+
+</script>
+
+</html>
