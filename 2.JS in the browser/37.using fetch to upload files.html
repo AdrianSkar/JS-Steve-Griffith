@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Using fetch to upload files</title>
+</head>
+
+<body>
+	<h1>Test using Postman</h1>
+	<p><a href="https://postman-echo.com/post">Postman/post</a></p>
+
+	<form action="#" id='my_form'>
+		<div>
+			<input type="hidden" id="user_id" value='75'>
+			<input type="file" id='avatar_img' accept='image/*' multiple>
+		</div>
+		<div><button id="btnSubmit">Upload avatar</button></div>
+	</form>
+
+	<div id="output">
+
+	</div>
+
+	<script>
+		// fetch using a Request and a Headers object to upload an image + POST data
+
+		const url = 'https://postman-echo.com/post';
+
+		document.addEventListener('DOMContentLoaded', init);
+
+		function init() {
+			document.getElementById('btnSubmit').addEventListener('click', upload);
+		}
+
+		function upload(ev) {
+			ev.preventDefault(); // prevent form from submitting
+
+			// Create headers; https://devdocs.io/dom/headers
+			let h = new Headers();
+			h.append('Accept', 'application/json'); // what we expect back
+
+
+			// let fd = new FormData(); // https://devdocs.io/dom/formdata
+			// fd.append('user-id', document.getElementById('user_id').value); // https://devdocs.io/dom/formdata
+
+			// https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData#parameters
+			let fd = new FormData(document.getElementById('my_form'))
+
+			let myFile = document.getElementById('avatar_img').files[0];
+			fd.append('avatar', myFile, 'avatar.png')
+			// $_FILES['avatar']['file_name']		"avatar.png"
+
+			let req = new Request(url, {
+				method: 'POST',
+				headers: h,
+				mode: 'no-cors',
+				body: fd
+			})
+
+			fetch(req)
+				.then(response => {
+					document.getElementById('output').textContent = 'Response received from server';
+				})
+				.catch(err => {
+					console.log('Error:', err.message);
+				})
+		}
+	</script>
+</body>
+
+</html>
