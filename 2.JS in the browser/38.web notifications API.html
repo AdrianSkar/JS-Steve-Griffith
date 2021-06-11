@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Web notifications API</title>
+</head>
+
+<body>
+
+	<h1>Notification API</h1>
+	<p id="output">
+
+	</p>
+
+	<script>
+		// Notification objects have a .close() method. Some browsers automatically close them.
+		// Notification events: click, error, close, show
+		if ('Notification' in window) {
+
+			if (Notification.permission === 'granted') {
+				doNotify();
+			}
+			else {
+				// Notification.permission === 'denied'
+				Notification.requestPermission()
+					.then(function (result) {
+						console.log(result); // granted || denied
+						if (Notification.permission === 'granted') {
+							doNotify();
+						}
+					})
+					.catch(err => console.log(err))
+			}
+		}
+
+		function doNotify() {
+			const title = 'The title',
+				t = Date.now() + 120000, // 2' in the future
+				options = {
+					body: "Hello from JavaScript!",
+					data: { prop1: 123, prop2: 'Steve' },
+					lang: 'en-CA',
+					icon: 'https://image.flaticon.com/icons/png/512/3602/3602123.png',
+					timestamp: t, // Ignored on unsupported devices
+					vibrate: [100, 200, 100] // Ignored on unsupported devices
+				},
+				n = new Notification(title, options);
+
+			n.addEventListener('show', ev => {
+				console.log('Show:', ev.currentTarget.data);
+			})
+			n.addEventListener('close', ev => {
+				console.log('Close:', ev.currentTarget.data);
+			});
+			n.addEventListener('click', ev => {
+				console.log('click:', ev.currentTarget.data);
+			});
+			setTimeout(n.close.bind(n), 3000); // Close notification after 3 seconds
+
+
+		}
+	</script>
+</body>
+
+</html>
