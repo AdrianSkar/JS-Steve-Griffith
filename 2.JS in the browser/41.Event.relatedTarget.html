@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Event.relatedTarget</title>
+
+	<style>
+		input {
+			margin: 1em;
+			min-width: 80%;
+			max-width: 100%;
+			padding: 0.25em 1em;
+		}
+
+		section {
+			clear: both;
+			padding: 1em;
+			margin: 1em 0;
+		}
+
+		div {
+			float: left;
+			overflow: auto;
+			box-sizing: border-box;
+			width: 50%;
+			border: 1px solid #aaa;
+			padding: 1em;
+		}
+
+		.in-out {
+			background-color: chocolate;
+			color: white;
+		}
+
+		.focus-blur {
+			background-color: thistle;
+			color: #333;
+		}
+
+		.blue {
+			background-color: cornflowerblue;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Event.relatedTarget</h1>
+
+	<div class="in-out">
+		<input type="text" id='one' value="This area uses focusin and focusout.">
+		<p>The events focusin and focusout are similar to mouseenter and mouseleave.</p>
+		<p>The do not bubble.</p>
+	</div>
+
+	<div class="focus-blur">
+		<input type="text" id="two" value="This area uses focus and blur.">
+		<p>The events focus and blur are similar to mouseover and mouseout.</p>
+		<p>They do bubble.</p>
+	</div>
+
+	<section>The <code>Event.relatedTarget</code> property also applies to mouseenter, mouseleave, mouseover, mouseout,
+		dragenter, and dragexit.</section>
+
+	<script>
+		document.querySelector('.in-out input').addEventListener('focusin', goIn);
+		document.querySelector('.in-out input').addEventListener('focusout', goOut);
+		function goIn(ev) {
+			ev.currentTarget.style.color = 'gold';
+			console.log('focusin input left');
+			if (ev.relatedTarget) {
+				ev.relatedTarget.style.color = 'red';
+				console.log('Just left related target', ev.relatedTarget.id);
+			}
+		}
+		function goOut(ev) {
+			ev.currentTarget.style.color = 'black';
+			console.log('focusout input left');
+			if (ev.relatedTarget) {
+				console.log('Headed to relatedTarget', ev.relatedTarget.id);
+			}
+		}
+
+		document.querySelector('.focus-blur input').addEventListener('focus', doFocus);
+		document.querySelector('.focus-blur input').addEventListener('blur', doBlur);
+		function doFocus(ev) {
+			ev.currentTarget.style.color = 'gold';
+			console.log('focus input right');
+			if (ev.relatedTarget) {
+				console.log('Just left related target', ev.relatedTarget.id);
+			}
+		}
+		function doBlur(ev) {
+			ev.currentTarget.style.color = 'black';
+			console.log('blur input right');
+			if (ev.relatedTarget) {
+				console.log('Headed to relatedTarget', ev.relatedTarget.id);
+			}
+		}
+	</script>
+</body>
+
+</html>

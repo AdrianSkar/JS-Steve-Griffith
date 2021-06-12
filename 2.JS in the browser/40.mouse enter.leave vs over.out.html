@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>mouseenter/mouseleave vs mouseover/mouseout</title>
+	<style>
+		p {
+			padding: 1em;
+			cursor: pointer;
+			border: 1px solid black;
+		}
+
+		div {
+			float: left;
+			overflow: auto;
+			box-sizing: border-box;
+			width: 50%;
+			border: 1px solid #aaa;
+			padding: 1em;
+		}
+
+		.enter {
+			background-color: antiquewhite;
+			color: #222;
+		}
+
+		.over {
+			background-color: antiquewhite;
+		}
+
+		.blue {
+			background-color: rgb(113, 109, 218);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>mouseenter/mouseleave vs mouseover/mouseout</h1>
+
+	<div class="enter">
+		<p>This area uses mouseenter and mouseleave</p>
+		<p>The first paragraph</p>
+		<p>The second paragraph.</p>
+	</div>
+	<div class="over">
+		<p>This area uses mouseover and mouseout</p>
+		<p>The first paragraph</p>
+		<p>The second paragraph.</p>
+	</div>
+
+	<script>
+		document.querySelector('.enter p').addEventListener('mouseenter', entering);
+		document.querySelector('.enter p').addEventListener('mouseleave', leaving);
+		function entering(ev) {
+			ev.currentTarget.style.borderColor = 'gold';
+			console.log('mouseenter p');
+		}
+		function leaving(ev) {
+			ev.currentTarget.style.borderColor = 'black';
+			console.log('mouseleave p');
+		}
+
+		document.querySelector('.over p').addEventListener('mouseover', overing);
+		document.querySelector('.over p').addEventListener('mouseout', outing);
+		function overing(ev) {
+			ev.currentTarget.style.borderColor = 'gold';
+			console.log('mouseover p');
+		}
+		function outing(ev) {
+			ev.currentTarget.style.borderColor = 'black';
+			console.log('mouseout p');
+		}
+
+		// No differences so far...
+
+		document.querySelector('.enter').addEventListener('mouseenter', function (ev) {
+			ev.currentTarget.classList.add('blue');
+			console.log('mouseenter div. Add blue.');
+		})
+		document.querySelector('.enter').addEventListener('mouseleave', function (ev) {
+			ev.currentTarget.classList.remove('blue');
+			console.log('mouseleave div. Remove blue.');
+		})
+
+		document.querySelector('.over').addEventListener('mouseover', function (ev) {
+			ev.currentTarget.classList.add('blue');
+			console.log('mouseover div. Add blue.');
+		});
+		document.querySelector('.over').addEventListener('mouseout', function (ev) {
+			ev.currentTarget.classList.remove('blue');
+			console.log('mouseout div. Remove blue.');
+		})
+
+	</script>
+</body>
+
+</html>

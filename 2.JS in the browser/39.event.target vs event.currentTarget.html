@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>event.Target vs event.currentTarget</title>
+	<style>
+		main {
+			background-color: antiquewhite;
+			color: #333;
+			padding: 1em;
+		}
+
+		div {
+			background-color: rgb(187, 170, 145);
+			color: #333;
+			padding: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>event.target vs event.currentTarget</h1>
+
+	<main>This text is inside the &lt;main&gt; element.
+		<div>This text is inside the &lt;div&gt; element.</div>
+	</main>
+
+	<script>
+		document.querySelector('main').addEventListener('click', clicked);
+		document.querySelector('div').addEventListener('click', clicked);
+
+		function clicked(ev) {
+			console.log('The click that was attached to', ev.currentTarget.tagName, 'is currently at', ev.target.tagName);
+			console.log('ev.target', ev.target);
+			console.log('ev.currentTarget', ev.currentTarget);
+		}
+
+		/*
+		The currentTarget identifies the current target for the event, as the event traverses the DOM. It always refers to the element to which the event handler has been attached, as opposed to Event.target, which identifies the element on which the event occurred and which may be its descendant.
+		*/
+
+	</script>
+</body>
+
+</html>
