@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Create and dispatch custom events</title>
+</head>
+
+<body>
+	<h1>Create and dispatch custom events</h1>
+	<main>
+	</main>
+
+	<script>
+		// 1. let evt = new Event('explode');
+		// 2. let evt = new CustomEvent('explode', {detail:{speed:20, volume:40}});
+
+		const born = new Event('born'),
+			died = new CustomEvent('died', { detail: { time: Date.now() } });
+
+		document.addEventListener('DOMContentLoaded', function () {
+			const m = document.querySelector('main');
+			addParagraph(m, 'This is a paragraph');
+			addParagraph(m, 'A new movie is coming soon.');
+			m.addEventListener('click', function (ev) {
+				removeParagraph(m, m.firstElementChild);
+			});
+		});
+
+		function addParagraph(parent, txt) {
+			let p = document.createElement('p');
+			p.textContent = txt;
+			// set up and dispatch events
+			p.addEventListener('born', wasBorn);
+			p.addEventListener('died', hasDied);
+			// Add to screen
+			parent.appendChild(p);
+
+			p.dispatchEvent(born);
+		}
+
+		function removeParagraph(parent, p) {
+			// Remove element from screen
+			parent.removeChild(p);
+			// Dispatch event
+			p.dispatchEvent(died);
+		}
+
+		function wasBorn(ev) { console.log(ev.type, ev.target) }
+
+		function hasDied(ev) {
+			console.log(ev.type, ev.target, ev.detail);
+			// Remove the listeners. Otherwise the element and the listeners will 
+			// remain in memory. Another approach is to add the listeners to the 
+			// parent element.
+			ev.target.removeEventListener('born', wasBorn);
+			ev.target.removeEventListener('died', hasDied);
+		}
+
+	</script>
+</body>
+
+</html>

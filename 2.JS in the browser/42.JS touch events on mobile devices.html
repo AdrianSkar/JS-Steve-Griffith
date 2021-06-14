@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Touch events</title>
+	<style>
+		p {
+			padding: 1em;
+			background-color: bisque;
+			color: #333;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Touch events</h1>
+	<p>This is a paragraph with some text. It is waiting to be touched. It can only be touched on a touch capable device
+		like a mobile phone or tablet.. Clicking it with a mouse will not accomplish anything.</p>
+
+	<script>
+		/*
+		touch events - touchstart, touchend, touchmove, touchcancel 
+		There is no tap, doubletap, swipe, swipeleft, swiperight, rotate, pinch 
+		or zoom.
+		You would have to create those events yourself by connecting to the touch
+		events.
+		No error on non-touch devices because 'touchstart' is just a name like 
+		'winlottery'
+		The event will probably just never happen on a laptop.
+		*/
+		document.querySelector('p').addEventListener('touchstart', f);
+		document.querySelector('p').addEventListener('touchend', f);
+		document.querySelector('p').addEventListener('touchmove', f);
+
+		function f(ev) {
+			console.log(ev.touches, ev.type);
+		}
+	</script>
+</body>
+
+</html>
