@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dataset properties</title>
+	<style>
+		h1::after {
+			display: block;
+			content: attr(data-time);
+			background-color: antiquewhite;
+			padding: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<h1 title="this is the title" data-time="1508868950262">Using data-* attributes</h1>
+	<p data-time-stamp="Monday" data-time:stamp="Tuesday">Some text</p>
+
+	<ul>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/attr()">css attr()</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset">dataset</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes">Using data
+				attributes</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute">Element.getAttribute()</a></li>
+		<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute">Element.setAttribute()</a></li>
+	</ul>
+
+	<script>
+		/**
+		 * dataset property names must:
+		 * 1. start with "data-"
+		 * 2. be made of lowercase letters and hyphens, underscore, period or colon
+		 * In JS reference them with getAttribute() or setAttribute()
+		 * OR dataset['property name']
+		 * OR dataset.propertyName where camelCase is used by removing the hyphen
+		 * NB: underscore, period and colon are left as-is
+		 **/
+		const h1 = document.querySelector('h1'),
+			p = document.querySelector('p');
+
+		console.log("h1.dataset", h1.dataset);
+		console.log("h1.dataset['time']", h1.dataset['time']);
+		console.log("h1.dataset.time", h1.dataset.time);
+		console.log("h1.getAttribute('data-time')", h1.getAttribute('data-time'));
+
+		console.log("p.dataset", p.dataset);
+		console.log("p.dataset['data-time-stamp']", p.dataset['data-time-stamp']);
+		console.log("p.dataset['timeStamp']", p.dataset['timeStamp']);
+		console.log("p.dataset['time:stamp']", p.dataset['time:stamp']);
+
+		console.log(p.getAttribute('data-time-stamp'));
+		console.log(p.getAttribute('data-time:stamp'));
+
+		p.setAttribute('data-time:stamp', 'Thursday');
+		p.dataset.timeStamp = 'Wednesday';
+	</script>
+</body>
+
+</html>

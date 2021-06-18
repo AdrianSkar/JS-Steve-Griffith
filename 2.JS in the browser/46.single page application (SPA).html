@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>A Single Page Application (SPA)</title>
+
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		.page {
+			display: none;
+			width: 100%;
+
+			/* Allow for content off the bottom of the page */
+			min-height: 100%;
+
+			position: fixed;
+			padding: 1em 2em;
+		}
+
+		.active {
+			display: block;
+		}
+
+		#home {
+			background-color: antiquewhite;
+		}
+
+		#list {
+			background-color: aquamarine;
+		}
+
+		#detail {
+			background-color: silver;
+		}
+
+		h1 {
+			font-size: 2rem;
+			font-weight: 600;
+			transition: all 1s;
+		}
+
+		.big {
+			font-size: 5rem;
+			font-weight: 900;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<div class="page active" id="home">
+			<h1>Home</h1>
+			<ol>
+				<li><a href="#" data-target='home' class="nav-link">Home</a></li>
+				<li><a href="#" data-target='list' class="nav-link">List</a></li>
+				<li><a href="#" data-target='detail' class="nav-link">Detail</a></li>
+			</ol>
+		</div>
+		<div class="page" id="list">
+			<h1>List</h1>
+			<ol>
+				<li><a href="#" data-target='home' class="nav-link">Home</a></li>
+				<li><a href="#" data-target='list' class="nav-link">List</a></li>
+				<li><a href="#" data-target='detail' class="nav-link">Detail</a></li>
+			</ol>
+		</div>
+		<div class="page" id="detail">
+			<h1>Detail</h1>
+			<ol>
+				<li><a href="#" data-target='home' class="nav-link">Home</a></li>
+				<li><a href="#" data-target='list' class="nav-link">List</a></li>
+				<li><a href="#" data-target='detail' class="nav-link">Detail</a></li>
+			</ol>
+		</div>
+	</main>
+
+	<script>
+		const app = {
+			pages: [],
+			show: new Event('show'),
+			init: function () {
+				// Select 'page' divs and add listeners to show pages
+				app.pages = document.querySelectorAll('.page');
+				app.pages.forEach(pg => {
+					pg.addEventListener('show', app.pageShown);
+				})
+
+				// Select links and add listeners when browsing event is triggered 
+				document.querySelectorAll('.nav-link').forEach(link => {
+					link.addEventListener('click', app.nav);
+				})
+
+				// Manage history
+				// Default
+				history.replaceState({}, 'Home', '#home');
+
+				// listener
+				window.addEventListener('popstate', app.poppin);
+			},
+			nav: function (ev) {
+				// Stop link default behavior
+				ev.preventDefault();
+
+				const currentPage = ev.target.getAttribute('data-target');
+
+				// Remove active class from current page and add it to the new one
+				document.querySelector('.active').classList.remove('active');
+				document.getElementById(currentPage).classList.add('active');
+
+				// Add current page to navigation state and dispatch event 'show'
+				history.pushState({}, currentPage, `#${currentPage}`);
+				document.getElementById(currentPage).dispatchEvent(app.show);
+
+			},
+			pageShown: function (ev) {
+				// console.log(ev, 'test');
+				console.log(ev.target);
+				console.log('Page', ev.target.id, 'just shown');
+
+				const h1 = ev.target.querySelector('h1'); // this div>h1
+
+				// Add class `big` and remove it after 1200 milliseconds 
+				h1.classList.add('big');
+				setTimeout((h) => {
+					// console.log(h);
+					h.classList.remove('big');
+				}, 1200, h1);
+			},
+			poppin: function (ev) {
+				console.log(location.hash, 'popstate event');
+
+				const hash = location.hash.replace('#', '');
+
+				// Remove active class from current page and add it to the new one
+				document.querySelector('.active').classList.remove('active');
+				document.getElementById(hash).classList.add('active');
+
+				console.log(hash);
+
+				document.getElementById(hash).dispatchEvent(app.show);
+			}
+
+		}
+
+		document.addEventListener('DOMContentLoaded', app.init);
+	</script>
+</body>
+
+</html>

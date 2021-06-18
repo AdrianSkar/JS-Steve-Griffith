@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>handleEvent method</title>
+</head>
+
+<body>
+	<h1>Built-in EventListener <a
+			href="https://developer.mozilla.org/en-US/docs/Web/API/EventListener/handleEvent">handleEvent</a> method</h1>
+	<button id='btn'>Click the button</button>
+
+	<script>
+		const obj = {
+			init: function () {
+				document.querySelector('#btn').addEventListener('click', this);
+				document.querySelector('#btn').addEventListener('focus', this);
+				document.querySelector('#btn').addEventListener('blur', this);
+			},
+			handleEvent: function (ev) {
+				switch (ev.type) {
+					case 'click':
+						this.something(ev);
+						break;
+					case 'focus':
+						this.something(ev);
+						break;
+					case 'blur':
+						this.something(ev);
+						break;
+					default:
+						break;
+				}
+			},
+			something: function (ev) {
+				console.log('btn was', ev.type + '-ed.');
+			}
+		}
+
+		obj.init();
+	</script>
+</body>
+
+</html>
