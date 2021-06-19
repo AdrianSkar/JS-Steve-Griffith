@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Modals with HTML, CSS and JS</title>
+	<style>
+		/* reset*/
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		h1,
+		p {
+			padding: 1em 2em;
+		}
+
+		p:nth-of-type(1) {
+			cursor: pointer;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			z-index: 100;
+			background-color: rgba(0, 0, 0, 0.8);
+			cursor: pointer;
+		}
+
+		.modal {
+			position: fixed;
+			top: 20%;
+			right: 20%;
+			left: 20%;
+			min-height: 10em;
+			max-width: 800px;
+			z-index: 200;
+			background-color: white;
+			padding: 1em 2em 3em 2em;
+			box-shadow: 2px 2px 2px #000;
+			transition: transform 1s;
+		}
+
+		.show {
+			display: block;
+		}
+
+		.hide {
+			display: none;
+		}
+
+		.off {
+			transform: translateY(-200%);
+		}
+
+		.on {
+			transform: translateY(0);
+		}
+
+		.close-btn {
+			position: absolute;
+			right: 2em;
+			bottom: 1em;
+			border: none;
+			background-color: cornflowerblue;
+			color: white;
+			cursor: pointer;
+			padding: 0.25em 2em;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<h1>Heading</h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, aliquid labore in, ex aspernatur ratione delectus
+			voluptatem odio omnis quisquam inventore illo molestias cupiditate quam odit ab corporis! Animi, enim.</p>
+		<p>Quis beatae molestias optio doloremque quod error quas iure repudiandae? Doloribus earum inventore qui, nulla id
+			unde corrupti, possimus eaque deleniti, at tempore ducimus dolore sed reprehenderit cupiditate ea totam.</p>
+		<p>Animi minima recusandae aperiam. Modi eum ipsam libero natus consequatur, sunt cum debitis adipisci harum
+			possimus, voluptates tempore qui. Distinctio, aspernatur fugit quod non illum tenetur nobis cumque et enim!</p>
+		<p>Vero perferendis ullam quasi corrupti voluptate fuga iste libero laborum iure quisquam! Facilis, eos repellendus
+			non explicabo, laboriosam cumque deleniti a porro reiciendis corrupti magnam ex reprehenderit perspiciatis
+			assumenda possimus?</p>
+		<p>Nulla aliquid placeat ullam officia unde amet quae porro quasi deleniti. Aliquam qui natus doloremque quisquam
+			ipsam, exercitationem animi, modi voluptatem necessitatibus ex, aspernatur at reiciendis ipsa deserunt
+			perspiciatis veritatis.</p>
+		<p>Minus, ea? Velit beatae non accusamus deserunt iusto odio nesciunt magni necessitatibus adipisci! Porro, omnis!
+			Vitae, necessitatibus. Autem aut eius tenetur, provident doloribus libero quis corporis expedita dicta eveniet
+			unde?</p>
+		<p>Mollitia adipisci repudiandae repellat ipsum. Architecto, ipsum. Facere, dolorum voluptas maxime suscipit sit
+			enim ipsa inventore perspiciatis. Blanditiis impedit autem et ullam animi tempora quae, distinctio totam odio rem
+			aspernatur.</p>
+		<p>Culpa nulla, earum magnam ex obcaecati numquam repellat repellendus consequuntur quae quasi vero placeat quisquam
+			dolores, nemo, voluptatem in deserunt molestiae laudantium eius provident unde! Vitae totam eum commodi obcaecati.
+		</p>
+		<p>Est ducimus nihil odio quisquam quo totam autem inventore harum et officia magnam rem, atque hic earum quos at,
+			vero pariatur, deleniti nemo facere neque tempora eaque praesentium! Fugit, rem.</p>
+		<p>Eum sunt reiciendis beatae omnis numquam, quae voluptates eius excepturi corrupti fugiat asperiores a placeat
+			nobis itaque laboriosam odio deserunt totam? Doloremque laboriosam enim praesentium expedita nobis? Fuga, in hic?
+		</p>
+		<p>Eos repellendus repellat aliquid sed eaque quis. Cum deserunt fugiat quaerat fuga, expedita, tempora omnis soluta
+			excepturi minima quam asperiores labore! Sed ratione voluptatibus perferendis exercitationem est culpa
+			necessitatibus! Provident.</p>
+		<p>Iste, consequatur quidem. Dolorum voluptatibus, eius nulla a dolorem non aperiam minus cum. Commodi asperiores
+			nam veniam, quisquam eligendi corporis. Laboriosam quasi, minima ab non magnam ullam molestiae commodi officiis.
+		</p>
+		<p>Sunt iusto quis praesentium quasi amet, temporibus non earum porro assumenda obcaecati ducimus iste molestiae
+			ullam qui facere odio inventore veniam illo! Esse quod tempore impedit ex, minima dolores doloribus?</p>
+		<p>Ducimus illum, ratione tempore unde velit suscipit dignissimos error distinctio ipsum voluptatem perferendis,
+			nesciunt quae exercitationem voluptates soluta officia sed quasi in nam quas consequatur obcaecati. Dignissimos
+			vel saepe illum?</p>
+		<p>Dolore aperiam omnis veritatis maxime, obcaecati placeat eligendi cupiditate hic distinctio voluptatibus incidunt
+			iste dignissimos quam, fugiat corporis voluptatum nesciunt sunt facilis quod alias asperiores doloremque!
+			Voluptatibus temporibus fuga doloribus!</p>
+		<p>Incidunt quidem ab pariatur voluptatem in sapiente, laborum dolorem molestiae blanditiis labore id mollitia neque
+			explicabo quo minima nulla tenetur deserunt ut quos. Quod possimus maxime perspiciatis aperiam, eligendi
+			reiciendis!</p>
+		<p>At assumenda nam, commodi, impedit nesciunt tempora dolores iusto explicabo dolore deleniti officiis repellat in
+			quae quaerat! Quod hic assumenda atque nulla, asperiores, ipsum excepturi quo magnam, repudiandae maxime tenetur.
+		</p>
+		<p>Illum aut praesentium harum quo maxime nihil, reiciendis dolores. Doloremque mollitia perferendis, adipisci nulla
+			optio doloribus consequatur repellat modi necessitatibus voluptatem provident a. Pariatur dolorem asperiores amet
+			sunt, odit expedita.</p>
+		<p>Neque enim totam expedita ad consequuntur sequi sint, animi debitis tenetur. Accusantium similique iusto, facere
+			exercitationem corrupti commodi libero, impedit vero possimus quia, eaque beatae dolores molestias! Rerum, quo
+			hic?</p>
+		<p>Nostrum eos, perferendis facere illum inventore dolorem incidunt. Sequi, quisquam? Ex nesciunt inventore at
+			excepturi vel eveniet expedita, ab eius architecto corrupti, tenetur repellat minus cupiditate possimus
+			perferendis numquam odio.</p>
+	</main>
+
+	<div class="overlay hide">&nbsp;</div>
+	<div class="modal off">
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id itaque quis quae ipsam natus, temporibus iure odit
+			saepe, omnis illum impedit cupiditate! Error hic voluptate aliquid corrupti provident deleniti eaque.</p>
+		<button class="close-btn">Close</button>
+	</div>
+
+	<script>
+
+		const init = ev => {
+			document.querySelector("p").addEventListener('click', showOverlay);
+			document.querySelector('.overlay').addEventListener('click', hideOverlay);
+			document.querySelector('.close-btn').addEventListener('click', hideOverlay);
+		};
+
+		const showOverlay = ev => {
+			ev.preventDefault();
+			const overlay = document.querySelector('.overlay');
+			overlay.classList.remove('hide');
+			overlay.classList.add('show');
+			// Show modal too
+			showModal(ev);
+		}
+
+		const hideOverlay = ev => {
+			ev.preventDefault();
+			ev.stopPropagation(); // don't click on things behind
+
+			const overlay = document.querySelector('.overlay');
+			overlay.classList.remove('show');
+			overlay.classList.add('hide');
+			// Hide modal too
+			hideModal(ev);
+		}
+
+		const showModal = ev => {
+			ev.preventDefault();
+			const modal = document.querySelector('.modal');
+			modal.classList.remove('off');
+			modal.classList.add('on');
+		}
+
+		const hideModal = ev => {
+			ev.preventDefault();
+			const modal = document.querySelector('.modal');
+			modal.classList.remove('on');
+			modal.classList.add('off');
+		}
+
+		document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+
+</html>

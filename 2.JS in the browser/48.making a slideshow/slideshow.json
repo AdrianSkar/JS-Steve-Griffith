@@ -1,0 +1,20 @@
+{
+	"items": [
+		{
+			"title": "Bullhorn Item",
+			"msg": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit accusantium laudantium, assumenda natus porro repellat fugiat numquam ea accusamus itaque quo, adipisci quis in voluptatem, perferendis eligendi ipsa animi nisi."
+		},
+		{
+			"title": "Calendar Item",
+			"msg": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit accusantium laudantium, assumenda natus porro repellat fugiat numquam ea accusamus itaque quo, adipisci quis in voluptatem, perferendis eligendi ipsa animi nisi."
+		},
+		{
+			"title": "Phone Item",
+			"msg": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit accusantium laudantium, assumenda natus porro repellat fugiat numquam ea accusamus itaque quo, adipisci quis in voluptatem, perferendis eligendi ipsa animi nisi."
+		},
+		{
+			"title": "Cog Item",
+			"msg": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit accusantium laudantium, assumenda natus porro repellat fugiat numquam ea accusamus itaque quo, adipisci quis in voluptatem, perferendis eligendi ipsa animi nisi."
+		}
+	]
+}
