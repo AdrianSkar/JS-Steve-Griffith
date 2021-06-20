@@ -43,7 +43,7 @@ const slideshow = {
 	createItem: function (item, index) {
 		let div = document.createElement('div');
 		div.classList.add('slideshow-item');
-		// In cade we need to target it
+		// In case we need to target it
 		div.setAttribute('data-index', index);
 
 		let title = document.createElement('h1');

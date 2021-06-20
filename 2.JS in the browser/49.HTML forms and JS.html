@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Working with forms</title>
+	<style>
+		*,
+		*::after,
+		*:before {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		h1 {
+			margin: 1rem 2rem;
+		}
+
+		form {
+			margin: 2rem;
+			width: 80vw;
+		}
+
+		.form-box {
+			padding: 1rem;
+			clear: both;
+			width: 100%;
+			position: relative;
+		}
+
+		.form-box label {
+			float: left;
+			width: 10vw;
+			margin-right: 1em;
+		}
+
+		.form-box input,
+		.form-box select,
+		.form-box option {
+			width: 30vw;
+			padding: 0.25rem 1rem;
+		}
+
+		.form-box button {
+			border: none;
+			padding: 0.25rem 2rem;
+			margin-right: 1rem;
+			color: white;
+			background-color: cornflowerblue;
+			cursor: pointer;
+		}
+
+		.error::after {
+			background-color: rgb(156, 78, 78);
+			color: papayawhip;
+			line-height: 1.8;
+			width: 30vw;
+			padding-left: 1rem;
+			position: absolute;
+			right: 0;
+			content: attr(data-errormsg);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>JavaScript and HTML forms</h1>
+	<form action="#" id="form-user" method="post">
+		<div class="form-box" data-errormsg="">
+			<label for="input-first">First</label>
+			<input type="text" id="input-first" autofocus required placeholder="First name" tabindex="1">
+		</div>
+		<div class="form-box" data-errormsg="">
+			<label for="input-password">Password</label>
+			<input type="password" id="input-password" required placeholder="Password" tabindex="2">
+		</div>
+		<div class="form-box" data-errormsg="">
+			<label for="input-email">E-mail</label>
+			<input type="text" id="input-email" required placeholder="E-mail address" tabindex="3">
+		</div>
+		<div class="form-box" data-errormsg="">
+			<label for="input-age">Age</label>
+			<select name="input-age" id="input-age">
+				<option value="1">Under 20</option>
+				<option value="2">20-30</option>
+				<option value="3">30-40</option>
+				<option value="4">40-50</option>
+				<option value="5">Over 50</option>
+			</select>
+		</div>
+		<div class="form-box" data-errormsg="">
+			<label for="input-alive">alive</label>
+			<input type="checkbox" id="input-alive" value='yes' tabindex="5" checked>
+		</div>
+		<div class="form-box">
+			<button id="button-reset">Reset</button><button id="button-send">Send</button>
+		</div>
+	</form>
+
+	<script>
+		const init = function () {
+			document.getElementById('button-reset').addEventListener('click', reset);
+			document.getElementById('button-send').addEventListener('click', send);
+		};
+
+		const reset = function (ev) {
+			ev.preventDefault(); // or use <input type='reset'>
+			document.getElementById('form-user').reset();
+		};
+
+		const send = function (ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			let fails = validate();
+			// if (fails.length === 0) {
+			if (!fails.length) {
+				document.getElementById('form-user').submit();
+			} else {
+				fails.forEach(obj => {
+					let field = document.getElementById(obj.input);
+					field.parentElement.classList.add('error');
+					field.parentElement.setAttribute('data-errormsg', obj.msg);
+				})
+			}
+		};
+
+		const validate = function () {
+			// let valid = true; // flag
+			let failures = [];
+			let chk = document.getElementById('input-alive');
+			// .checked .value
+			if (!chk.checked) {
+				// valid = false;
+				// chk.parentElement.classList.add('error');
+				// chk.parentElement.setAttribute('data-errormsg', 'Must be alive to submit.')
+				failures.push({ input: 'input-alive', msg: 'Must be alive to submit.' });
+			}
+
+			let select = document.getElementById('input-age');
+			// selectedIndex .options .length .selectedValue .value
+			// console.log('select.selectedIndex', select.selectedIndex);
+			// console.log('select.options', select.options);
+			// console.log('select.length', select.length);
+			// console.log('select.selectedValue', select.selectedValue);
+			// console.log('select.value', select.value);
+			if (select.selectedIndex === 0) {
+				failures.push({ input: 'input-age', msg: 'Too young' })
+			}
+
+			// other inputs
+			const first = document.getElementById('input-first'),
+				password = document.getElementById('input-password'),
+				email = document.getElementById('input-email');
+			// .value .defaultValue, value.length
+			// console.log('first.value', first.value);
+			// console.log('first.defaultValue', first.defaultValue);
+			if (first.value === '') {
+				failures.push({ input: 'input-first', msg: 'Required field' })
+			}
+			if (password.value === '' || password.value.length < 8) {
+				failures.push({
+					input: 'input-password',
+					msg: 'Required password must be at least 8 chars'
+				});
+			}
+			if (email.value === '') {
+				failures.push({ input: 'input-email', msg: 'Required field' })
+			}
+
+			// return a boolean || an object with details about the failures
+			return failures;
+		};
+		document.addEventListener('DOMContentLoaded', init);
+
+	</script>
+</body>
+
+</html>
