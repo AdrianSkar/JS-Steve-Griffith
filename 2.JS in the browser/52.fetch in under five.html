@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fetch in under five minutes</title>
+</head>
+
+<body>
+	<h1>Fetch under five</h1>
+	<p>How to use <code>fetch()</code>for AJAX in less than five minutes.</p>
+	<div id="output">
+		<pre></pre>
+	</div>
+
+	<script>
+		let url = "https://jsonplaceholder.typicode.com/comments?postId=42";
+
+		fetch(url)
+			.then(response => response.json())
+			.then(data => {
+				let str = JSON.stringify(data, null, '\t');
+				// Output the string version of the JSON data as preformatted text
+				document.querySelector('#output pre').textContent = str;
+				// Output the postId from the first object in the data array
+				// document.querySelector('#output').textContent = data[0].postId;
+
+			})
+			.catch(err => {
+				let nm = err.name; // Error type
+				let msg = err.message // Error message
+				alert(`Catch: ${nm} ${msg}`);
+			})
+	</script>
+</body>
+
+</html>
