@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Empty form elements</title>
+</head>
+
+<body>
+	<h1>Empty inputs</h1>
+	<form action="https://www.adrianskar.com">
+		<p><input type="text" id='username' placeholder="Enter a username"></p>
+		<p><select name="province" id="province">
+				<option value="">Please select a province:</option>
+				<option value="BC">British Columbia</option>
+				<option value="MB">Manitoba</option>
+				<option value="NS">Nova Scotia</option>
+				<option value="ON">Ontario</option>
+			</select></p>
+		<p><input type="number" id="age" min=12 max=120></p>
+		<p><input type="submit" id="btnSubmit" value="Go"></p>
+	</form>
+
+	<div id="output"></div>
+
+	<script>
+		let processForm = function (ev) {
+			ev.preventDefault(); // stop form from submitting
+			const username = document.getElementById('username'),
+				prov = document.getElementById('province');
+
+			// Text input
+			console.log('\nText input:');
+			console.log('typeof username.value:', typeof username.value);
+			console.log('username.value.length:', username.value.length); // Use trim to delete whitespace
+			console.log("'X' + username.value + 'X':", 'X' + username.value + 'X');
+			console.log("'X' + username.value.trim() + 'X':", 'X' + username.value.trim() + 'X');
+			console.log('6 chars min?', username.value.trim().length > 6); // Test for min chars
+
+			// Select
+			console.log('\nSelect:');
+			console.log('typeof prov.value:', typeof prov.value);
+			console.log('prov.value:', prov.value);
+			console.log('prov.value.length:', prov.value.length);
+			console.log('prov.selectedIndex > 0:', prov.selectedIndex > 0);
+
+			// Input number
+			console.log('\nNumber input:');
+			console.log('typeof age.value', typeof age.value);
+			console.log('age.min', age.min);
+			console.log('age.max', age.max);
+			console.log('parseInt(age.value)', parseInt(age.value));
+			console.log('isNaN(age.value)', isNaN(age.value)); // false means num
+
+			console.log('parseInt(age.value) && parseInt(age.value) < age.max', parseInt(age.value) && parseInt(age.value) < age.max);
+			console.log('parseInt(age.value) && parseInt(age.value) < age.min', parseInt(age.value) && parseInt(age.value) > age.min);
+
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById("btnSubmit").addEventListener('click', processForm);
+		})
+	</script>
+</body>
+
+</html>

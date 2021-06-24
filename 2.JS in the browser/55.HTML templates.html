@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTML templates</title>
+	<style>
+		.temp {
+			background-color: cornflowerblue;
+			color: #fff;
+		}
+
+		.box {
+			border: 1px solid #bbb;
+			padding: 1em;
+			max-width: 40vw;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Using HTML templates</h1>
+	<p>Paragraph above the template.</p>
+	<template id="myTemplate">
+		<div class="box">
+			<h2 class="temp">A sub-heading</h2>
+			<p>Some template created text.</p>
+		</div>
+	</template>
+	<p>Paragraph below the template.</p>
+
+	<script>
+		// console.log('asd' in document.createElement('template'));
+		// console.log('content' in document.createElement('template'));
+		const supportsTemplate = function () {
+			// Create a template element and make sure it has a 'content' property
+			return 'content' in document.createElement('template');
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			if (supportsTemplate()) {
+				// We can use the template element in our HTML
+				console.log('Templates supported');
+				let temp = document.getElementById('myTemplate'),
+					content = temp.content;
+				console.log(content);
+
+				document.body.appendChild(content.cloneNode(true));
+				document.body.appendChild(content.cloneNode(true));
+
+				document.body.appendChild(content);
+				//! Won't work as it references the same object
+				document.body.appendChild(content);
+			}
+			else {
+				// Fallback method (manually build the elements).
+				console.log('Else is running');
+				let df = document.createDocumentFragment(),
+					div = document.createElement('div'),
+					h2 = document.createElement('h2'),
+					p = document.createElement('p');
+				h2.textContent = 'A sub-heading';
+				p.textContent = 'Some dynamically created text';
+				div.className = 'box';
+				h2.className = 'temp';
+				div.appendChild(h2);
+				div.appendChild(p);
+				df.appendChild(div);
+				document.body.appendChild(df);
+			}
+		})
+	</script>
+</body>
+
+</html>
