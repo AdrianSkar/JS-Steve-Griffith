@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Master-detail pattern</title>
+	<style>
+		main {
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.page {
+			display: block;
+			padding: 1rem;
+			margin: 1rem;
+			background-color: #dedede;
+		}
+
+		h1 {
+			padding: 0.5rem 2rem;
+		}
+
+		#detail h1 {
+			cursor: pointer;
+		}
+
+		.person {
+			list-style: none;
+			border-top: 1px solid #999;
+			padding: 0.2rem 1rem;
+			cursor: pointer;
+		}
+
+		.person:hover,
+		person.active {
+			background-color: aliceblue;
+		}
+
+		.person:last-child {
+			border-bottom: 1px solid #999;
+		}
+
+		.lastAccess {
+			color: lightskyblue;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<div class="page" id="info">
+			<p>If these were really a Single Page Application we would be hiding all but one of the div "pages" at all times.
+			</p>
+		</div>
+
+		<div class="page" id="master">
+			<header>
+				<h1>MASTER detail</h1>
+			</header>
+			<main>
+				<ul class="master-list"></ul>
+			</main>
+		</div>
+
+		<div class="page" id="detail">
+			<header>
+				<h1>master DETAIL</h1>
+			</header>
+			<main>
+				<ul class="detail-list"></ul>
+			</main>
+		</div>
+	</main>
+
+	<script>
+		const TODAY = new Date(15116711772000),
+			MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			DATA = {
+				people: [
+					{
+						person_id: 1,
+						name: 'Megan',
+						lastAccess: 1511150221000,
+						isMobile: false,
+						avatar: "😀"
+					},
+					{
+						person_id: 2,
+						name: 'Cara',
+						lastAccess: 1511350221000,
+						isMobile: false,
+						avatar: "😡"
+					},
+					{
+						person_id: 3,
+						name: 'Camille',
+						lastAccess: 1511661001000,
+						isMobile: false,
+						avatar: "😜"
+					},
+					{
+						person_id: 4,
+						name: 'Bree',
+						lastAccess: 1511670871221,
+						isMobile: true,
+						avatar: "😵"
+					}
+				]
+			};
+
+		let init = function () {
+			loadMaster(DATA.people);
+		};
+
+		let loadMaster = function (people) {
+			let ul = document.querySelector('.master-list'),
+				df = new DocumentFragment();
+			people.forEach(person => {
+				let li = document.createElement('li');
+				li.textContent = person.name;
+				li.className = 'person';
+				li.setAttribute('data-key', person.person_id);
+				li.addEventListener('click', showDetails);
+				df.appendChild(li);
+			});
+			ul.appendChild(df);
+		};
+
+		let showDetails = function (ev) {
+			// Get person_id from its data attr and currently active item
+			let person_id = ev.target.getAttribute('data-key'),
+				oldActive = document.querySelector('.active');
+
+
+			// Remove old active and add new
+			(oldActive) ? oldActive.classList.remove('active') : null;
+			ev.target.classList.add('active');
+
+			// Look for target person
+			let activePerson;
+			DATA.people.forEach(person => {
+				if (person.person_id == person_id) {
+					activePerson = person;
+				};
+			})
+			// console.log('alt to forEach', DATA.people[Number(person_id) - 1]);
+
+			// Find and clear old list
+			let ul = document.querySelector('.detail-list');
+			ul.innerHTML = '';
+
+			let df = new DocumentFragment();
+			for (prop in activePerson) {
+				let li = document.createElement('li');
+				li.classList.add(prop); // Add class named after prop
+				if (prop === 'lastAccess') {
+					// Format date and add content
+					let timmy = new Date(activePerson[prop]),
+						str = `${timmy.getDate()} ${MONTHS[timmy.getMonth()]} ${timmy.getFullYear()}`;
+					li.textContent = str;
+				} else {
+					// Just add content
+					li.textContent = activePerson[prop];
+				}
+				console.log(activePerson[prop]);
+				df.appendChild(li);
+			}
+			ul.appendChild(df);
+		};
+
+		document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tabbed controls</title>
+	<style>
+		header {
+			padding: 1rem 2rem 0.5rem;
+			border-bottom: 1px solid #779;
+		}
+
+		main {
+			padding: 2rem 2rem 1rem;
+			font-size: 1rem;
+		}
+
+		.tab-nav {
+			border-bottom: 1px solid #779;
+		}
+
+		.tab-menu {
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: 0.2rem;
+		}
+
+		.tab {
+			list-style: none;
+			padding: 0 2rem 0.2rem;
+		}
+
+		.tab.active,
+		.tab:hover {
+			color: rebeccapurple;
+			padding-bottom: 0;
+			border-bottom: 0.2rem solid rebeccapurple;
+		}
+
+		.tab-content {
+			display: none;
+		}
+
+		.tab-content.active {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Using tabbed controls</h1>
+
+	</header>
+	<nav class="tab-nav">
+		<ul class="tab-menu">
+			<li id="first" class="tab">First</li>
+			<li id="second" class="tab">Second</li>
+			<li id="third" class="tab">Third</li>
+			<li id="fourth" class="tab active">Fourth</li>
+		</ul>
+	</nav>
+	<main>
+		<section id="section-first" class="tab-content">
+			<h2>Heading about section one</h2>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ullam aliquid quasi nulla, ipsa sequi animi
+				consectetur minus eaque recusandae ex reiciendis aliquam vel, odio enim voluptatum minima, sapiente optio.</p>
+		</section>
+		<section id="section-second" class="tab-content">
+			<h2>Heading about section two</h2>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ullam aliquid quasi nulla, ipsa sequi animi
+				consectetur minus eaque recusandae ex reiciendis aliquam vel, odio enim voluptatum minima, sapiente optio.</p>
+		</section>
+		<section id="section-third" class="tab-content">
+			<h2>Heading about section three</h2>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ullam aliquid quasi nulla, ipsa sequi animi
+				consectetur minus eaque recusandae ex reiciendis aliquam vel, odio enim voluptatum minima, sapiente optio.</p>
+		</section>
+		<section id="section-fourth" class="tab-content active">
+			<h2>Heading about section four</h2>
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ullam aliquid quasi nulla, ipsa sequi animi
+				consectetur minus eaque recusandae ex reiciendis aliquam vel, odio enim voluptatum minima, sapiente optio.</p>
+		</section>
+	</main>
+
+	<script>
+		let tabs, sections;
+
+		let init = function () {
+			// Find all tabs (li.tab)
+			tabs = document.querySelectorAll(".tab");
+			// Find all content (section.tab-content)
+			sections = document.querySelectorAll('.tab-content');
+
+			// Add click listeners to each one supporting old browsers by using .call
+			// instead of regular `forEach` over them.
+			[].forEach.call(tabs, tab => {
+				tab.addEventListener('click', switchTab);
+			})
+		}
+
+		let switchTab = function (ev) {
+			let tab = ev.target,
+				id = tab.id,
+				actives = document.querySelectorAll('.active');
+
+			// Remove active classes
+			[].forEach.call(actives, ele => {
+				ele.classList.remove('active');
+			});
+
+			// Loop through sections to find target
+			[].forEach.call(sections, section => {
+				if ('section-' + id === section.id) {
+					// Make tab active
+					tab.classList.add('active');
+					// Make section active
+					section.classList.add('active');
+				}
+			});
+		};
+
+		window.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+
+</html>
