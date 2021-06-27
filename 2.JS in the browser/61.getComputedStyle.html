@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessing computed styles</title>
+	<style>
+		.first {
+			font-size: 0.7rem;
+			font-family: sans-serif;
+		}
+
+		.second {
+			font-family: monospace;
+			font-weight: 700;
+		}
+
+		.second::before {
+			content: attr(data-sample) " ""\0026"" ";
+			color: red;
+			font-variant: small-caps;
+		}
+
+		.third {
+			color: #fff;
+			background-color: rebeccapurple;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Using JS to get style values from CSS</h1>
+	<p class="first">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, praesentium cumque? Nam corporis
+		laboriosam facere provident rerum. Impedit minima itaque, odit harum excepturi aspernatur eius, reiciendis
+		similique, nostrum nobis maiores.</p>
+	<p class="second" data-sample="Some text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, praesentium
+		cumque? Nam corporis laboriosam facere provident rerum. Impedit minima itaque, odit harum excepturi aspernatur eius,
+		reiciendis similique, nostrum nobis maiores.</p>
+	<p class="third">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, praesentium cumque? Nam corporis
+		laboriosam facere provident rerum. Impedit minima itaque, odit harum excepturi aspernatur eius, reiciendis
+		similique, nostrum nobis maiores.</p>
+
+	<div id="output"></div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const first = document.querySelector('.first'),
+				second = document.querySelector('.second'),
+				third = document.querySelector('.third');
+
+			// console.log(getComputedStyle(first));
+			let resultOne = getComputedStyle(first).fontSize,
+				resultTwo = getComputedStyle(second, '::before').content,
+				resultThree = getComputedStyle(third).backgroundColor;
+
+			console.log(resultTwo);
+			let output = document.getElementById('output');
+			output.innerHTML = `${resultOne} ${resultTwo} ${resultThree}`;
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NodeList forEach Method </title>
+	<!--
+    Video about call() - https://www.youtube.com/watch?v=uBdH0iB1VDM
+    Video about forEach() - https://www.youtube.com/watch?v=159EAISAxwg
+    Video about NodeLists - https://www.youtube.com/watch?v=ubNP6fbT2Ac
+    -->
+
+	<style>
+		h1 {
+			cursor: pointer;
+		}
+
+		p {
+			outline: 1px solid rebeccapurple;
+			padding: 1px;
+		}
+
+		.new {
+			font-weight: 900;
+			color: green;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>forEach polyfill for NodeLists</h1>
+
+	<p>some text 1</p>
+	<p>some text 2</p>
+	<p>some text 3</p>
+	<p>some text 4</p>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelector('h1').addEventListener('click', loopy);
+		})
+
+		const loopy = function (ev) {
+			let nl = document.querySelectorAll('p');
+			// nl.forEach()
+			[].forEach.call(nl, (item, index) => {
+				item.classList.toggle('new');
+			})
+		}
+	</script>
+</body>
+
+</html>

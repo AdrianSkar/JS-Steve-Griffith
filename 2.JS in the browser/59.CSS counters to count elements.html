@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS counters</title>
+	<style>
+		dl {
+			/* counter name + starting value */
+			counter-reset: term 3;
+		}
+
+		dt::before {
+			/* counter reference + increment amt */
+			counter-increment: term 3;
+			/* counter value + space */
+			content: counter(term) " ";
+			color: deepskyblue;
+		}
+
+		section {
+			/* counter name */
+			counter-reset: note;
+		}
+
+		sup::before {
+			counter-increment: note;
+			/* space + counter ref */
+			content: " "counter(note);
+			color: red;
+		}
+
+		.counting-food {
+			counter-reset: food;
+		}
+
+		input:checked {
+			counter-increment: food;
+		}
+
+		.food-total:after {
+			content: open-quote counter(food) close-quote;
+		}
+
+		.counting-info {
+			counter-reset: info;
+		}
+
+		input[type="text"]:valid,
+		input[type="email"]:valid {
+			counter-increment: info;
+		}
+
+		.info-total:after {
+			content: open-quote counter(info) close-quote;
+		}
+
+		.divs {
+			counter-reset: divs;
+		}
+
+		.divs div {
+			margin: 1rem;
+		}
+
+		.divs p {
+			padding: 1rem;
+		}
+
+		.selectable {
+			border: 1px solid #666;
+			background-color: #ddd;
+		}
+
+		.selectable.active {
+			background-color: goldenrod;
+			counter-increment: divs;
+		}
+
+		.output:after {
+			content: counter(divs);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>CSS counters</h1>
+
+	<!-- Add nums to existing elements -->
+	<dl>
+		<dt>term</dt>
+		<dd>description</dd>
+		<dt>term</dt>
+		<dd>description</dd>
+		<dt>term</dt>
+		<dd>description</dd>
+	</dl>
+
+	<!-- Add nums and quotes to visually connect to other content -->
+	<section>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet beatae non provident laboriosam nisi architecto.
+			Iusto, obcaecati. Laborum id sint, magni natus molestiae deserunt <sup></sup>accusamus voluptatibus quo ea.
+			Cupiditate, eaque.
+			Amet assumenda odio labore doloribus in iste, molestiae accusantium, sed eos id dignissimos quia eveniet voluptate
+			expedita sequi. Nemo ullam fuga deleniti quod enim praesentium itaque <sup></sup> tenetur laborum ducimus magni.
+		</p>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet beatae non provident laboriosam nisi architecto.
+			Iusto, obcaecati. Laborum id sint, magni natus molestiae deserunt accusamus voluptatibus quo ea. Cupiditate,
+			eaque.
+			Amet assumenda odio labore doloribus in iste, molestiae accusantium, sed eos id dignissimos quia eveniet
+			<sup></sup> voluptate expedita sequi. Nemo ullam fuga deleniti quod enim praesentium itaque tenetur laborum
+			ducimus magni.
+		</p>
+	</section>
+	<ol>
+		<li>First note</li>
+		<li>Second note</li>
+	</ol>
+
+
+	<!-- Counting items based on state -->
+	<section>
+		<fieldset class="counting-food">
+			<p>
+				<label for="pizza">Pizza</label>
+				<input type="checkbox" id="pizza" value='za'>
+			</p>
+			<p>
+				<label for="burgers">Burgers</label>
+				<input type="checkbox" id='burgers' value='burg'>
+			</p>
+		</fieldset>
+		<fieldset class="counting-info">
+			<p>
+				<label for="nm">Username</label>
+				<input type="text" id="nm" required>
+			</p>
+			<p>
+				<label for="email">Email</label>
+				<input type="email" id="email" required>
+			</p>
+		</fieldset>
+
+		<div>
+			<p class="food-total">Food items selected: </p>
+			<p class="info-total">Text fields filled out: </p>
+		</div>
+	</section>
+
+	<section class="divs">
+		<div class="selectable">
+			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi deleniti nam nulla commodi, minima,
+				accusamus voluptate accusantium esse dignissimos reprehenderit atque officiis quibusdam perferendis dolorem quia
+				officia architecto? Repellat, alias?</p>
+		</div>
+		<div class="selectable">
+			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi deleniti nam nulla commodi, minima,
+				accusamus voluptate accusantium esse dignissimos reprehenderit atque officiis quibusdam perferendis dolorem quia
+				officia architecto? Repellat, alias?</p>
+		</div>
+		<div class="selectable">
+			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi deleniti nam nulla commodi, minima,
+				accusamus voluptate accusantium esse dignissimos reprehenderit atque officiis quibusdam perferendis dolorem quia
+				officia architecto? Repellat, alias?</p>
+		</div>
+		<div class="output">Divs selected: </div>
+	</section>
+
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			let divs = document.querySelectorAll('.selectable');
+			[].forEach.call(divs, div => {
+				div.addEventListener('click', () => {
+					div.classList.toggle('active');
+				})
+			})
+		})
+	</script>
+</body>
+
+</html>
