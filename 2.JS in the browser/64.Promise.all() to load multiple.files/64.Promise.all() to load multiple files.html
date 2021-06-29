@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Promise.all() to load multiple files</title>
+</head>
+<!-- 
+	<link rel="stylesheet" href="css1.css">
+	<link rel="stylesheet" href="css2.css"> 
+-->
+
+<body>
+	<h1>Heading</h1>
+
+	<script>
+		const URL1 = "./css1.css",
+			URL2 = "./css2.css";
+
+		let p1 = new Promise((resolve, reject) => {
+			let link = document.createElement("link");
+			link.setAttribute("rel", "stylesheet");
+			link.setAttribute("type", "text/css");
+
+			link.addEventListener("load", function (ev) {
+				// The CSS has been loaded into the style tag
+				console.log('Your css is here');
+				resolve(link);
+			})
+			link.addEventListener("error", function (ev) {
+				// There was an error
+				console.warn('Your CSS is not ready');
+				reject(err);
+			})
+			link.href = URL1;
+			//* The link/css tag requires that you append the element or it won't load
+			// the stylesheet as you would expect with an img src
+			document.head.appendChild(link);
+		})
+		let p2 = new Promise((resolve, reject) => {
+			let link = document.createElement("link");
+			link.setAttribute("rel", "stylesheet");
+			link.setAttribute("type", "text/css");
+
+			link.addEventListener("load", function (ev) {
+				// The CSS has been loaded into the style tag
+				console.log('Your css is here');
+				resolve(link);
+			})
+			link.addEventListener("error", function (ev) {
+				// There was an error
+				console.warn('Your CSS is not ready');
+				reject(err);
+			})
+			link.href = URL2;
+			document.head.appendChild(link);
+		})
+
+		Promise.all([p1, p2])
+			.then((things => {
+				console.log('Both CSS links have been loaded');
+				// Now my page can run and use both the scripts or images, etc.
+			}))
+			.catch((err) => {
+				console.warn('Something bad happened');
+			})
+	</script>
+</body>
+
+</html>
