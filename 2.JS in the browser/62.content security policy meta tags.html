@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Content-Security-Policy</title>
+
+	<meta http-equiv="Content-Security-Policy" content="
+		default-src 'self' data: gap: 'unsafe-eval' ws: ;
+		style-src 'self' 'unsafe-inline';
+		script-src https: *.example.com;
+		media-src 'none';
+		font-src *;
+		connect-src *;
+		img-src 'self' data: content:;
+	">
+	<!-- Also
+	base-uri /abc/; - limit to content in this folder v2
+	form-action; - limit where forms can be sent v2
+
+	Values
+	'self' - anything from the same origin
+	data: - data-yri (base64 images)
+	gap: - phonegap and cordova used by plugins on iOS
+	ws: - web sockets
+	*: - anything except data: and blobs
+	filesystem: - access things on the local filesystem
+	blob: - allow Binary Large OBjects
+	mediastream: - allow streamed media
+	content: - used by Cordova
+	'none': - prevent anything in the category
+	https: - anything over https?;;
+	*.example.com - anything from any subdomain of example.com
+	'unsafe-inline' - inline source elements like style attributes, onclick, or 
+	script tags
+	'unsafe-eval' - allow JS eval() -->
+</head>
+
+<body>
+	<h1>Content-Security-Policy</h1>
+	<p style="" onclick="">The real value of this page is the stuff in the &lt;head&gt;</p>
+
+	<p>We can also add this header to any webpage to add a layer of security which
+		will control what resources can be loaded and from which sources.
+	</p>
+</body>
+
+</html>
