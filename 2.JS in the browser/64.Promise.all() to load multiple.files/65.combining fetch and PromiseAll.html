@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Promise.all() and fetch</title>
+	<style>
+		p {
+			font-size: 2em;
+			font-weight: 900;
+			color: #444;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>Using Promise.all() with fetch</h1>
+	<div id="output"></div>
+
+	<script>
+		// We want to fetch multiple things or multiple copies of the same thing
+		let datafile1 = fetch('../09.intro to json.json');
+		let datafile2 = fetch('../09.intro to json.json');
+
+		Promise.all([datafile1, datafile2])
+			.then(files => {
+				console.log(files);
+				files.forEach(file => {
+					process(file.json());
+				})
+				// files[0].json()
+				// files[1].json()
+			})
+			.catch(err => console.log(err));
+
+		let process = prom => {
+			prom.then(data => {
+				let p = document.createElement('p');
+				p.textContent = data.fargo.movie.directors;
+				document.getElementById('output').appendChild(p);
+			})
+		}
+
+	</script>
+</body>
+
+</html>
