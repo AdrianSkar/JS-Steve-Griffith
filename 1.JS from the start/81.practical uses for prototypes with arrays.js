@@ -9,11 +9,14 @@ Array.prototype.shuffle = function () {
 	let len = this.length;
 	for (let i = 0; i < len; i++) {
 
-		let pos = Math.floor(Math.random() * len);
-		let temp = this[i];
-		let other = this[pos];
-		this[i] = other;
-		this[pos] = temp;
+		let pos = Math.floor(Math.random() * len); // Random position
+		// let temp = this[i];
+		// let other = this[pos];
+		// this[i] = other;
+		// this[pos] = temp;
+
+		//* You can use destructuring instead:
+		[this[i], this[pos]] = [this[pos], this[i]];
 
 	}
 	return this;
