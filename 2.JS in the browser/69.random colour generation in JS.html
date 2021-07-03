@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Random colours</title>
+	<style>
+		body {
+			min-height: 100vh;
+		}
+
+		div {
+			height: 10vh;
+			padding: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<div id='hex'></div>
+	<div id='hex2'></div>
+	<div id='hsl'></div>
+	<div id='rgb'></div>
+	<div id='binary'></div>
+
+	<script>
+		// 1. Short hex
+		// Random 16 num to Hex string
+		let hex_r = Math.floor(Math.random() * 16).toString(16),
+			hex_g = Math.floor(Math.random() * 16).toString(16),
+			hex_b = Math.floor(Math.random() * 16).toString(16),
+			hex_color = `#${hex_r}${hex_g}${hex_b}`,
+			hex_div = document.getElementById('hex');
+		hex_div.textContent = hex_color;
+		hex_div.style.backgroundColor = hex_color;
+
+		// 2. Regular hex
+		// Random 16 num to Hex string
+		let hexB_r = Math.floor(Math.random() * 256).toString(16),
+			hexB_g = Math.floor(Math.random() * 256).toString(16),
+			hexB_b = Math.floor(Math.random() * 256).toString(16);
+
+		// Check random numbers length to avoid single digit values
+		hexB_r = hexB_r.length > 1 ? hexB_r : `0${hexB_r}`;
+		hexB_g = hexB_g.length > 1 ? hexB_g : `0${hexB_g}`;
+		hexB_b = hexB_b.length > 1 ? hexB_b : `0${hexB_b}`;
+
+		let hexB_color = `#${hexB_r}${hexB_g}${hexB_b}`,
+			hexB_div = document.getElementById('hex2');
+		hexB_div.textContent = hexB_color;
+		hexB_div.style.backgroundColor = hexB_color;
+
+		// 3. HSL (359, 50%, 50%) hsla(h, s, l, 0.5)
+		let h = Math.floor(Math.random() * 360).toString(),
+			s = Math.floor(Math.random() * 360).toString(),
+			l = Math.floor(Math.random() * 360).toString(),
+			hsl_color = `hsla(${h}, ${s}%, ${l}%, ${Math.random().toFixed(2)})`,
+			hsl_div = document.getElementById('hsl');
+		hsl_div.textContent = hsl_color;
+		hsl_div.style.backgroundColor = hsl_color;
+
+		// 4. RGB (255, 255, 255) rgba(r, g, b, 0.5)
+		let r = Math.floor(Math.random() * 256).toString(),
+			g = Math.floor(Math.random() * 256).toString(),
+			b = Math.floor(Math.random() * 256).toString(),
+			rgb_color = `rgba(${r}, ${g}, ${b}, ${Math.random().toFixed(2)})`,
+			rgb_div = document.getElementById('rgb');
+		rgb_div.textContent = rgb_color;
+		rgb_div.style.backgroundColor = rgb_color;
+
+		// 5. Binary (faster colors with bitwise operators)
+
+		// Generate a random value between 0 and 2 to the power of 24
+		let binary_num = Math.floor(Math.random() * Math.pow(2, 24)),
+			// 111111110000000011111111
+
+			// Drop the last 16 bits -> 11111111 and apply AND over 255 (or not)
+			binary_r = binary_num >> 16 & 255,
+			// binary_r = binary_num >> 16,
+			// console.log(Math.pow(2, 24) >> 16); // = 256
+
+			// Drop the last 8 bits and apply AND over 255 
+			binary_g = (binary_num >> 8) & 255,
+
+			// Apply AND over 255 to everything
+			binary_b = binary_num & 255;
+
+		console.log(binary_num.toString(2));
+		console.log(binary_r.toString(2));
+		console.log(binary_g.toString(2));
+		console.log(binary_b.toString(2));
+		console.log(binary_num);
+		console.log(binary_r);
+		console.log(binary_g);
+		console.log(binary_b);
+
+		let binary_color = `rgba(${binary_r}, ${binary_g}, ${binary_b}, ${Math.random().toFixed(2)})`,
+			binary_div = document.getElementById('binary');
+		binary_div.textContent = 'binary generated: ' + binary_color;
+		binary_div.style.backgroundColor = binary_color;
+
+
+
+	</script>
+</body>
+
+</html>
