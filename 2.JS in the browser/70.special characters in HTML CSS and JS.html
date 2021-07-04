@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Special characters in HTML, CSS, and JS</title>
+	<style>
+		p {
+			padding: 0 1em;
+		}
+
+		p>span {
+			color: red
+		}
+
+		p#four>span::after {
+			display: inline;
+			content: ' \\00A5 '"\2192 "' \00A5';
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Special characters in HTML, CSS &amp; JS</h1>
+	<p>Keyboards have a limited number of characters. We still need to be able
+		to display characters that are not on our keyboards. Sometimes we are
+		putting the characters in HTML, sometimes we use CSS to load content.
+		Other time we use JavaScript to write out new content in the HTML.
+		All three have a different way of adding the characters.
+	</p>
+	<p id="one">HTML character entities (decimal): <code>&amp;#165;</code> &#8594; <span>&#165;</span></p>
+	<p id="two">HTML character entities (hexadecimal): <code>#x00A5;</code> &#8594; <span>&#x00A5;</span></p>
+	<p id="three">HTML character entities (abbreviation): <code>&amp;yen;</code> &#8594; <span>&yen;</span></p>
+	<p id="four">Unicode in CSS: <span></span></p>
+	<p id="five">Unicode in JS: <span></span></p>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const span = document.querySelector('#five>span');
+
+			span.textContent = '\\u00A5 \u2192 \u00A5';
+		})
+	</script>
+</body>
+
+</html>
