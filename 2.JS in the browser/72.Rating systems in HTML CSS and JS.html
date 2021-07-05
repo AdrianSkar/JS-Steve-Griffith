@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Star rating system</title>
+	<style>
+		.star {
+			color: goldenrod;
+			font-size: 2rem;
+			padding: 0 1rem;
+		}
+
+		.star::before {
+			content: '\2606';
+			cursor: pointer;
+		}
+
+		/* Selected star (filled) */
+		.star.rated::before {
+			content: '\2605';
+		}
+
+		.stars {
+			counter-reset: rateme 0;
+			font-size: 2rem;
+			font-weight: 900;
+		}
+
+		.star.rated {
+			counter-increment: rateme 1;
+		}
+
+		/* Show rating in numbers after stars */
+		.stars::after {
+			content: counter(rateme) '/5'
+		}
+	</style>
+</head>
+
+<body>
+	<!-- alternate codepen version https://codepen.io/mad-d/pen/aJMPWr?editors=0010 -->
+	<h1>Star rating system</h1>
+	<div class="stars" data-rating="3">
+		<span class="star">&nbsp;</span>
+		<span class="star">&nbsp;</span>
+		<span class="star">&nbsp;</span>
+		<span class="star">&nbsp;</span>
+		<span class="star">&nbsp;</span>
+	</div>
+	<p>The number shown after the CSS is generated with a CSS counter.</p>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const stars = document.querySelectorAll('.star');
+			stars.forEach(star => {
+				star.addEventListener('click', setRating);
+			});
+			let rating = parseInt(document.querySelector('.stars').getAttribute('data-rating')),
+				// Target is 0 index based
+				target = stars[rating - 1]
+		});
+
+		function setRating(ev) {
+			const clickedSpan = ev.target,
+				stars = document.querySelectorAll('.star');
+
+			// Target flag 
+			let match = false, num;
+
+			stars.forEach((star, index) => {
+				if (match) star.classList.remove('rated');
+				else star.classList.add('rated');
+
+				// Is current span the target (clicked one)?
+				if (star === clickedSpan) {
+					match = true;
+					num = index + 1;
+				}
+			});
+			// Update data-rating according to num
+			document.querySelector('.stars').setAttribute('data-rating', num);
+
+		}
+	</script>
+</body>
+
+</html>
