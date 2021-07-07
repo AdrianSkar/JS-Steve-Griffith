@@ -44,11 +44,11 @@
 	<!-- alternate codepen version https://codepen.io/mad-d/pen/aJMPWr?editors=0010 -->
 	<h1>Star rating system</h1>
 	<div class="stars" data-rating="3">
-		<span class="star">&nbsp;</span>
-		<span class="star">&nbsp;</span>
-		<span class="star">&nbsp;</span>
-		<span class="star">&nbsp;</span>
-		<span class="star">&nbsp;</span>
+		<span class="star"></span>
+		<span class="star"></span>
+		<span class="star"></span>
+		<span class="star"></span>
+		<span class="star"></span>
 	</div>
 	<p>The number shown after the CSS is generated with a CSS counter.</p>
 
@@ -60,7 +60,10 @@
 			});
 			let rating = parseInt(document.querySelector('.stars').getAttribute('data-rating')),
 				// Target is 0 index based
-				target = stars[rating - 1]
+				target = stars[rating - 1];
+
+			// Load stars according to initial data-rating
+			target.dispatchEvent(new MouseEvent('click'));
 		});
 
 		function setRating(ev) {
@@ -70,6 +73,8 @@
 			// Target flag 
 			let match = false, num;
 
+			// Add 'rated' class to all stars until we change the flag, then remove it
+			// for all others.
 			stars.forEach((star, index) => {
 				if (match) star.classList.remove('rated');
 				else star.classList.add('rated');
