@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Selecting event targets</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			font-size: 10px;
+		}
+
+		body {
+			padding: 1rem 2rem;
+
+		}
+
+		.list-view {
+			list-style: none;
+		}
+
+		.list-item {
+			font-size: 2rem;
+			line-height: 2rem;
+			font-weight: 100;
+			padding: 1.5rem 1rem;
+		}
+
+		.list-item span {
+			font-weight: 500;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Choosing your event targets</h1>
+	<h2> Nothing selected</h2>
+	<main>
+		<ul class="list-view">
+			<li class="list-item" data-id="1" data-name='Sam'>1: <span>Sam</span></li>
+			<li class="list-item" data-id="3" data-name='Dean'>3: <span>Dean</span></li>
+			<li class="list-item" data-id="6" data-name='Ellen'>6: <span>Ellen</span></li>
+			<li class="list-item" data-id="8" data-name='Jo'>8: <span>Jo</span></li>
+			<li class="list-item" data-id="11" data-name='Bobbie'>11: <span>Bobbie</span></li>
+			<li class="list-item" data-id="13" data-name='Castiel'>13: <span>Castiel</span></li>
+			<li class="list-item" data-id="15" data-name='Crowley'>15: <span>Crowley</span></li>
+			<li class="list-item" data-id="18" data-name='Amara'>18: <span>Amara</span></li>
+			<li class="list-item" data-id="21" data-name='Chuck'>21: <span>Chuck</span></li>
+		</ul>
+	</main>
+
+	<script>
+		const partyStarted = function () {
+			document.querySelector('.list-view').addEventListener('click', onClick2);
+			// Target will be ul
+
+			const lis = document.querySelectorAll('.list-item');
+			lis.forEach(li => {
+				// li.addEventListener('click', onClick);
+				// target will be li
+			});
+			const spans = document.querySelectorAll('.list-item span');
+
+		}
+
+		const onClick2 = function (ev) {
+			// alert(ev.target.tagName);
+			console.log(ev.target.tagName);
+
+			// Make sure li is selected
+			let li = ev.target;
+			if (ev.target.tagName == 'SPAN') {
+				li = ev.target.parentElement;
+			}
+			let id = li.getAttribute('data-id'),
+				nm = li.getAttribute('data-name'),
+				h2 = document.querySelector('h2');
+			h2.textContent = `${id}: ${nm}`;
+
+		}
+
+		const onClick = function (ev) {
+			// ev is the click event... but who called it?
+			// alert('target:', ev.target, 'currentTarget:', ev.currentTarget);
+			console.log('target:', ev.target, 'currentTarget:', ev.currentTarget);
+
+			let id = ev.currentTarget.getAttribute('data-id'),
+				nm = ev.currentTarget.getAttribute('data-name'),
+				h2 = document.querySelector('h2');
+			console.log(id, nm);
+			h2.textContent = `${id}: ${nm}`;
+
+			/* 
+			This will work if the event is attached to lis (line 66), but won't
+			if the event is attached to the ul (line 61) because the ul doesn't have
+			those attributes
+			*/
+		}
+
+		document.addEventListener('DOMContentLoaded', partyStarted);
+	</script>
+</body>
+
+</html>
