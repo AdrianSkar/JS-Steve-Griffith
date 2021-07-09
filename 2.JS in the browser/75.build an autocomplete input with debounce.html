@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Debouncing</title>
+</head>
+
+<body>
+	<h1>Heading</h1>
+
+	<form action=""><input type="text" id="txt-search"></form>
+
+	<p id="output"></p>
+	<ul id="matches"></ul>
+
+	<h3>Full list (localStorage)</h3>
+	<pre>'apple', 'acorn', 'bee', 'beet', 'beef', 'bunny', 'cookie', 'corn', 'corndog', 'dog', 'dogma', 'echo', 'elephant'
+	</pre>
+
+	<script>
+		const KEY = 'debounce-terms';
+
+		const init = function () {
+			// Listener attached to 'input' instead of 'keyup/press' because ev.target.value
+			// would catch everything but not the last char, 'input' is the last to be
+			// triggered and, therefore, includes all.
+			// document.getElementById('txt-search').addEventListener('input', search);
+			document.getElementById('txt-search').addEventListener('input', efficientSearch);
+
+			const terms = ['apple', 'acorn', 'bee', 'beet', 'beef', 'bunny', 'cookie', 'corn',
+				'corndog', 'dog', 'dogma', 'echo', 'elephant'];
+			localStorage.setItem(KEY, JSON.stringify(terms));
+		}
+
+		// Get input search, call getList to find matches, and display results
+		const search = function (ev) {
+			let text = ev.target.value;
+			document.getElementById('output').textContent = `List matching ${text}`;
+			let ul = document.getElementById('matches');
+
+			// Call an async search to match what has been typed
+			getList(text)
+				.then(list => {
+					ul.innerHTML = '';
+					if (list.length == 0) {
+						// If list is empty
+						let li = document.createElement('li');
+						li.textContent = 'No matches';
+						ul.appendChild(li);
+					} else {
+						list.forEach(item => {
+							let li = document.createElement('li');
+							li.textContent = item;
+							ul.appendChild(li);
+						})
+					}
+				})
+				.catch(err => console.warn(err));
+		}
+
+		// Use a RegExp to find matches and filter the list; return promise
+		const getList = function (txt) {
+			return new Promise((resolve, reject) => {
+				// Use setTimeout with rand value to show what can happen (calls are not sequential)
+				let r = Math.floor(Math.random() * 1000);
+				setTimeout((function () {
+					let pattern = new RegExp(`^${txt}`, 'i'),
+						terms = JSON.parse(localStorage.getItem(KEY)),
+						matches = terms.filter(term => pattern.test(term));
+					console.log('Matches:', matches);
+					resolve(matches);
+				}).bind(txt), r);
+
+				// If you don't want to use this or bind:
+				// setTimeout((function () {
+				// 	console.log('txt', txt);
+				// 	let pattern = new RegExp(`^${txt}`, 'i'),
+				// 		terms = JSON.parse(localStorage.getItem(KEY)),
+				// 		matches = terms.filter(term => pattern.test(term));
+				// 	console.log('Matches:', matches);
+				// 	resolve(matches);
+				// }), r);
+			})
+		}
+
+		const debounce = function (func, wait, immediate) {
+			let timeout;
+			return function () {
+				// context = ev
+				let context = this, args = arguments,
+					later = function () {
+						timeout = null;
+						if (!immediate) func.apply(context, args);
+					},
+					callNow = immediate && !timeout;
+
+				clearTimeout(timeout);
+				timeout = setTimeout(later, wait);
+				if (callNow) func.apply(context, args);
+
+			};
+		};
+
+		// Same as `search` but wrapping it into `debounce` and givin it 300ms wait arg
+		const efficientSearch = debounce(function (ev) {
+			let text = ev.target.value;
+			document.getElementById('output').textContent = `List matching ${text}`;
+			let ul = document.getElementById('matches');
+
+			// Call an async search to match what has been typed
+			getList(text)
+				.then(list => {
+					ul.innerHTML = '';
+					if (list.length == 0) {
+						let li = document.createElement('li');
+						li.textContent = 'No matches';
+						ul.appendChild(li);
+					} else {
+						list.forEach(item => {
+							let li = document.createElement('li');
+							li.textContent = item;
+							ul.appendChild(li);
+						})
+					}
+				})
+				.catch(err => console.warn(err));
+
+		}, 300);
+
+		document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+
+</html>
