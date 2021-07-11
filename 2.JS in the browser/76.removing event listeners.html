@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Removing event listeners</title>
+	<style>
+		.gold {
+			color: gold;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<ul class='list-view'>
+			<li class="list-item">First post</li>
+			<li class="list-item">Second post</li>
+		</ul>
+	</main>
+
+	<script>
+		const partyStarted = function () {
+			// Add a listener to existing list items
+			document.querySelectorAll('.list-item').forEach(item => {
+				item.addEventListener('click', randomThing)
+			})
+			// Add another list item every 2secs
+			setInterval(addItem, 1000);
+		}
+
+		const randomThing = function (ev) {
+			let li = ev.currentTarget;
+			li.className = 'gold';
+
+			setTimeout((function () {
+				// Remove the listener
+				this.removeEventListener('click', randomThing);
+
+				// Remove li from the page after 1/2 second
+				this.parentElement.removeChild(this);
+			}).bind(li), 500);
+		};
+
+		const addItem = function () {
+			let ul = document.querySelector('.list-view');
+			let li = document.createElement('li');
+			li.className = 'list-item';
+			li.textContent = `Post number ${Date.now()}`;
+			li.addEventListener('click', randomThing);
+			ul.appendChild(li);
+		}
+
+		document.addEventListener('DOMContentLoaded', partyStarted);
+	</script>
+</body>
+
+</html>
