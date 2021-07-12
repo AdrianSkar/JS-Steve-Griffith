@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Global JS errors</title>
+</head>
+
+<body>
+	<h1>Window error event handling</h1>
+	<p>The Window Object has an Error event that lets us handle any error that happens on the page. Much better practice
+		than wrapping your whole page in a try...catch block.</p>
+
+	<p><img src="asdfads" alt="no alt" id='badImg'></p>
+
+	<!-- <script src="http://www.otherdomain.com/script1234.js" crossorigin="anonumous"></script> -->
+
+	<script>
+		// document.addEventListener('DOMContentLoaded', function () {
+		// 	const img = document.getElementById('badImg');
+		// 	img.onerror = function (ev) {
+		// 		console.warn('image did not load');
+		// 		console.log(ev);
+		// 	}
+		// })
+
+		// window.onerror = function (msg, url, line, col, err) {
+		// 	console.log(msg, url, line, col, err);
+		// }
+
+		window.addEventListener('error', function (ev) {
+			console.log(ev.type);
+			console.warn(ev);
+			ev.preventDefault();
+		})
+
+		asd;
+
+		// try{
+		// 	function a(){
+		// 		referenceA.error.causing();
+		// 	}
+		// 	function b(){
+		// 		referenceB.error.causing();
+		// 	}
+
+		// 	a();
+		// }
+		// catch(err){
+		// 	console.error(err);
+		// }
+	</script>
+</body>
+
+</html>
