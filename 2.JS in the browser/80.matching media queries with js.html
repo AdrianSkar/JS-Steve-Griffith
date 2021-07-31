@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Matching media queries with JS</title>
+
+	<style>
+		header,
+		main {
+			padding: 2rem;
+		}
+
+		p {
+			padding: 0.5rem 0;
+		}
+
+		@media (max-width: 600px) {
+			p {
+				color: #bada55;
+			}
+		}
+
+		@media (min-width: 601px) {
+			p {
+				color: rebeccapurple;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Window MatchMedia</h1>
+	</header>
+	<main>
+		<p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit repudiandae expedita rem aliquam itaque.
+				Architecto, quaerat repellendus. Animi veritatis in, quod, odio inventore velit numquam nobis, ullam saepe a
+				quidem.</span><span>Delectus, nihil atque dolorum voluptate tenetur iure fugiat ducimus? Blanditiis in facilis
+				facere pariatur tenetur explicabo necessitatibus modi assumenda cum temporibus? Rerum eius incidunt rem
+				repudiandae voluptate dolorum, optio voluptates.</span></p>
+		<p><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, accusamus, nulla nam dolore dolorem
+				laudantium quidem distinctio nihil nesciunt quaerat repellat suscipit optio dolores voluptatem, facilis tempore
+				doloribus incidunt. Voluptas.</span><span>Optio velit alias nemo earum culpa nisi sed sequi at et. Nulla error
+				natus, doloribus molestiae illo quasi quos ut excepturi facilis distinctio aut sed omnis aliquid iusto dolore
+				eaque!</span></p>
+	</main>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', init);
+
+		function init() {
+			let query = window.matchMedia("(min-width:601px)");
+
+			if (query.matches) {
+				// If the page > 600px
+				document.querySelector('h1').style.color = 'red';
+			}
+			else {
+				// If the page < 601px
+				document.querySelector('h1').style.color = 'blue';
+			}
+
+		}
+	</script>
+</body>
+
+</html>
