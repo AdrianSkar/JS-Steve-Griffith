@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Caching data with localStorage</title>
+	<style>
+		h1 {
+			cursor: pointer;
+			padding: 1rem;
+			font-size: 4rem;
+		}
+
+		#output {
+			font-size: 3rem;
+			padding: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Caching data with localStorage</h1>
+	<div id="output"></div>
+
+	<script>
+		// Data will be valid for this amount
+		const DATATIMEOUT = 60;
+
+		function fetchDate() {
+			let url = "http://localhost/apache/api/data.php";
+			// dummy api key addition
+			url += '?apikey=abd654e9d6cc52a1297dfee';
+
+			fetch(url)
+				.then(response => response.json())
+				.then(data => {
+					// Now we need to check if data is new enough
+					let t = data.time,
+						p = data.people,
+						output = document.getElementById('output'),
+						oldtime = localStorage.getItem('westeros-time');
+
+					if (oldtime) {// we have data
+						let intOldTime = parseInt(oldtime);
+
+						// if we need to update data based on DATATIMEOUT
+						if ((intOldTime + DATATIMEOUT) < t) {
+							localStorage.setItem('westeros-time', t);
+							// stringify people array
+							let ps = JSON.stringify(p);
+							localStorage.setItem('westeros-ppl', ps);
+							output.textContent = 'List updated';
+						}
+						else { // no need to update yet
+							output.textContent = 'List is within our timeout range';
+						}
+					} else {
+						// We don't have data in localStorage yet
+						localStorage.setItem('westeros-time', t);
+						// stringify people array
+						let ps = JSON.stringify(p);
+						localStorage.setItem('westeros-ppl', ps);
+						output.textContent = 'List created';
+					}
+				})
+				.catch(err => {
+					let output = document.getElementById('output');
+					output.textContent = JSON.stringify(err, null, 2);
+				})
+		}
+
+		function init() {
+			let h1 = document.querySelector('h1');
+			// get data on click
+			h1.addEventListener('click', fetchData);
+			// or every 20secs
+			let timmy = setInterval(fetchData, 20000);
+		}
+
+		document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+
+</html>

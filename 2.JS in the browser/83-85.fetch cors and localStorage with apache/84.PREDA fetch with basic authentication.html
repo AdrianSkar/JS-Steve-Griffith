@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fetch with basic access authentication</title>
+	<style>
+		p {
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Fetch with basic access authentication</h1>
+	</header>
+	<main>
+		<p>Response will appear here after you click.</p>
+	</main>
+
+	<script>
+		let p;
+
+		document.addEventListener("DOMContentLoaded", function () {
+			p = document.querySelector('main>p');
+			p.addEventListener('click', doFetch);
+		});
+
+		function doFetch(ev) {
+			let uri = 'https://localhost/apache/no-browse/sample.json';
+
+			let h = new Headers();
+			h.append('Accept', 'application/json');
+			let encoded = window.btoa('rex:pass123');
+			let auth = 'Basic ' + encoded;
+			h.append('Authorization', auth);
+			console.log(auth);
+
+			let req = new Request(uri, {
+				method: 'GET',
+				headers: h,
+				credentials: 'include'
+			})
+			// credentials: 'same-origin'
+
+			fetch(req)
+				.then(response => {
+					if (response.ok) {
+						return response.json();
+					} else {
+						throw new Error('BAD HTTP stuff');
+					}
+				})
+				.then(jsonData => {
+					console.log(jsonData);
+					p.textContent = JSON.stringify(jsonData, null, 4);
+				})
+				.catch(err => console.log('Error:', err.message))
+		}
+	</script>
+</body>
+
+</html>

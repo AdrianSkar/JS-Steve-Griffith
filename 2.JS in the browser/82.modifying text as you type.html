@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Autoconvert to uppercase</title>
+</head>
+
+<body>
+	<header>
+		<h1>Converting text as you type</h1>
+	</header>
+	<main>
+		<input type="text" id="txt" style="font-size: 3rem">
+	</main>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			let txt = document.getElementById('txt');
+			// txt.addEventListener('keydown', upThing);
+			// 1st - no charcode | no input value added yet
+
+			// txt.addEventListener('keypress', upThing);
+			// 2nd - charcode | no input value added yet
+
+			// txt.addEventListener('keyup', upThing);
+			// 3rd - no carcode | input value added
+
+			txt.addEventListener('input', upThing);
+			// 4th - no charcode | input value accessible/mutable
+		});
+
+		function upThing(ev) {
+			let num = ev.charCode,
+				letter = String.fromCharCode(num);
+
+			console.log(ev.type, num, letter, ev.target.value);
+			ev.target.value = ev.target.value.toUpperCase();
+		}
+	</script>
+</body>
+
+</html>
