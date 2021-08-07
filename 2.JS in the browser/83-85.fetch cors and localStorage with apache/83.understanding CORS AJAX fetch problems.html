@@ -25,11 +25,11 @@
 		let p;
 
 		document.addEventListener('DOMContentLoaded', function () {
-			p = document.querySelecror('main>p');
+			p = document.querySelector('main>p');
 			p.addEventListener('click', doFetch);
 
-			function doFecth(ev) {
-				let uri = "";
+			function doFetch(ev) {
+				let uri = "https://localhost/steve/sample.json";
 
 				let h = new Headers();
 				h.append('Accept', 'application/json');
@@ -50,10 +50,9 @@
 						}
 					})
 					.then(jsonData => {
-						console.log(jsonData);
 						p.textContent = JSON.stringify(jsonData, null, 2);
 					})
-					.catch(err => console.log('Error', err))
+					.catch(err => console.log('Error', err, err.message, 'test'))
 			}
 		})
 	</script>

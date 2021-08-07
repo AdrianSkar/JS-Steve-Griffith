@@ -1,0 +1,12 @@
+{
+"employee1":{
+		"name":"Adrian",
+		"status": "Ok",
+		"number": 170
+	},
+	"employee2":{
+		"name":"Nano",
+		"status": "Ok",
+		"number": 14
+	}
+}
