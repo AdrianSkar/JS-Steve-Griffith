@@ -30,7 +30,7 @@
 		});
 
 		function doFetch(ev) {
-			let uri = 'https://localhost/apache/no-browse/sample.json';
+			let uri = 'https://localhost/steve/sample.json';
 
 			let h = new Headers();
 			h.append('Accept', 'application/json');
@@ -42,9 +42,9 @@
 			let req = new Request(uri, {
 				method: 'GET',
 				headers: h,
-				credentials: 'include'
+				// credentials: 'include'
+				credentials: 'same-origin'
 			})
-			// credentials: 'same-origin'
 
 			fetch(req)
 				.then(response => {

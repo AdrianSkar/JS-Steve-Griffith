@@ -26,40 +26,42 @@
 
 	<script>
 		// Data will be valid for this amount
-		const DATATIMEOUT = 60;
+			const DATA_TIMEOUT = 60;
 
-		function fetchDate() {
-			let url = "http://localhost/apache/api/data.php";
+			function fetchData() {
+				let url = "https://localhost/steve/data.php";
 			// dummy api key addition
 			url += '?apikey=abd654e9d6cc52a1297dfee';
 
 			fetch(url)
 				.then(response => response.json())
 				.then(data => {
-					// Now we need to check if data is new enough
-					let t = data.time,
+					let t = data.time, // Current time
 						p = data.people,
 						output = document.getElementById('output'),
-						oldtime = localStorage.getItem('westeros-time');
+						oldTime = localStorage.getItem('westeros-time');
+					
+					// Now we need to check if data is new enough
+					if (oldTime) {// we have data
+						let intOldTime = parseInt(oldTime);
 
-					if (oldtime) {// we have data
-						let intOldTime = parseInt(oldtime);
-
-						// if we need to update data based on DATATIMEOUT
-						if ((intOldTime + DATATIMEOUT) < t) {
+						// Do we need to update data based on DATA_TIMEOUT?
+						if ((intOldTime + DATA_TIMEOUT) < t) {// (19:00 + 00:10) < 19:30
+							// Update stored time
 							localStorage.setItem('westeros-time', t);
-							// stringify people array
+							// Stringify people array
 							let ps = JSON.stringify(p);
+							// Update people
 							localStorage.setItem('westeros-ppl', ps);
 							output.textContent = 'List updated';
 						}
-						else { // no need to update yet
+						else { // No need to update yet
 							output.textContent = 'List is within our timeout range';
 						}
 					} else {
-						// We don't have data in localStorage yet
+						// We don't have data in localStorage yet, so we set it
 						localStorage.setItem('westeros-time', t);
-						// stringify people array
+						// Stringify people array
 						let ps = JSON.stringify(p);
 						localStorage.setItem('westeros-ppl', ps);
 						output.textContent = 'List created';
