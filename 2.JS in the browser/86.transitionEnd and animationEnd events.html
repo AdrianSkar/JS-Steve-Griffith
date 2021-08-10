@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Transition animation events</title>
+	<style>
+		p {
+			overflow: hidden;
+			width: 90%;
+			padding: 1rem;
+			margin: 1rem;
+			border: 1rem solid #ddd;
+			background-color: hsl(220, 50%, 80%);
+			color: hsl(220, 50%, 30%);
+			font-size: 1.0rem;
+			line-height: 1.5rem;
+			height: 8rem;
+			position: relative;
+
+			transition: width 0.6s ease-in;
+
+			animation-duration: 0.5s;
+
+			/* This will prevent the animation running when `p` elements recover 
+			their width (limit already reached), so we also use `animationend` to 
+			reset the animation-name property */
+			animation-iteration-count: 1;
+
+			animation-direction: normal;
+			/* animation-name: glow; */
+		}
+
+		p:hover {
+			width: 40%;
+		}
+
+		@keyframes glow {
+			0% {
+				border: 0px solid gold;
+			}
+
+			50% {
+				border: 4px solid gold;
+			}
+
+			100% {
+				border: 1px solid gold;
+			}
+		}
+
+		p::after {
+			display: block;
+			position: absolute;
+			content: " ";
+			right: 0;
+			left: 0;
+			bottom: 0;
+			height: 1rem;
+			background-color: hsla(220, 50%, 80%, 0.65);
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Transition &amp; animation events</h1>
+	</header>
+	<main>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis officiis alias provident saepe! Aspernatur et
+			eos natus odio, voluptatum illum quam. In architecto iusto fugiat distinctio iure a temporibus dolorem!</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis officiis alias provident saepe! Aspernatur et
+			eos natus odio, voluptatum illum quam. In architecto iusto fugiat distinctio iure a temporibus dolorem!</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis officiis alias provident saepe! Aspernatur et
+			eos natus odio, voluptatum illum quam. In architecto iusto fugiat distinctio iure a temporibus dolorem!</p>
+	</main>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			let ps = document.querySelectorAll('p');
+			ps.forEach(p => {
+				// Apply animation 'glow' when transition ends (widen, narrow)
+				p.addEventListener('transitionend', glow);
+				// Reset animation to '' so it can be applied again after a new transition
+				p.addEventListener('animationend', noglow);
+			});
+		})
+
+		let glow = ev => ev.currentTarget.style.animationName = 'glow';
+		let noglow = ev => ev.currentTarget.style.animationName = '';
+
+		// function glow(ev) { ev.currentTarget.style.animationName = 'glow' }
+		// function noglow(ev) { ev.currentTarget.style.animationName = '' }
+	</script>
+</body>
+
+</html>
