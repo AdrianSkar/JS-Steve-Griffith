@@ -1,21 +1,21 @@
 // food prices
 const beerCost = 6.25;
-const burguerCost = 6.75;
+const burgerCost = 6.75;
 const popCost = 6.75;
 
 //user's money
 let accountBalance = 15.75;
 
 //Check account balance
-function checkBalance(amnt) {
-	if (accountBalance - amnt >= 0) {
+function checkBalance(amt) {
+	if (accountBalance - amt >= 0) {
 		return true;
 	}
 	else {
 		console.log("Insufficient funds");
 		return false;
 	}
-	//You could also do "return ((accountBalance - amnt) >= 0)"
+	//You could also do "return ((accountBalance - amt) >= 0)"
 }
 //drink beer
 function drinkBeer() {
@@ -26,11 +26,11 @@ function drinkBeer() {
 	console.log("\tBalance: ", accountBalance.toFixed(2));
 }
 
-//eat burguer
-function eatBurguer() {
-	if (checkBalance(burguerCost)) {
-		accountBalance -= burguerCost;
-		console.log("Enjoy your burguer.");
+//eat burger
+function eatBurger() {
+	if (checkBalance(burgerCost)) {
+		accountBalance -= burgerCost;
+		console.log("Enjoy your burger.");
 
 	}
 	console.log("\tBalance: ", accountBalance.toFixed(2));
@@ -50,7 +50,7 @@ function drinkPop() {
 
 //Visit the carnival, eat and drink
 
-const mealList = [drinkBeer, drinkPop, eatBurguer, drinkBeer];
+const mealList = [drinkBeer, drinkPop, eatBurger, drinkBeer];
 function visitCarnival(mList) {
 	for (let i = 0; i < mealList.length; i++) {
 		console.log(mealList[i]);
