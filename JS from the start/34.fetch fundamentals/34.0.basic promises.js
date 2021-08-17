@@ -1,4 +1,4 @@
-//Promises basics 
+//Promises basics  https://www.youtube.com/watch?v=SmPouEFKOBg
 // wrappers for anything async
 // ajax calls, reading files, timeouts, geolocation, talk to a database or anything that would use a callback function
 // use them to get rid of callback hell
