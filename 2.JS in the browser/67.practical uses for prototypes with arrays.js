@@ -1,0 +1,1 @@
+../1.JS from the start/81.practical uses for prototypes with arrays.js
