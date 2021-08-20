@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Nodes vs. elements in the DOM</title>
+	<!-- This comment is a child element of the head element. -->
+</head>
+<!-- This comment is a child of the html element -->
+
+<body>
+	<h1>Heading</h1>
+	<main id="main">
+		<section id="a">
+			<p>Each paragraph is a Child Element Node of the section
+				Element Node. The text inside each paragraph tag is a Text Node.
+			</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, rerum fuga sequi ab exercitationem ut qui
+				fugiat deserunt voluptates inventore aspernatur provident nisi animi ducimus, facilis enim repellendus, possimus
+				sed!
+				Doloribus aperiam excepturi, reprehenderit omnis necessitatibus libero laudantium aliquid deserunt? Unde
+				voluptate nam impedit quasi maiores iste. Eveniet architecto sed, esse animi aliquid, quam harum maiores quae,
+				totam sequi voluptas.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, rerum fuga sequi ab exercitationem ut qui
+				fugiat deserunt voluptates inventore aspernatur provident nisi animi ducimus, facilis enim repellendus, possimus
+				sed!
+				Doloribus aperiam excepturi, reprehenderit omnis necessitatibus libero laudantium aliquid deserunt? Unde
+				voluptate nam impedit quasi maiores iste. Eveniet architecto sed, esse animi aliquid, quam harum maiores quae,
+				totam sequi voluptas.</p>
+
+		</section>
+		<section id="b">
+			<p>Each paragraph is a Child Element Node of the section
+				Element Node. The text inside each paragraph tag is a Text Node.
+			</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, rerum fuga sequi ab exercitationem ut qui
+				fugiat deserunt voluptates inventore aspernatur provident nisi animi ducimus, facilis enim repellendus, possimus
+				sed!
+				Doloribus aperiam excepturi, reprehenderit omnis necessitatibus libero laudantium aliquid deserunt? Unde
+				voluptate nam impedit quasi maiores iste. Eveniet architecto sed, esse animi aliquid, quam harum maiores quae,
+				totam sequi voluptas.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Totam, rerum fuga sequi ab exercitationem ut qui
+				fugiat deserunt voluptates inventore aspernatur provident nisi animi ducimus, facilis enim repellendus, possimus
+				sed!
+				Doloribus aperiam excepturi, reprehenderit omnis necessitatibus libero laudantium aliquid deserunt? Unde
+				voluptate nam impedit quasi maiores iste. Eveniet architecto sed, esse animi aliquid, quam harum maiores quae,
+				totam sequi voluptas.</p>
+
+		</section>
+		<!-- 
+			Comment node after the two sections
+
+			Node types:
+			1 - Element Node
+			3 - Text Node
+			8 - Comment Node
+			9 - Document Node
+			10 - Document type node
+			11 - Document fragment node
+
+			Deprecated types:
+			2 - Attribute node
+			4 - CData node
+		 -->
+	</main>
+
+	<script>
+		console.log('nodeType of #main:', document.getElementById('main').nodeType);
+		console.log('nodeType of #a:', document.getElementById('a').nodeType);
+		console.log('html childNodes', document.querySelector('html').childNodes);
+	</script>
+</body>
+
+</html>
