@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>fetching and reading XML data</title>
+</head>
+
+<body>
+
+	<header>
+		<h1>Reading data from XML files</h1>
+	</header>
+	<main>
+		<ul id="houses"></ul>
+		<ul id="swords"></ul>
+		<pre id="output"></pre>
+	</main>
+	<script>
+		// Older way: XMLHttpRequest() - has responseXML property in the response 
+
+		document.addEventListener('DOMContentLoaded', () => {
+			// fetch the data as soon as the page has loaded
+			let url = 'read.xml';
+			fetch(url)
+				.then(response => response.text())
+				.then(data => {
+					console.log('data:', data); // string
+
+					let parser = new DOMParser(),
+						xml = parser.parseFromString(data, 'application/xml');
+					document.getElementById('output').textContent = data;
+					console.log('xml:', xml);
+					buildHouseList(xml);
+					buildSwordList(xml);
+				})
+				.catch(err => console.log(err))
+		})
+
+		function buildHouseList(x) {
+			let list = document.getElementById('houses'),
+				houses = x.getElementsByTagName('house');
+			for (let i = 0; i < houses.length; i++) {
+				let li = document.createElement('li'),
+					house = houses[i].firstChild.nodeValue;
+				console.log(houses[i].firstChild);
+				li.textContent = house;
+				list.appendChild(li);
+			}
+		}
+
+		// Same approach but using `for...of` and `textContent` instead of `nodeValue`
+		function buildSwordList(x) {
+			let list = document.getElementById('swords'),
+				swords = x.getElementsByTagName('sword');
+			console.log(typeof swords);
+
+			for (let sword of swords) {
+				let li = document.createElement('li'),
+					swordName = sword.firstChild.textContent,
+					person = sword.getAttribute('owner');
+				li.textContent = `${swordName} - ${person}`;
+				list.appendChild(li);
+			}
+		}
+	</script>
+</body>
+
+</html>
