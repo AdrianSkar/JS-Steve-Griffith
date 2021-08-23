@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HTML5 video and captions</title>
+	<style>
+		.control {
+			cursor: pointer;
+		}
+
+		/* Matches WebVTT cues within a selected element (style captions) */
+		::cue {
+			font-size: 20px;
+			color: #333;
+			background-color: rgba(255, 200, 10, 0.64);
+		}
+
+		::cue(b) {
+			/* cue(<selector>) */
+			text-transform: uppercase;
+			color: #600;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- 
+		https://www.youtube.com/watch?v=DcWsUyhBykE&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=89 -->
+
+	<header>
+		<h1>HTML5 video and captions</h1>
+	</header>
+	<main>
+		<video controls id='video' poster="poster.jpg">
+			<source src="lion-sample.mp4" type='video/mp4'>
+			<source src="lion-sample.ogv" type='video/ogg'>
+
+			<track default src="lion1.vtt" kind='captions' srclang="en" label="English captions">
+
+			<p><a href="lion-sample.ogv" download>Download video</a></p>
+		</video><br>
+
+		<button id="btnPlay" class="control">Play</button>
+		<button id="btnPause" class="control">Pause</button>
+		<button id="btnStop" class="control">Stop</button>
+		<button id="btnRew" class="control">Rewind</button>
+		<button id="btnFF" class="control">Fast-forward</button>
+	</main>
+
+	<script>
+		let vid;
+		document.addEventListener('DOMContentLoaded', init);
+
+		function init() {
+			document.getElementById('btnPlay').addEventListener('click', play);
+			document.getElementById('btnPause').addEventListener('click', pause);
+			document.getElementById('btnStop').addEventListener('click', stop);
+			document.getElementById('btnRew').addEventListener('click', rew);
+			document.getElementById('btnFF').addEventListener('click', ff);
+
+			vid = document.getElementById('video');
+			console.log(vid);
+
+			// Use destructuring to log all props
+			console.log({ vid });
+
+			let mediaType = vid.type,
+				str = vid.canPlayType('video/mp4');
+			console.log(str);
+			vid.volume = 0.6; // 0 - 1
+		}
+
+		function play(ev) {
+			vid.play()
+				.then(() => {
+					console.log('video is playing');
+				})
+				.catch(err => console.log({ err })) // destructure err obj to log props
+
+			// After the video starts to play you can access text tracks
+			let tt = vid.textTracks,
+				cues = tt[0].cues;
+			console.log(tt);
+			console.log(`There are ${tt.length} text tracks`);
+			console.log(tt[0]);
+			console.log(cues);
+			console.log(cues.length);
+			console.log(cues[0]);
+			console.log(cues[0].text);
+		}
+
+		function pause(ev) {
+			vid.pause();
+			console.log(vid.currentTime, 'of', vid.duration, 'seconds played');
+			console.log('video is paused. No promise here');
+		}
+		function stop(ev) {
+			// No native stop function; pause and set currentTime to 0
+			vid.pause();
+			console.log(vid.currentTime);
+			vid.currentTime = 0;
+		}
+
+		function rew(ev) {
+
+			console.log(vid.currentTime);
+			if (!vid.fastSeek) {// .fastSeek not available in current browser
+				vid.currentTime -= 20;
+			}
+			else {
+				vid.fastSeek(vid.currentTime -= 20)
+				// fastSeek seems to no longer be based on promises https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/fastSeek
+				// .then(() => {
+				// console.log('Video rewind 20secs with fastSeek'); })
+				// .catch(err => console.log({ err }))
+				console.log('Video rewind 20secs with fastSeek');
+			}
+			console.log(vid.currentTime);
+		}
+
+		function ff(ev) {
+			console.log(vid.currentTime);
+			if (!vid.fastSeek) {
+				vid.currentTime += 20;
+			} else {
+				vid.fastSeek(vid.currentTime += 20)
+				// .then(() => console.log('Video forward 20secs with fastSeek'))
+				// .catch(err => console.log({ err }))
+			}
+			console.log('Video forward 20secs with fastSeek');
+			console.log(vid.currentTime);
+		}
+	</script>
+</body>
+
+</html>
