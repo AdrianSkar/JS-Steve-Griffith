@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Permissions API</title>
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Permission API</h1>
+	</header>
+
+	<main>
+		<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos provident quidem eius possimus, eaque veritatis
+			natus similique officia? Commodi culpa, consequuntur voluptatibus obcaecati minima necessitatibus aspernatur iste
+			quidem repellat sit.</p>
+	</main>
+
+
+	<footer>
+		<ul>
+			<li><a
+					href="https://www.youtube.com/watch?v=U0vmh2sd3g8&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=90">Video</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API">Permissions API - MDN</a></li>
+		</ul>
+
+		</ul>
+	</footer>
+
+	<script>
+		if (navigator.permissions) {
+			// browser supports it
+
+			navigator.permissions.query({ name: 'geolocation' })
+				.then(function (permissionStatus) {
+					console.log('geolocation permission state is ', permissionStatus.state);
+
+					permissionStatus.onchange = function () {
+						console.log('geolocation permission state has changed to ', this.state);
+					}
+				})
+
+			navigator.permissions.query({ name: 'push', userVisibleOnly: true })
+
+			navigator.geolocation.getCurrentPosition(ftw, wtf);
+			function ftw() { console.log('Geolocation ok'); }
+			function wtf() { console.log('Geolocation not ok'); }
+
+			// Notification permission
+			Notification.requestPermission(function (result) {
+				console.log('result: ', result);
+				if (result === 'denied') {
+					console.log('Notification permission NOT granted. Allow a retry');
+					return;
+				}
+				else if (result === 'default') {
+					console.log('Notification permission DISMISSED');
+					return;
+				}
+				console.log('Notification permission GRANTED.');
+			})
+		}
+	</script>
+</body>
+
+</html>
