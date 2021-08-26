@@ -27,8 +27,7 @@
 
 	<footer>
 		<ul>
-			<li><a
-					href="https://www.youtube.com/watch?v=U0vmh2sd3g8&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=90">Video</a>
+			<li><a href="https://www.youtube.com/watch?v=U0vmh2sd3g8&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=90">Video</a>
 			</li>
 			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Permissions_API">Permissions API - MDN</a></li>
 		</ul>
@@ -49,7 +48,7 @@
 					}
 				})
 
-			navigator.permissions.query({ name: 'push', userVisibleOnly: true })
+			// navigator.permissions.query({ name: 'push', userVisibleOnly: true })
 
 			navigator.geolocation.getCurrentPosition(ftw, wtf);
 			function ftw() { console.log('Geolocation ok'); }
