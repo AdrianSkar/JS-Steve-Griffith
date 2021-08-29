@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Opening new windows and tabs from JS</title>
+	<style>
+		button:hover {
+			color: aquamarine;
+		}
+
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>
+			Opening new windows and tabs from JS
+		</h1>
+	</header>
+	<main>
+		<ul>
+			<li><a id="oTab" href='#'>open tab</a></li>
+			<li><a id="cTab" href='#'>close tab</a></li>
+			<li><a id="oWindow" href='Fred'>open window</a></li>
+			<li><a id="cWindow" href='#'>close window</a></li>
+		</ul>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/open#window_features" target="_blank"
+					rel="noopener noreferrer">"Window.open()" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/close" target="_blank"
+					rel="noopener noreferrer">"Window.close()" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/opener" target="_blank"
+					rel="noopener noreferrer">"Window.opener" - <em>MDN</em></a>
+			</li>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus" target="_blank"
+					rel="noopener noreferrer">"HTMLElement.focus()" - <em>MDN</em></a>
+			</li>
+		</ul>
+
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=jEetsRZBfQ0&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=99"
+				target="_blank" rel="noopener noreferrer">"Opening new windows and tabs from JS." <em>YouTube</em>, by Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			let oTab = document.querySelector('#oTab'),
+				cTab = document.querySelector('#cTab'),
+				oWindow = document.querySelector('#oWindow'),
+				cWindow = document.querySelector('#cWindow');
+
+			// window.open(url, windowName, [windowFeatures]);
+
+			// Open/close on tab
+			oTab.addEventListener('click', ev => {
+				// ev.preventDefault(); // Not needed; works properly.
+				let refTab = window.open('new.html', '_blank');
+
+				cTab.addEventListener('click', ev => {
+					// ev.preventDefault(); // Not needed; works properly.
+					refTab.close();
+				})
+			})
+
+			// Open/close window
+			oWindow.addEventListener('click', ev => {
+				ev.preventDefault(); // Needed, won't work properly otherwise.
+
+				// Don't use options when opening tabs; otherwise it'll interfere/won't work
+				let optsWindow = 'statusbar=no, height=300, width=600, xyz=abc';
+				let refWindow = window.open('new.html', 'Fred', optsWindow);
+
+				cWindow.addEventListener('click', ev => {
+					ev.preventDefault(); // Needed, won't work properly otherwise.
+					refWindow.close();
+				})
+
+			})
+
+		})
+	</script>
+</body>
+
+</html>

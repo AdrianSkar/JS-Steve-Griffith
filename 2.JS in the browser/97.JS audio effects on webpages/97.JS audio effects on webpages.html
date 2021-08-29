@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JS audio effects on webpages</title>
+	<style>
+		p {
+			font-size: 1.5rem;
+		}
+
+		p::after {
+			display: inline-block;
+			content: attr(data-file);
+			font-size: 1.5rem;
+			margin-left: 1rem;
+			color: gray;
+		}
+
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>JS audio effects on webpages</h1>
+	</header>
+
+	<main>
+		<p data-file="clear-throat">Click me to play a sound.</p>
+		<p data-file="doorbell">Mouseover me to play a sound.</p>
+		<p data-file="static">Double-click me to play a sound.</p>
+	</main>
+
+	<!-- An audio tag with no `controls` attribute is not visible on the page -->
+	<audio id='a' src=""></audio>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/Events#media" target="_blank"
+					rel="noopener noreferrer">"Event reference" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement" target="_blank"
+					rel="noopener noreferrer">"HTMLMediaElement" - <em>MDN</em></a>
+			</li>
+		</ul>
+
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=eRTe4uaiSpc&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=97"
+				target="_blank" rel="noopener noreferrer">"JS audio effects on webpages." <em>YouTube</em>, by Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', init);
+		const SOUNDS = {
+			'clear-throat': null,
+			'doorbell': null,
+			'static': null
+		}
+		// You can add a flag (and later a button/option) in case users don't want 
+		// sounds to be played.
+		let allowSound = true;
+
+		function init() {
+			// Try different selectors:
+			let p1 = document.querySelector('p[data-file]'),
+				p2 = document.querySelector('p:nth-of-type(2)'),
+				p3 = document.querySelector('p:last-of-type');
+			p1.addEventListener('click', play);
+			p2.addEventListener('mouseover', play);
+			p3.addEventListener('dblclick', play);
+		}
+
+		function play(ev) {
+			let p = ev.currentTarget;
+			ev.preventDefault();
+
+			let fn = p.getAttribute('data-file'),
+				src = './media/' + fn + '.mp3';
+			if (SOUNDS[fn]) {
+				// If there's a sound already playing, pause it and remove it (setting 
+				// its value (the audio tag) to null will also allow the garbage 
+				// collector to pick it up).
+				SOUNDS[fn].pause();
+				SOUNDS[fn] = null;
+			}
+			console.log(src);
+
+			// let audio = document.getElementById('a');
+			let audio = document.createElement('audio');
+			// Won't need:
+			// audio.removeAttribute('controls');
+			// document.body.appendChild(audio);
+
+			audio.src = src;
+			audio.volume = 0.2;
+
+			// Change the starting position in the file.
+			// audio.currentTime = 0.8;
+			if (allowSound) { // User preference.
+				SOUNDS[fn] = audio;
+				audio.setAttribute('data-file', fn);
+				audio.play();
+			}
+			// Listen for sound events:
+			audio.addEventListener('playing', goAudio);
+			audio.addEventListener('ended', doneAudio);
+
+			function goAudio(ev) {
+				console.log(ev.target, 'has started playing');
+			}
+			function doneAudio(ev) {
+				console.log(ev.target, 'has finished playing');
+				let fn = ev.target.getAttribute('data-file');
+				SOUNDS[fn] = null;
+			}
+		}
+	</script>
+</body>
+
+</html>

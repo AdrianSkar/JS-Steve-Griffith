@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS variables</title>
+	<style>
+		:root {
+			--COLOR: cornflowerblue;
+			--SPACE: 10px;
+		}
+
+		h1 {
+			color: var(--COLOR);
+			border-bottom: var(--SPACE) solid var(--COLOR);
+		}
+
+		p {
+			color: var(--COLOR);
+		}
+
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>CSS variables</h1>
+	</header>
+	<main>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quis optio inventore, tempora voluptatum commodi in
+			alias dolorem, velit molestias rerum pariatur expedita aliquid maiores iste aliquam ex, doloribus dolores.</p>
+		<p style='--COLOR: salmon'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quis optio inventore,
+			tempora voluptatum commodi in alias dolorem, velit molestias rerum pariatur expedita aliquid maiores iste aliquam
+			ex, doloribus dolores.</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://caniuse.com/css-variables" target="_blank" rel="noopener noreferrer">"CSS variables (custom
+					properties)" - <em>caniuse.com</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/--*" target="_blank" rel="noopener noreferrer">"Custom
+					properties (--*): CSS variables" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties" target="_blank"
+					rel="noopener noreferrer">"Using CSS custom properties (variables)" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:root" target="_blank"
+					rel="noopener noreferrer">":root" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleDeclaration/setProperty" target="_blank"
+					rel="noopener noreferrer">"CSSStyleDeclaration.setProperty()" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement" target="_blank"
+					rel="noopener noreferrer">"Document.documentElement" - <em>MDN</em></a>
+			</li>
+		</ul>
+
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=ELkA_MAdThQ&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=93"
+				target="_blank" rel="noopener noreferrer">"CSS variables." <em>YouTube</em>, by Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let html = document.documentElement;
+			html.style.setProperty('--COLOR', 'gray');
+		})
+	</script>
+</body>
+
+</html>
