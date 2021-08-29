@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>International date/time formatting</title>
+	<style>
+		p {
+			font-size: 1.2rem;
+		}
+
+		p[lang=de-DE] {
+			color: darkkhaki
+		}
+
+		p[lang=en-CA] {
+			color: darkcyan
+		}
+
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>International date/time formatting</h1>
+	</header>
+
+	<p lang="de-DE">de-DE: </p>
+	<p lang="en-CA">en-CA: </p>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat"
+					target="_blank" rel="noopener noreferrer">"Intl.DateTimeFormat" - <em>MDN</em></a>
+			</li>
+		</ul>
+
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=_o2OHTwjtts&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=95"
+				target="_blank" rel="noopener noreferrer">"International date and time formatting with JS." <em>YouTube</em>, by
+				Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		let today = new Date();
+
+		let us = new Intl.DateTimeFormat('en-US').format(today),
+			ca = new Intl.DateTimeFormat('en-CA').format(today),
+			gb = new Intl.DateTimeFormat('en-GB').format(today),
+			de = new Intl.DateTimeFormat('de-DE').format(today),
+			// Default + fallback:
+			as = new Intl.DateTimeFormat('ar', 'sv').format(today),
+			sa = new Intl.DateTimeFormat('sv', 'ar').format(today);
+
+		document.querySelector('p[lang=de-DE]').textContent += de;
+		document.querySelector('p[lang=en-CA]').textContent += ca;
+
+		console.log(us);
+		console.log(ca);
+		console.log(gb);
+		console.log(de);
+		console.log(as);
+		console.log(sa);
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>JS internationalization and localization of strings</title>
+</head>
+
+<body>
+	<header>
+		<h1>JS internationalization and localization of strings</h1>
+	</header>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank"
+					rel="noopener noreferrer">"Intl" - <em>MDN</em></a>
+			</li>
+		</ul>
+
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=Y25n9k9-Z5A&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=96"
+				target="_blank" rel="noopener noreferrer">"JS internationalization and localization of strings."
+				<em>YouTube</em>, by Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		let languageCodes = ['sv', 'en', 'fr', 'es', 'dee', 'de'];
+		// Check for supported languages:
+		console.log(Intl.Collator.supportedLocalesOf(languageCodes));
+
+		// Defaults to user's locale
+		console.log(new Intl.Collator().compare('a', 'z'));
+		console.log(new Intl.Collator('en').compare('a', 'z'));
+
+
+		console.group('sv');
+		console.log(new Intl.Collator('sv').compare('ä', 'z'));
+		console.log(new Intl.Collator('sv').compare('ä', 'a'));
+
+		console.log('numeric:true 10 vs 2', new Intl.Collator('sv', {
+			numeric: true,
+		}).compare('10', '2'));
+
+		console.log('caseFirst:False a vs A:', new Intl.Collator('sv', {
+			caseFirst: false
+		}).compare('a', 'A'));
+		console.log('ignorePunctuation:true .a vs A:', new Intl.Collator('sv', {
+			ignorePunctuation: true
+		}).compare('.a', 'A'));
+		console.log('sensitivity:base a=A', new Intl.Collator('sv', {
+			sensitivity: "base"
+		}).compare('a', 'A'));
+		console.groupEnd('sv');
+
+		console.log(new Intl.Collator('de').compare('ß', 's'));
+
+		console.log(new Intl.Collator('dk').compare('å', 'z'));
+		console.log(new Intl.Collator('dk').compare('æ', 'z'));
+	</script>
+</body>
+
+</html>

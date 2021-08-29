@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>International numbers and currency</title>
+</head>
+
+<body>
+	<header>
+		<h1>International numbers and currency</h1>
+	</header>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat"
+					target="_blank" rel="noopener noreferrer">"Intl.numberFormat" - <em>MDN</em></a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat"
+					target="_blank" rel="noopener noreferrer">"Intl.numberFormat() constructor" - <em>MDN</em></a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=-7DFCCoH6Hk&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=94"
+				target="_blank" rel="noopener noreferrer">"International number and currency formatting in JS."
+				<em>YouTube</em>, by Steve
+				Griffith</a>
+		</cite>
+	</footer>
+
+	<script>
+		let number = 12346.789;
+
+		console.group('numbers');
+		console.log('en-CA', new Intl.NumberFormat('en-CA', { style: 'decimal' }).format(number));
+		console.log('fr-CA', new Intl.NumberFormat('fr-CA', { style: 'decimal' }).format(number));
+		console.groupEnd('numbers');
+
+		console.group('currency');
+		console.log('en-CA useGrouping:false', new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD', useGrouping: false }).format(number));
+		// Expected output: "$123,456.79"
+
+		// You can assign the new object to a var
+		let gbNum = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+		console.log('en-GB', gbNum.format(number));
+		// Expected output: "£123,456.79"
+
+		console.log('de-DE', new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(number));
+		// Expected output "123.456,79 €"
+
+		console.log('ja-JP', new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(number));
+		// Expected output: "￥123,457"
+		console.groupEnd('currency');
+
+		// Limit to three significant digits
+		console.log('en-IN', new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3, style: 'currency', currency: 'INR' }).format(number));
+		// Expected output: "1,23,000"
+	</script>
+</body>
+
+</html>
