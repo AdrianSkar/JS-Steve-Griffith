@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Clipboard API</title>
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Clipboard API</h1>
+	</header>
+	<main>
+		<p contenteditable="true">Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic tempora asperiores non
+			voluptatem tempore, sunt reprehenderit dolor illo voluptate molestias repudiandae. Natus, provident officia
+			deserunt omnis ut libero quam eaque.</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel amet quae quibusdam minus consequatur repellat odit
+			nisi corrupti dolorum quos repudiandae, et placeat dignissimos magnam quia. Incidunt aperiam id autem.</p>
+		<p><button id="btnCopy">Copy sample code</button></p>
+
+		<pre>
+			['cut', 'copy', 'paste'].forEach(function(event){
+				document.addEventListener(event, function(e){
+					console.log(event);
+				})
+			})
+		</pre>
+		<img src=".\89.controlling HTML5 video and captions with JS\poster.jpg" alt="">
+	</main>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard" target="_blank"
+					rel="noopener noreferrer">"Clipboard" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent" target="_blank"
+					rel="noopener noreferrer">"Clipboard Event" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/permissions"
+					target="_blank" rel="noopener noreferrer">"permissions" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/contentEditable" target="_blank"
+					rel="noopener noreferrer">"HTMLElement.contentEditable" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus" target="_blank"
+					rel="noopener noreferrer">"HTMLElement.focus()" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select" target="_blank"
+					rel="noopener noreferrer">"HTMLInputElement.select()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=JTVvgToyTRs&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=91"
+				target="_blank" rel="noopener noreferrer">"HTML5 clipboard API." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+
+	<script>
+		/*** Old/cross-browser approach (input element and focus needed) ***/
+		// document.addEventListener('DOMContentLoaded', () => {
+		// 	['cut', 'copy', 'paste'].forEach(function (event) {
+		// 		document.addEventListener(event, function (ev) {
+		// 			console.log(ev);
+		// 			// if (ev.type === 'paste') {
+		// 			// 	console.log(ev.clipboardData.getData('text'));
+		// 			// }
+		// 		})
+		// 	})
+		// 	let pre = document.querySelector('pre'),
+		// 		text = pre.textContent;
+		// 	const input = document.createElement('input');
+		// 	document.body.appendChild(input);
+		// 	input.value = text;
+		// 	input.focus();
+		// 	input.select();
+		// 	const result = document.execCommand('copy'); //! Deprecated.
+		// 	if (result === 'unsuccessful') {
+		// 		console.error('Failed to copy text');
+		// 	}
+		// })
+
+		//__________________________________________________________________________
+
+		/* HTTPS only (or localhost), only active tabs, required permissions
+			for read and write */
+
+		// Get permission to access the clipboard
+		navigator.permissions.query({
+			// these won't work in Firefox https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard#using_the_clipboard_api
+			name: 'clipboard-read',
+			name: 'clipboard-write'
+		})
+			.then(permissionStatus => {
+				// 'granted', 'denied', or ' prompt'
+				console.log(permissionStatus.state);
+
+				// Listen for changes to the permission state.
+				permissionStatus.onchange = () => {
+					console.log('Clipboard permission state:', permissionStatus.state);
+				}
+			})
+
+		let pre = document.querySelector('pre'),
+			btnCopy = document.querySelector('#btnCopy');
+
+		// Copy <pre>'s content to the clipboard.
+		btnCopy.addEventListener('click', function () {
+			navigator.clipboard.writeText(pre.textContent)
+				.then(() => {
+					console.log('<pre> was copied to the clipboard.');
+				})
+				.catch(err => console.error(err));
+		})
+
+		document.addEventListener('DOMContentLoaded', () => {
+			['cut', 'copy', 'paste'].forEach(function (event) {
+				document.addEventListener(event, function (ev) {
+					console.log(ev);
+					// Retrieve clipboard and log copied/pasted text content.
+					if (ev.type === 'cut' || ev.type === 'copy') {
+						navigator.clipboard.readText()
+							.then(copy => {
+								console.log('The content in the clipboard is:', copy);
+							})
+							.catch(err => console.error(err))
+					}
+					else if (ev.type === 'paste') {
+						// ev.preventDefault(); // If you don't want the actual paste.
+						navigator.clipboard.readText()
+							.then(text => { console.log('Pasted text is:', text); })
+							.catch(err => console.error(err))
+					}
+				})
+			})
+		})
+
+	</script>
+</body>
+
+</html>
