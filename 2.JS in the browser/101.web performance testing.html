@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Intro to web performance testing</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+
+	<script>
+		let startTime = performance.now();
+		performance.mark('Mario');
+	</script>
+</head>
+
+<body>
+	<header>
+		<h1>Intro to web performance testing</h1>
+	</header>
+	<main>
+		<p>Uses a <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp"" target=" _blank"
+				rel="noopener noreferrer">DOMHighResTimeStamp</a>.
+		</p>
+		<p>The millisecond is the unit of measure.</p>
+		<p>Accurate to within 5 microseconds.</p>
+
+		<div id="output"></div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance_API" target="_blank"
+					rel="noopener noreferrer">"Performance API" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=EzFeN61KQM0&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=101"
+				target="_blank" rel="noopener noreferrer">"Intro to web performance testing." YouTube, by
+				Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		for (let i = 0; i < 100000; i++) {
+			let a = 50000;
+			if (a < i) a = Math.random();
+			let out = document.getElementById('output');
+			out.textContent = `Random number; ${a}`;
+		}
+
+		let endTime = performance.now();
+		console.log('endTime - startTime', endTime - startTime);
+
+		document.addEventListener('DOMContentLoaded', () => {
+			performance.mark('Luigi'); // 2nd mark
+			// Measure created marks
+			performance.measure('measureName', 'Mario', 'Luigi');
+
+			let timmy = performance.getEntriesByName('measureName', 'measure');
+			console.log(timmy);
+		})
+
+		/* Performance methods:
+			- performance.mark()
+			- performance.measure()
+			- performance.clearMarks()
+			- performance.clearMeasures()
+			- performance.getEntries()
+			- performance.getEntriesByType('mark')
+			- performance.getEntriesByName('measureName', 'measure')
+			*/
+	</script>
+</body>
+
+</html>
