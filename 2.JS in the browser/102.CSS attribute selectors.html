@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>CSS attribute selectors</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		/*
+		 [data-value] 				- has attribute
+		 [data-value="one"] 	- exact match
+		 [data-value*="one"] 	- contains
+		 [data-value~="one"]	- space separated
+		 [data-value^="one"]	- starts with
+		 [data-value$="one"]	- ends with
+		 [data-value|="one"]	- starts with one + hyphen
+		*/
+
+		main [data-value |='two'] {
+			color: gold;
+		}
+
+		a[href^="https://adrianskar.com"] {
+			/* all anchors leading to URL */
+			padding: 1rem;
+		}
+
+		a[href$=".pdf"] {
+			/* all links leading to .pdf files */
+			color: lightcoral;
+		}
+	</style>
+	<script>
+		// Target attributes with JS too
+		document.addEventListener('DOMContentLoaded', () => {
+			let three = document.querySelector('p[data-value*="thr"]');
+			three.style.color = 'red';
+		})
+	</script>
+</head>
+
+<body>
+	<header>
+		<h1>CSS attribute selectors</h1>
+	</header>
+	<main>
+		<p data-value="one">Lorem ipsum dolor sit amet <a href="https://adrianskar.com/doc.pdf">consectetur</a> adipisicing
+			elit. Sequi ab dignissimos quidem quia esse
+			suscipit reiciendis corporis, nobis unde asperiores temporibus aperiam officia animi quam adipisci doloribus
+			mollitia tempora illo!</p>
+		<p data-value="two">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ab dignissimos quidem quia esse
+			suscipit reiciendis corporis, nobis unde asperiores temporibus aperiam officia animi quam adipisci doloribus
+			mollitia tempora illo!</p>
+		<p data-value="three">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ab dignissimos quidem quia esse
+			suscipit reiciendis corporis, nobis unde asperiores temporibus aperiam officia animi quam adipisci doloribus
+			mollitia tempora illo!</p>
+		<p data-value="four">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ab dignissimos quidem quia esse
+			suscipit reiciendis corporis, nobis unde asperiores temporibus aperiam officia animi quam adipisci doloribus
+			mollitia tempora illo!</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors" target="_blank"
+					rel="noopener noreferrer">"Attribute selectors" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=oO610iSW73Q&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=102"
+				target="_blank" rel="noopener noreferrer">"CSS attribute selectors." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+
+	</script>
+</body>
+
+</html>
