@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Make QR codes with JS</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		img {
+			width: 20%;
+		}
+
+		div img {
+			width: 20%;
+		}
+	</style>
+	<script src="qrcode.js"></script>
+</head>
+
+<body>
+	<header>
+		<h1>Make QR codes with JS</h1>
+	</header>
+	<main>
+		<div id="output"></div>
+		<!-- <img src="qrcode-encoding.png" alt=""> -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://davidshimjs.github.io/qrcodejs/" target="_blank" rel="noopener noreferrer">"qrcode.js"
+					- <em>github.io</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=xeLsiAj3fI8&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=103"
+				target="_blank" rel="noopener noreferrer">"Make QR codes with JS." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+
+	<script>
+		let qrCode = new QRCode("output", {
+			text: "https://adrianskar.com",
+			width: 255,
+			height: 255,
+			colorDark: "#990000",
+			colorLight: "#ffffff",
+			correctLevel: QRCode.CorrectLevel.H
+		});
+
+		document.body.addEventListener('click', () => {
+			// change qrCode to a different URL
+			qrCode.clear();
+			qrCode.makeCode("https://dev.adrianskar.com");
+		})
+	</script>
+</body>
+
+</html>
