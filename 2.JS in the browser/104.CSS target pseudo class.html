@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>How to use the CSS :target pseudo class</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		a {
+			font-size: 1rem;
+			padding: 0.2rem 1rem;
+		}
+
+		a.current {
+			color: white;
+			background-color: #bada55;
+			text-shadow: 1px;
+			font-weight: 900;
+			text-decoration: none;
+		}
+
+		p {
+			font-size: 1rem;
+			padding: 1rem;
+			margin: 1rem;
+		}
+
+		:target {
+			/* Select element with id=#target (in url) */
+			background-color: bisque;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>How to use the CSS :target pseudo class</h1>
+	</header>
+	<nav>
+		<a href="#p1">paragraph1</a>
+		<a href="#p2">paragraph2</a>
+		<a href="#p3">paragraph3</a>
+		<a href="#p4">paragraph4</a>
+		<a href="#p5">paragraph5</a>
+	</nav>
+	<main>
+		<p id="p1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quas quo rem quae obcaecati
+			expedita, esse cumque, facilis voluptatem velit nihil saepe quasi facere, doloribus eligendi sit? Ad, maxime
+			velit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, debitis quam. Modi sapiente eius
+			odit magnam est mollitia ea repellat, esse animi ratione sint expedita magni itaque porro velit atque?</p>
+		<p id="p2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quas quo rem quae obcaecati
+			expedita, esse cumque, facilis voluptatem velit nihil saepe quasi facere, doloribus eligendi sit? Ad, maxime
+			velit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, debitis quam. Modi sapiente eius
+			odit magnam est mollitia ea repellat, esse animi ratione sint expedita magni itaque porro velit atque?</p>
+		<p id="p3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quas quo rem quae obcaecati
+			expedita, esse cumque, facilis voluptatem velit nihil saepe quasi facere, doloribus eligendi sit? Ad, maxime
+			velit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, debitis quam. Modi sapiente eius
+			odit magnam est mollitia ea repellat, esse animi ratione sint expedita magni itaque porro velit atque?</p>
+		<p id="p4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quas quo rem quae obcaecati
+			expedita, esse cumque, facilis voluptatem velit nihil saepe quasi facere, doloribus eligendi sit? Ad, maxime
+			velit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, debitis quam. Modi sapiente eius
+			odit magnam est mollitia ea repellat, esse animi ratione sint expedita magni itaque porro velit atque?</p>
+		<p id="p5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem quas quo rem quae obcaecati
+			expedita, esse cumque, facilis voluptatem velit nihil saepe quasi facere, doloribus eligendi sit? Ad, maxime
+			velit! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, debitis quam. Modi sapiente eius
+			odit magnam est mollitia ea repellat, esse animi ratione sint expedita magni itaque porro velit atque?</p>
+	</main>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:target" target="_blank"
+					rel="noopener noreferrer">":target" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event" target="_blank"
+					rel="noopener noreferrer">"Window:hashchange event" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=e-2HNzrpVE4&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=104"
+				target="_blank" rel="noopener noreferrer">"How to use the CSS :target pseudo class." YouTube,
+				by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		// `load` event acts on elements when the page loads (not on clicked after).
+		window.addEventListener('load', setCurr);
+
+		// 'DOMContentLoaded'; works in Firefox as well as 'load' (not at the 
+		// time of video recording) but not in Chrome.
+		document.addEventListener('DOMContentLoaded', setCurr);
+
+		// `hashchange` acts on elements that changed when we've already loaded the 
+		// page.
+		window.addEventListener('hashchange', setCurr);
+
+		// `popstate`; works in Firefox as well as 'hashchange' (not at the 
+		// time of video recording) but loads the previous id on Chrome.
+		// window.addEventListener('popstate', setCurr);
+
+		function setCurr(ev) {
+			let p, a, id;
+
+			p = document.querySelector(':target');
+			console.log(ev, p);
+			if (p) {// If there's a target to act on.
+				// Make a selector for our paragraph:
+				id = `a[href="#${p.id}"]`;
+				console.log(id);
+
+				// Remove all previous `.current` classes: 
+				document.querySelectorAll('.current').forEach(anchor => {
+					anchor.classList.remove('current');
+				})
+
+				// Add the new one:
+				a = document.querySelector(id);
+				a.classList.add('current');
+			}
+		}
+
+	</script>
+</body>
+
+</html>
