@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Capture DOM changes with mutation observers</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Capture DOM changes with mutation observers</h1>
+	</header>
+	<main>
+		<p title="mouseover text">
+			<![CDATA[ this is some characterData]]>
+			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed placeat quia eaque blanditiis recusandae nulla quis
+			nostrum enim eum facere. Tempore reiciendis error ad sit veritatis ipsam ipsum. Nemo, sint.
+		</p>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus soluta aliquam explicabo nesciunt sint iure
+			animi possimus laborum? Accusantium cumque quod dolor sint dolores rerum eum mollitia voluptates eius nulla?</p>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus soluta aliquam explicabo nesciunt sint iure
+			animi possimus laborum? Accusantium cumque quod dolor sint dolores rerum eum mollitia voluptates eius nulla?</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CDATASection" target="_blank"
+					rel="noopener noreferrer">"CDATASection" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver" target="_blank"
+					rel="noopener noreferrer">"MutationObserver" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=RQ1N_EP07xs&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=105"
+				target="_blank" rel="noopener noreferrer">"Capture DOM changes with mutation observers."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let observer;
+
+		document.addEventListener('DOMContentLoaded', init);
+
+		function init() {
+			let p = document.querySelector('main > p'); // 1st p
+			p.addEventListener('click', change);
+
+			function change(ev) {
+				let p = ev.currentTarget;
+
+				p.textContent = ` this is new content`;
+				p.setAttribute('data-thing', 123);
+				p.title = ' New title';
+
+				let span = document.createElement('span');
+				span.textContent = ` some span text.`;
+				p.appendChild(span);
+			}
+
+			let config = {
+				/* Required at least one of childList, attributes or character Data */
+				attributes: true,
+				attributeOldValue: true,
+				attributeFilter: ['data-thing', 'title', 'style'],
+				childList: true,
+				subtree: false,
+				characterData: false,
+				characterDAtaOdValue: false
+			};
+
+			// Create and return new observer invoking `mutated` when DOM event occurs:
+			observer = new MutationObserver(mutated);
+			// Method to establish which portion of the DOM observe (p) and what kind
+			// of changes to watch for (config):
+			observer.observe(p, config);
+
+			function mutated(mutationList) {
+				console.log(mutationList);
+				for (const mutation of mutationList) {
+					if (mutation.type === 'childList') {
+						console.log('A child node has been added/removed.');
+					}
+					else if (mutation.type === 'attributes') {
+						console.log(`The ${mutation.attributeName} attribute was modified.`);
+						console.log(mutation.oldValue);
+					}
+				}
+				// Stop watching for mutations:
+				observer.disconnect();
+
+			}
+		}
+
+	</script>
+</body>
+
+</html>
