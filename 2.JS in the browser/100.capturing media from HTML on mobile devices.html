@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Capturing media from HTML on mobile devices</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		P>audio,
+		p>video,
+		p>img {
+			max-width: 90%;
+		}
+	</style>
+</head>
+
+<body>
+
+	<header>
+		<h1>Capturing media from HTML on mobile devices</h1>
+	</header>
+
+	<main>
+		<form action="#" id="myForm" enctype="multipart/form-data">
+			<label for="capture">Capture media</label>
+			<input type="file" id="capture" accept="image/*,video/*,audio/*" capture multiple />
+			<br>
+			<input type="submit" value='Process'>
+		</form>
+
+		<p><img src="" id="image" alt="image from phone"></p>
+		<p>
+			<audio src="" id="audio" controls></audio>
+		</p>
+		<p>
+			<video src="" id="video" controls></video>
+		</p>
+	</main>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/capture" target="_blank"
+					rel="noopener noreferrer">"HTML attribute: capture" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file" target="_blank"
+					rel="noopener noreferrer">"&lt;input type="file"&gt;" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/multiple" target="_blank"
+					rel="noopener noreferrer">"HTML attribute: multiple" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept" target="_blank"
+					rel="noopener noreferrer">"HTML attribute: accept" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL" target="_blank"
+					rel="noopener noreferrer">"URL.createObjectURL()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=dbrez37HlJM&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=100"
+				target="_blank" rel="noopener noreferrer">"Capturing media from HTML on mobile devices."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', ev => {
+			let form = document.getElementById('myForm'),
+				input = document.getElementById('capture');
+
+			input.addEventListener('change', ev => {
+				// Determine type of file on input change and show it on its own div accordingly.
+				let file = input.files[0];
+				console.dir(file);
+
+				if (file.type.indexOf('image') > -1) {
+					let img = document.getElementById('image');
+					img.src = window.URL.createObjectURL(file);
+				}
+				else if (file.type.indexOf('audio') > -1) {
+					let audio = document.getElementById('audio');
+					audio.src = window.URL.createObjectURL(file);
+				}
+				else if (file.type.indexOf('video') > -1) {
+					let video = document.getElementById('video');
+					video.src = window.URL.createObjectURL(file);
+				}
+			})
+		})
+	</script>
+
+</body>
+
+</html>
