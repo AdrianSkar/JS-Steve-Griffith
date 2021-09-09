@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Base64 made clear</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		/* You can also use base64 strings to create background images in CSS */
+		.cssBack {
+			width: 41px;
+			height: 43px;
+			background: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7) no-repeat left center;
+		}
+
+		output {
+			font-family: monospace;
+			background-color: #eee;
+			color: #333;
+			padding: 1rem;
+			margin: 1rem 0;
+			display: block;
+			word-break: break-all;
+		}
+
+		canvas {
+			border: 1px solid red;
+		}
+
+		img {
+			margin: 1rem;
+		}
+
+		.FileReader {
+			/* From file input. */
+			border: 3px solid blue;
+		}
+
+		.createObjectURL {
+			/* From file input */
+			border: 3px solid gold;
+		}
+
+		.canvas {
+			border: 3px solid green;
+		}
+
+		#inputs,
+		#canvases {
+			border: 1px solid #333;
+			padding: 1rem;
+			margin: 0.2rem 0;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Base64 made clear</h1>
+	</header>
+	<main>
+		<p>
+			All your data is broken up into 3-byte groups. With 8 bits per byte that
+			makes 24 bits in each group. Each 24bits of data is then turned into
+			groups of 4 x 6 bits.
+		</p>
+		<p>
+			If we end up with a group at the end of the data stream that only has one
+			or two bytes, then it gets padded with zeros. These padding zeros will be
+			represented with the equal sign <code>=</code> character.
+		</p>
+		<p>
+			111111 would be the largest number you could make with 6 bits. That value,
+			in decimal, is 63. So there are 65 different values. They are represented
+			with the following characters.
+		</p>
+		<pre>A-Z			a-z			0-9			+			/</pre>
+		<pre>0-25			26-51			52-61			62			63</pre>
+
+		<output id="out"></output>
+
+		<div id="canvases">
+			<p>Canvas images:</p>
+			<canvas id="canvas" width="200" height="200"></canvas>
+		</div>
+		<form action="#"><input type="file" accepts="image/*" id="imgInput"></form>
+		<div id="inputs">
+			<p>Input images:</p>
+		</div>
+		<div id="manual">
+			<div class="cssBack"></div>
+			<!-- Directly as src in HTML tag: -->
+			<div class="htmlOnly"><img
+					src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"
+					alt="star" width="16" height="16"></div>
+		</div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Base64" target="_blank"
+					rel="noopener noreferrer">"Base64" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/escape"
+					target="_blank" rel="noopener noreferrer">"escape()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/unescape"
+					target="_blank" rel="noopener noreferrer">"unescape()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent"
+					target="_blank" rel="noopener noreferrer">"encodeURIComponent()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent"
+					target="_blank" rel="noopener noreferrer">"decodeURIComponent()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL" target="_blank"
+					rel="noopener noreferrer">"URL.createObjectURL()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader" target="_blank"
+					rel="noopener noreferrer">"FileReader" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL" target="_blank"
+					rel="noopener noreferrer">"FileReader.readAsDataURL()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas" target="_blank"
+					rel="noopener noreferrer">"The graphics canvas element" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas/getContext" target="_blank"
+					rel="noopener noreferrer">"OffscreenCanvas.getContext()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage" target="_blank"
+					rel="noopener noreferrer">"CanvasRenderingContext2D.drawImage()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank"
+					rel="noopener noreferrer">"HTMLCanvasElement.toDataURL()" - <em>MDN</em>.</a></li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob" target="_blank"
+					rel="noopener noreferrer">"HTMLCanvasElement.toBlob()" - <em>MDN</em>.</a></li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=SARf0c-D8BU&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=106"
+				target="_blank" rel="noopener noreferrer">"Base64 made clear." YouTube, by Steve Griffith.</a>
+		</cite>
+		<br>
+		<cite>
+			- <a href="hhttps://css-tricks.com/data-uris/" target="_blank" rel="noopener noreferrer">"Data URIs."
+				css-tricks.com, by Chris Coyier.</a>
+		</cite>
+	</footer>
+	<script>
+		// You couldn't use .toString(radix) because only accepts values up to 36.
+		let out = document.getElementById('out'),
+			num = 17;
+		out.innerHTML += `17 in hexadecimal is ${num.toString(16)}. <br>`;
+		out.innerHTML += `17 in base36 is ${num.toString(36)}. <br>`;
+
+		// btoa/atob (base64 to ASCII; ASCII to base64)
+		// window.btoa(unescape(encodeURIComponent(str)))
+		// decodeURIComponent(escape(window.atob(encoded value)))
+
+		try { // Won't work as btoa can't interpret UNICODE chars (emoji).
+			let set = btoa('abc🤔');
+			out.innerHTML += `${str} is abc🤔 in base-64. <br>`;
+		}
+		catch (err) {
+			out.innerHTML += `Error: ${err.message}<br>`;
+			// console.log("encodeURIComponent('abc🤔')  -> ", encodeURIComponent('abc🤔'));
+			// console.log("unescape(encodeURIComponent('abc🤔')))  -> ", unescape(encodeURIComponent('abc🤔')));
+			// console.log("btoa(unescape(encodeURIComponent('abc🤔'))))  -> ", btoa(unescape(encodeURIComponent('abc🤔'))));
+			let str2 = btoa(unescape(encodeURIComponent('abc🤔')));
+			out.innerHTML += `${str2} is abc🤔 in base-64.<br>`;
+		}
+
+		let imgTemp = document.createElement('img');
+		imgTemp.src = './rocket.png';
+
+		//__________________________________________________________________________
+
+		// HTML5 Canvas for images
+		// canvas.toDataURL(type, encoderOptions);
+		//https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+		let canvas = document.getElementById('canvas');
+		let context = canvas.getContext('2d');
+		// console.log(context);
+		imgTemp.addEventListener('load', e => {
+			context.drawImage(imgTemp, 10, 10);
+
+			// Canvas image to base64 string:
+			let canvas64 = canvas.toDataURL(),
+				shortCanvas64 = `${canvas64.slice(0, 36)}...`;
+			out.innerHTML += `<br>Base64 string from canvas(red):<br>${shortCanvas64}</br>`;
+
+			// Image from DataURL:
+			let img2 = document.createElement('img');
+			img2.classList.add('canvas');
+			img2.src = canvas64;
+			document.querySelector('#canvases').appendChild(img2);
+
+			// Image from canvas toBlob(callback,[type, quality]):
+			let canvasBlob = canvas.toBlob(blob => {
+				let blobURL = URL.createObjectURL(blob);
+				out.innerHTML += `<br>BlobURL from canvas:<br> ${blobURL}<br>`;
+				// No further need for img2's blob:
+				img2.onload = function () {
+					URL.revokeObjectURL(blobURL);
+				}
+			}, 'image/jpeg', 0.8)
+		});
+		//________________________________________________________________________
+
+		// Images from input:
+		let input = document.getElementById('imgInput')
+		input.addEventListener('change', ev => {
+			let file = ev.target.files[0];
+			// Using createObjectURL:
+			if (file) {
+				let fileURL = window.URL.createObjectURL(file);
+				out.innerHTML += `<br>BlobURL from 	input:<br> ${fileURL}<br>`;
+				let img = document.createElement('img');
+				img.addEventListener('load', ev => {
+					// Clear up memory
+					URL.revokeObjectURL(fileURL);
+				})
+				img.src = fileURL;
+				img.classList.add('createObjectURL');
+				document.querySelector('#inputs').appendChild(img);
+			}
+
+			// Using FileReader:
+			let reader = new FileReader();
+			reader.addEventListener('load', ev => {
+				let img2 = document.createElement('img');
+				console.log(ev.currentTarget);
+				img2.src = ev.currentTarget.result;
+				img2.classList.add('FileReader');
+
+				let shortBase64b = ev.currentTarget.result.slice(0, 36);
+				out.innerHTML += `<br>Base64 from FileReader(result):<br> ${shortBase64b}...<br>`;
+				document.querySelector('#inputs').appendChild(img2);
+			})
+			reader.readAsDataURL(file);
+		})
+
+
+
+
+
+	</script>
+</body>
+
+</html>
