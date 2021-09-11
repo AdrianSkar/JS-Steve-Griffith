@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>new moment JS - luxon JS</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		#output,
+		#durations,
+		#intervals {
+			margin: 1rem 0;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>new moment JS -> luxon JS</h1>
+	</header>
+
+	<main>
+		<div id="output"></div>
+		<div id="durations"><a href="https://moment.github.io/luxon/#/tour?id=durations" target="_blank"
+				rel="noopener noreferrer">Durations:</a><br>
+		</div>
+		<div id="intervals">
+			<a href="https://moment.github.io/luxon/#/tour?id=intervals" target="_blank"
+				rel="noopener noreferrer">Intervals:</a><br>
+		</div>
+		<div id="info">
+			<a href="https://moment.github.io/luxon/api-docs/index.html#info" target="_blank"
+				rel="noopener noreferrer">Info:</a><br>
+		</div>
+	</main>
+
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://momentjs.com/" target="_blank" rel="noopener noreferrer"><em>momentjs.com</em>.</a>
+			</li>
+			<li>
+				<a href="https://moment.github.io/luxon/#/" target="_blank" rel="noopener noreferrer">"luxon" -
+					<em>github.io</em>.</a>
+			</li>
+			<li>
+				<a href="https://github.com/moment/luxon/" target="_blank" rel="noopener noreferrer">"luxon" -
+					<em>github.com</em>.</a>
+			</li>
+			<li>
+				<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" target="_blank"
+					rel="noopener noreferrer">"List of tz database time zones" - <em>Wikipedia</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl" target="_blank"
+					rel="noopener noreferrer">"Intl" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=vAuUzEwTbck&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=107"
+				target="_blank" rel="noopener noreferrer">"new moment JS - luxon JS." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+
+	<script src="./luxon.min.js"></script>
+	<script>
+		let output = document.getElementById('output');
+		output.textContent = `${JSON.stringify(luxon.DateTime.DATETIME_FULL)}`;
+
+		// Alias the main class/base object in Luxon.
+		const DateTime = luxon.DateTime;
+		/* 
+		- diff(dateTime), diffNow(), equals(dateTime), hasSame(dateTime, unit),
+		minus(duration|object|ms), plus(duration(|object|ms), setLocale(), setZone(),
+		toUTC(), until(DateTime)
+		*/
+
+		let today = DateTime.local(),
+			now = DateTime.now(),
+			f = { month: 'long', day: '2-digit' }, // format
+			m = today.get('month'), // get month number
+			tz = today.zoneName,
+			newDt = today.set({ month: 12 }); // change month
+
+		output.innerHTML += `<br>
+		<br><code>DateTime.local()</code>: ${today}
+		<br><code>DateTime.now()</code>: ${now} 
+		<br>
+		<br> For people, use <code>toLocaleString()</code>
+		<br> <code>newDt.setLocale('de').toLocaleString(f)</code>: ${newDt.setLocale('de').toLocaleString(f)}
+		<br> <code>newDt.setLocale('fr-CA').toLocaleString(f)</code>: ${newDt.setLocale('fr-CA').toLocaleString(f)}
+		<br> <code>today.toLocaleString()</code>: ${today.toLocaleString()}
+		<br> <code>today.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)</code>: ${today.toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
+		<br> <code>today.toFormat('yyyy LLL dd')</code>: ${today.toFormat('yyyy LLL dd')}
+		<br>
+		<br> For computers (toISO, toBSON, toObject, toJSDate, toJSON, to SQL, toMillis)
+		<br> <code>newDt.toISO()</code>: ${newDt.toISO()}
+		`;
+
+		// Durations
+		let dur = luxon.Duration.fromMillis(20000),
+			durB = luxon.Duration.fromMillis(15000);
+		document.getElementById('durations').innerHTML += `
+			<code>luxon.Duration.fromMillis(20000).equals(luxon.Duration.fromMillis(15000))</code>: ${dur.equals(durB)}
+		`;
+
+		// Intervals
+		const old = DateTime.local(2020, 10, 12),
+			i = luxon.Interval.fromDateTimes(old, DateTime.now());
+		console.log(i);
+		// i = Interval.fromDateTimes(now, later);
+		document.getElementById('intervals').innerHTML += `
+			<code>
+			i = Interval.fromDateTimes(DateTime.local(2020, 10,12), now);<br>
+			i.length():	${i.length()}<br>
+			i.length('years'):	${i.length('years')}<br>
+			i.contains(DateTime.local(2021)):	${i.contains(DateTime.local(2021))}<br>
+			</code>
+		`;
+
+		// Info 
+		today.setZone('Asia/Tokyo');
+		document.getElementById('info').innerHTML += `
+		<code>
+			today.setZone('Asia/Tokyo')<br>
+			luxon.Info.hasDST('Asia/Tokyo'):  ${luxon.Info.hasDST('Asia/Tokyo')}<br>
+			luxon.Info.isValidIANAZone('Asia/Tokyo'):  ${luxon.Info.isValidIANAZone('Asia/Tokyo')}<br>
+			luxon.Info.monthsFormat():  ${luxon.Info.monthsFormat()}<br>
+			luxon.Info.monthsFormat('short'):  ${luxon.Info.monthsFormat('short')}<br>
+		</code>
+		`;
+
+	</script>
+</body>
+
+</html>
