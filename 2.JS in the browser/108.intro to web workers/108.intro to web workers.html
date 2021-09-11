@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Intro to web workers</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Intro to web workers</h1>
+	</header>
+	<main>
+		<pre id="output"></pre>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank"
+					rel="noopener noreferrer">"Using web workers" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank"
+					rel="noopener noreferrer">"Web workers API" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=EiPytIxrZtU&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=108"
+				target="_blank" rel="noopener noreferrer">"Intro to web workers." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let output = document.getElementById('output'),
+			worker;
+		document.addEventListener('DOMContentLoaded', init);
+
+		function init() {
+			worker = new Worker('worker_one.js');
+			worker.addEventListener('message', workerMessaged);
+			worker.addEventListener('error', workerError);
+
+			// worker.postMessage('Get started');
+
+			document.body.addEventListener('click', () => {
+				// Send another message to the worker
+				// worker.postMessage('Other');
+				worker.postMessage({ do: 'fetch' });
+			})
+		}
+
+		function workerMessaged(ev) {
+			let data = ev.data;
+			output.textContent += JSON.stringify(data, null, 2) + '\n';
+		}
+		function workerError(err) { console.log(err) }
+	</script>
+</body>
+
+</html>
