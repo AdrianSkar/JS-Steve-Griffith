@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Import and export ES6 modules</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Import and export ES6 modules</h1>
+	</header>
+	<main>
+		<h2>Import</h2>
+		<pre>
+			import defaultExport from "module-name";
+			import * as name from "module-name";
+			import { export1, export2 as name2 } from "module-name";
+			import defaultExport, { export1 [, [...]] } from "module-name";
+			import defaultExport, * as name from "module-name";
+			import "module-name";
+			var promise = import(module-name);
+		</pre>
+		<h2>Export</h2>
+		<pre>
+			export { name1, variable2 as name2 };
+			export let name1, name2;
+			export let name1 = ..., name2 = ...;
+			export functionName(){...}
+
+			export default expression;
+			export { name1 as default, name2 };
+			export * from ...;
+			export { import1 as name1, import2 as name2 };
+		</pre>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import" target="_blank"
+					rel="noopener noreferrer">"import" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export" target="_blank"
+					rel="noopener noreferrer">"export" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=BLak5aR4qXw&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=109"
+				target="_blank" rel="noopener noreferrer">"Import and export ES6 modules." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+	<script type="module">
+		import defaultSum, { exportSubs as e1 } from './export.js';
+		console.log(defaultSum(9));
+		console.log(e1(234));
+
+		// import * as allExports from './export.js';
+		// console.log(allExports.exportSubs(23));
+
+	</script>
+</body>
+
+</html>
