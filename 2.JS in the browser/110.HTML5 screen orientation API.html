@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5 screen orientation API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>HTML5 screen orientation API</h1>
+	</header>
+	<main>
+		<div id="output"></div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ScreenOrientation" target="_blank"
+					rel="noopener noreferrer">"ScreenOrientation" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=FujzCfH7Gzo&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=110"
+				target="_blank" rel="noopener noreferrer">"HTML5 screen orientation API." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let orn = getOrientation(),
+			out = document.getElementById('output');
+		out.textContent = orn;
+
+		function getOrientation() {
+			let _orn = screen.msOrientation ||
+				(screen.orientation || screen.mozOrientation).type;
+
+			switch (_orn) {
+				case 'portrait-primary':
+					console.log('portrait primary');
+					break;
+				case 'portrait-secondary':
+					console.log('portrait secondary');
+					break;
+				case 'landscape-primary':
+					console.log("Desktop/laptop version");
+					break;
+				case 'landscape-secondary':
+					console.log('land secondary');
+					break;
+				case undefined:
+					console.log('unsupported');
+					break;
+				default:
+				// Something unknown 
+			}
+			return _orn;
+		}
+
+		window.addEventListener('orientationchange', ev => {
+			orn = getOrientation();
+			out.textContent = orn;
+			console.dir(ev);
+		})
+
+	</script>
+</body>
+
+</html>
