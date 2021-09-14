@@ -1,18 +1,17 @@
 * {
-	padding: 0;
-	margin: 0;
+	/* padding: 0;
+	margin: 0; */
 }
 
 html {
 	box-sizing: border-box;
-	font-size: calc(1.5vh + 1vw + 1%);
-	line-height: 1.5;
+	font-size: calc(1.5vh + 0.2vw + 1%);
 	text-size-adjust: 100%;
 }
 
 body {
 	min-height: 100vh;
-	width: 100%;
+	/* width: 100%; */
 }
 
 p {
@@ -37,7 +36,7 @@ main {
 }
 
 #cart {
-	flex: 1 1 20%;
+	flex: 1 1 15%;
 }
 
 .card {
@@ -46,71 +45,89 @@ main {
 	box-sizing: content-box;
 	max-width: 200px;
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 .card img {
 	width: 100%;
-	filter: contrast(0.3);
+	filter: contrast(0.8);
+	top: 2rem;
+	aspect-ratio: 4/3;
+}
+
+.card .prod_action {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	margin-top: auto;
 }
 
 .card .price {
-	position: absolute;
-	top: 3rem;
-	left: 2rem;
-	transform: rotate(30deg);
-	text-shadow: 2px 2px 2px #333, 1px 1px 2px #eee;
-	color: aqua;
+	text-shadow: 2px 2px 2px rgb(221, 221, 221), 1px 1px 2px #eee;
+	color: rgb(39, 117, 28);
 	font-weight: 700;
-	font-size: 1.5rem;
+	font-size: 1.6rem;
 }
 
 .card h2 {
 	font-size: 1.2rem;
+	margin-bottom: 0;
+}
+
+.card p {
+	margin-top: 0;
 }
 
 .card .btn {
-	border: 2px solid cornflowerblue;
+	border: 2px solid rgb(39, 117, 28);
 	padding: 0.25rem 1rem;
-	color: cornflowerblue;
+	color: rgb(39, 117, 28);
 	cursor: pointer;
 }
 
 .cart-item {
 	border-bottom: 1px solid #666;
 	padding: 1rem;
-	width: 100%;
 	position: relative;
 }
 
-.cart-item .price {
-	position: absolute;
-	top: 2rem;
-	bottom: 1rem;
-	right: 1rem;
-	width: 30%;
-	font-size: 0.8rem;
-	color: #aaa;
-	transform: rotate(30deg);
+.cart-desc {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.6rem 0;
 }
 
+.cart-item .price {
+	/* position: absolute;
+	top: 2rem;
+	bottom: 1rem;
+	right: 1rem; */
+	/* width: 30%;
+	font-size: 0.8rem; */
+	/* color: #aaa; */
+	/* transform: rotate(30deg); */
+}
+
+/* 
 .cart-item .title {
 	font-size: 1rem;
 	color: #999;
 	line-height: 1.5rem;
 	height: 1.5rem;
 	width: 70%;
-}
+} */
 
 .cart-item .controls {
 	height: 1.5rem;
-	cursor: pointer;
 	width: 70%;
 	display: flex;
 	justify-content: space-between;
 	background-color: #eee;
 }
 
-.cart-item span:nth-child(1), .cart-item span:nth-child(3) {
+/* .cart-item span:nth-child(1), .cart-item span:nth-child(3) {
 	border: 1px solid cornflowerblue;
 	color: cornflowerblue;
 	background: #fff;
@@ -118,4 +135,15 @@ main {
 	line-height: 1.5rem;
 	padding: 0 0.5rem;
 	display: block;
+} */
+
+/* Custom styles */
+
+footer {
+	font-size: small;
+}
+
+footer p {
+	margin: 0;
+	padding: 0;
 }

@@ -6,11 +6,6 @@
 	<title>localStorage shopping cart</title>
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="style.css">
-	<style>
-		footer {
-			font-size: small;
-		}
-	</style>
 </head>
 
 <body>
@@ -18,19 +13,102 @@
 		<h1>localStorage shopping cart</h1>
 	</header>
 	<main>
-		main content
+	<!-- Products sample -->
+	<div id="products">
+		<div class="card">
+			<img src="./images/svg/001-nope.svg" alt="test">
+			<h2>Product title</h2>
+			<p>Product description; some info about the description.</p>
+			<div class="prod_action">
+				<span class="price">34.56$</span>
+				<button class="btn">Add item</button>
+			</div>
+		</div>
+		<div class="card">
+			<img src="./images/svg/002-cool.svg" alt="test">
+			<h2>Product title</h2>
+			<p>Product description; some info about the description. This one is
+				larger as we need to test different sizes.
+			</p>
+			<div class="prod_action">
+				<span class="price">34.56$</span>
+				<button class="btn">Add item</button>
+			</div>
+		</div>
+		<div class="card">
+			<img src="./images/old-black-background.jpg" alt="test" max-width="100%">
+			<h2>Product title</h2>
+			<p>Product description; some info about the description.</p>
+			<div class="prod_action">
+				<span class="price">34.56$</span>
+				<button class="btn">Add item</button>
+			</div>
+		</div>
+		<div class="card">
+			<img src="./images/svg/002-cool.svg" alt="test">
+			<h2>Product title</h2>
+			<p>Product description; some info about the description.</p>
+			<div class="prod_action">
+				<span class="price">34.56$</span>
+				<button class="btn">Add item</button>
+			</div>
+		</div>
+	</div>
+	<div id="cart">
+	
+		<!-- Cart sample -->
+		<div class="cart-item">
+			<div class="cart-desc">
+				<span>Product 1</span>
+				<span class="price">34.56$</span>
+			</div>
+			<div class="controls">
+				<button>-</button>
+				<span class="qty">12</span>
+				<button>+</button>
+			</div>
+		</div>
+		<div class="cart-item">
+			<div class="cart-desc">
+				<span>Product 1</span>
+				<span class="price">34.56$</span>
+			</div>
+			<div class="controls">
+				<button>-</button>
+				<span class="qty">12</span>
+				<button>+</button>
+			</div>
+		</div>
+	</div>
 	</main>
 	<footer>
 		<p>Refs:</p>
 		<ul>
-			<li><a href="" target="_blank" rel="noopener noreferrer">"" - <em>MDN</em>.</a>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter" target="_blank" rel="noopener noreferrer">"filter"
+					- <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/calc()" target="_blank" rel="noopener noreferrer">"calc()" -
+					<em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-size-adjust" target="_blank"
+					rel="noopener noreferrer">"text-size-adjust" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap" target="_blank" rel="noopener noreferrer">"gap
+					(grid-gap)" - <em>MDN</em>.</a>
 			</li>
 		</ul>
 		<cite>
 			- <a href="https://www.youtube.com/watch?v=oXtCOiG-7_A&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=111"
-				target="_blank" rel="noopener noreferrer">"localStorage shopping cart." YouTube, by Steve
-				Griffith.</a>
+			target="_blank" rel="noopener noreferrer">"localStorage shopping cart." YouTube, by Steve
+			Griffith.</a>
 		</cite>
+		<br>
+		- Stickers by <a href="https://www.flaticon.com/authors/stickers" title="Stickers">Stickers</a><br>
+		- Black background by <a
+			href='https://www.freepik.com/free-photo/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall_11712558.htm#page=1&position=5'>benzoix.</a>
 	</footer>
 	<script>
 
