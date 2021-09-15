@@ -63,8 +63,14 @@ const CART = {
 	},
 	decrease(id, qty = 1) {
 		CART.content = CART.contents.map(item => {
-			if (item.id === id) item.qty += qty;
+			if (item.id === id) item.qty -= qty;
 			return item;
+		});
+		// Check if there are no `id` items left and remove them from cart if so:
+		CART.contents.forEach(async item => {
+			if (item.id === id && item.qty < 1) {
+				await CART.remove(id);
+			}
 		});
 		CART.sync();
 	},
