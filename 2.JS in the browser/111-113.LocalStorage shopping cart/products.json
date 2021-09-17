@@ -40,5 +40,12 @@
 		"desc": "Earum deleniti modi dolore cum, animi minima, saepe placeat, debitis mollitia veniam.",
 		"img": "008-wtf.svg",
 		"price": 6.45
+	},
+	{
+		"id": 453,
+		"title": "Old black bg",
+		"desc": "Old black background.",
+		"img": "old-black-background.jpg",
+		"price": 17.45
 	}
 ]
