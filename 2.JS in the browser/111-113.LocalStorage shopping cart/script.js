@@ -58,12 +58,12 @@ const CART = {
 	},
 
 	// Increase or decrease cart item (id) by qty:
-	increase(id, qty = 1) {
+	async increase(id, qty = 1) {
 		CART.content = CART.contents.map(item => {
 			if (item.id === id) item.qty += qty;
 			return item;
 		});
-		CART.sync();
+		await CART.sync();
 	},
 	decrease(id, qty = 1) {
 		CART.content = CART.contents.map(item => {
@@ -80,9 +80,9 @@ const CART = {
 	},
 
 	// Remove item from cart
-	remove(id) {
+	async remove(id) {
 		CART.contents = CART.contents.filter(item => item.id !== id);
-		CART.sync();
+		await CART.sync();
 	},
 
 	// Empty cart:
@@ -188,8 +188,7 @@ function decrementCart(ev) {
 	if (item) {
 		qty.textContent = item.qty;
 	} else {
-		// This should not happen;
-		console.log('error; no item found in decrementCart(ev)');
+		// It was the last item, remove from cart:
 		document.getElementById('cart').removeChild(controls.parentElement);
 	}
 }
@@ -202,8 +201,8 @@ function getProducts(success, failure) {
 		mode: 'cors',
 	})
 		.then(response => response.json())
-		// .then(showProducts)
-		.then(data => showProducts(data))
+		// .then(data => showProducts(data))
+		.then(showProducts)
 		.catch(err => errorMessage(err));
 }
 
