@@ -147,3 +147,8 @@ footer p {
 	margin: 0;
 	padding: 0;
 }
+
+.total {
+	text-align: center;
+	font-size: 1.8rem;
+}

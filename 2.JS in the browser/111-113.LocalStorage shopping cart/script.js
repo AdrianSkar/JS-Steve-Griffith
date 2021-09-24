@@ -121,12 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function showCart() {
 	let cartSection = document.getElementById('cart');
 	cartSection.innerHTML = '';
-	let s = CART.sort('title');
+	let s = CART.sort('title'),
+		totalAmt = 0;
 	// Build cart:
 	s.forEach(item => {
 		// Container:
 		let cartItem = document.createElement('div');
 		cartItem.className = 'cart-item';
+
 		// Desc container:
 		let cartDesc = document.createElement('div');
 		cartDesc.className = 'cart-desc';
@@ -140,6 +142,7 @@ function showCart() {
 			currency: 'EUR',
 		}).format(item.qty * item.itemPrice);
 		cartDesc.append(sTitle, sPrice);
+
 		// Controls container:
 		let controls = document.createElement('div');
 		controls.className = 'controls';
@@ -155,11 +158,24 @@ function showCart() {
 		let itemQty = document.createElement('span');
 		itemQty.className = 'qty';
 		itemQty.textContent = item.qty;
+
+		// Total amount:
+		totalAmt += item.qty * item.itemPrice;
+
 		// Add elements to containers, then to section:
 		cartItem.append(cartDesc, controls);
 		controls.append(buttonMinus, itemQty, buttonPlus);
 		cartSection.append(cartItem);
 	});
+	// Total:
+	let total = document.createElement('p');
+	total.className = 'total';
+	totalAmt = new Intl.NumberFormat('es-ES', {
+		style: 'currency',
+		currency: 'EUR',
+	}).format(totalAmt);
+	total.textContent = `Total: ${totalAmt}`;
+	cartSection.appendChild(total);
 }
 
 function incrementCart(ev) {
@@ -171,6 +187,7 @@ function incrementCart(ev) {
 		item = CART.find(id);
 	if (item) {
 		qty.textContent = item.qty;
+		showCart();
 	} else {
 		// This should not happen;
 		console.log('error; no item found in incrementCart(ev)');
@@ -187,6 +204,7 @@ function decrementCart(ev) {
 		item = CART.find(id);
 	if (item) {
 		qty.textContent = item.qty;
+		showCart();
 	} else {
 		// It was the last item, remove from cart:
 		document.getElementById('cart').removeChild(controls.parentElement);
