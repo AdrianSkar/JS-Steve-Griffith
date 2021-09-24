@@ -41,6 +41,8 @@ const CART = {
 			// Add new item
 			let arr = PRODUCTS.filter(product => product.id === id);
 			if (arr[0]) {
+				console.log(arr[0]);
+				// Needed only if you don't want other data being passed (such as desc.):
 				let obj = {
 					id: arr[0].id,
 					title: arr[0].title,
@@ -79,7 +81,7 @@ const CART = {
 		CART.sync();
 	},
 
-	// Remove item from cart
+	// Remove item from cart:
 	async remove(id) {
 		CART.contents = CART.contents.filter(item => item.id !== id);
 		await CART.sync();
@@ -91,7 +93,7 @@ const CART = {
 		CART.sync();
 	},
 
-	// Sort cart items by field:
+	// Sort cart items by field (default = 'title'):
 	sort(field = 'title') {
 		// Return sorted shallow copy of the CART.contents array:
 		let sorted = CART.contents.sort((a, b) => {
@@ -158,13 +160,23 @@ function showCart() {
 		let itemQty = document.createElement('span');
 		itemQty.className = 'qty';
 		itemQty.textContent = item.qty;
+		let buttonRemove = document.createElement('button');
+		// buttonRemove.textContent = '🗑';
+		// buttonRemove.innerHTML = '&#128465;';
+		// buttonRemove.innerHTML = '&#x1F5D1';
+		buttonRemove.textContent = '\u{1F5D1}';
+		// buttonRemove.setAttribute('data-id', item.id); //! Not needed
+		buttonRemove.addEventListener('click', () => {
+			CART.decrease(item.id, item.qty);
+			showCart();
+		});
 
 		// Total amount:
 		totalAmt += item.qty * item.itemPrice;
 
 		// Add elements to containers, then to section:
 		cartItem.append(cartDesc, controls);
-		controls.append(buttonMinus, itemQty, buttonPlus);
+		controls.append(buttonMinus, itemQty, buttonPlus, buttonRemove);
 		cartSection.append(cartItem);
 	});
 	// Total:
@@ -186,7 +198,6 @@ function incrementCart(ev) {
 		qty = controls.querySelector('.qty'),
 		item = CART.find(id);
 	if (item) {
-		qty.textContent = item.qty;
 		showCart();
 	} else {
 		// This should not happen;
@@ -203,7 +214,6 @@ function decrementCart(ev) {
 		qty = controls.querySelector('.qty'),
 		item = CART.find(id);
 	if (item) {
-		qty.textContent = item.qty;
 		showCart();
 	} else {
 		// It was the last item, remove from cart:

@@ -40,14 +40,14 @@ main {
 }
 
 .card {
-	border: 1px solid #999;
+	/* border: 1px solid #999; */
 	padding: 1rem;
 	box-sizing: content-box;
 	max-width: 200px;
-	position: relative;
+	/* position: relative; */
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	/* justify-content: flex-start; */
 }
 
 .card img {
