@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Capturing and saving user audio or video</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Capturing and saving user audio or video</h1>
+	</header>
+	<main>
+		<p>
+			Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus amet accusantium ipsam, recusandae fugiat
+			consequuntur praesentium non delectus harum doloremque nobis voluptatum quibusdam ipsa in autem, ea odit corrupti
+			error!
+		</p>
+
+		<p><button id="btnStart">Record</button><br><button id="btnStop">Stop</button></p>
+
+		<video controls></video>
+
+		<video controls id="vid2"></video>
+
+		<!-- Could save to canvas and do image manipulation and saving too -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices" target="_blank"
+					rel="noopener noreferrer">"MediaDevices" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank"
+					rel="noopener noreferrer">"MediaDevices.getUserMedia()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject" target="_blank"
+					rel="noopener noreferrer">"HTMLMediaElement.srcObject" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onloadedmetadata" target="_blank"
+					rel="noopener noreferrer">"GlobalEventHandlers.onloadedmetadata" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder" target="_blank"
+					rel="noopener noreferrer">"MediaRecorder" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/ondataavailable" target="_blank"
+					rel="noopener noreferrer">"MediaRecorder.ondataavailable" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob" target="_blank"
+					rel="noopener noreferrer">"Blob()" - <em>MDN</em>.</a>
+			</li>
+
+
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=K6L38xk2rkk&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=114"
+				target="_blank" rel="noopener noreferrer">"Capturing and saving user audio or video." YouTube,
+				by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let constraintObj = {
+			audio: true,
+			video: {
+				facingMode: "user",
+				width: { min: 640, ideal: 1280, max: 1920 },
+				height: { min: 480, ideal: 720, max: 1080 }
+			}
+			// width: 1280, height: 720 -> preference only
+			// facingMode {exact: "user"} -> to force
+			// facingMode: "environment"
+		}
+
+		// Handle older browsers that might implement some support for getUserMedia:
+		if (navigator.mediaDevices === undefined) {
+			navigator.mediaDevices = {};
+			navigator.mediaDevices.getUserMedia = function (constraintObj) {
+				let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+				if (!getUserMedia) {
+					return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+				}
+				return new Promise(function (resolve, reject) {
+					getUserMedia.call(navigator, constraintObj, resolve, reject);
+				});
+			}
+		} else {
+			navigator.mediaDevices.enumerateDevices()
+				.then(devices => {
+					devices.forEach(device => {
+						console.log(device.kind, device.label);
+						// device.deviceId available too
+					})
+				})
+				.catch(err => console.error(err));
+		}
+
+		navigator.mediaDevices.getUserMedia(constraintObj)
+			.then(function (mediaStreamObj) {
+				// Connect the media stream to the first video element:
+				let video = document.querySelector('video');
+				if ('srcObject' in video) {
+					video.srcObject = mediaStreamObj;
+				} else { // Old version:
+					video.src = window.URL.createObjectURL(mediaStreamObj);
+				}
+
+				video.onloadedmetadata = function (ev) {
+					// Show webcam capture in the video element
+					video.play();
+				}
+
+				// Add listeners for saving video/audio:
+				let start = document.getElementById('btnStart'),
+					stop = document.getElementById('btnStop'),
+					vidSave = document.getElementById('vid2'),
+					mediaRecorder = new MediaRecorder(mediaStreamObj),
+					chunks = [];
+
+				start.addEventListener('click', ev => {
+					mediaRecorder.start()
+					console.log(mediaRecorder.state);
+				})
+				stop.addEventListener('click', ev => {
+					mediaRecorder.stop()
+					console.log(mediaRecorder.state);
+				})
+				mediaRecorder.ondataavailable = function (ev) {
+					chunks.push(ev.data);
+				}
+				mediaRecorder.onstop = ev => {
+					let blob = new Blob(chunks, { "type": 'video/mp4' }),
+						videoURL = window.URL.createObjectURL(blob);
+					chunks = [];
+					vidSave.src = videoURL;
+				}
+			})
+			.catch(err => {
+				console.error(err.name, err);
+			});
+
+		/*
+		getUserMedia returns a Promise
+		resolve - returns a MediaStream object
+		reject returns one of the following errors:
+			AbortError - generic unknown cause
+			NotAllowedError (SecurityError) - user rejected permissions
+			NotFoundError - Missing media track
+			NotReadableError - Permissions ok but hardware/OS related error
+			OverconstrainedError - Constraint video settings preventing
+			TypeError: audio:false, video:false
+		*/
+	</script>
+</body>
+
+</html>
