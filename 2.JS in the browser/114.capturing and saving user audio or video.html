@@ -23,7 +23,11 @@
 			error!
 		</p>
 
-		<p><button id="btnStart">Record</button><br><button id="btnStop">Stop</button></p>
+		<p>
+			<button id="btnStart">record</button><br>
+			<button id="btnPause">pause/resume</button><br>
+			<button id="btnStop">stop</button>
+		</p>
 
 		<video controls></video>
 
@@ -124,6 +128,7 @@
 				// Add listeners for saving video/audio:
 				let start = document.getElementById('btnStart'),
 					stop = document.getElementById('btnStop'),
+					pause = document.getElementById('btnPause'),
 					vidSave = document.getElementById('vid2'),
 					mediaRecorder = new MediaRecorder(mediaStreamObj),
 					chunks = [];
@@ -136,14 +141,34 @@
 					mediaRecorder.stop()
 					console.log(mediaRecorder.state);
 				})
+				pause.addEventListener('click', ev => {
+					if (mediaRecorder.state === 'recording') {
+						mediaRecorder.pause();
+						console.log('paused recording');
+					} else {
+						mediaRecorder.resume();
+						console.log('resumed recordin');
+					}
+				})
 				mediaRecorder.ondataavailable = function (ev) {
+					console.log(ev, 'ondataavailable');
 					chunks.push(ev.data);
 				}
 				mediaRecorder.onstop = ev => {
+					console.log(ev, 'onstop');
 					let blob = new Blob(chunks, { "type": 'video/mp4' }),
-						videoURL = window.URL.createObjectURL(blob);
-					chunks = [];
+						videoURL = URL.createObjectURL(blob);
+					// chunks = [];
+					console.log('chunks', chunks);
+					console.log('blob', blob);
 					vidSave.src = videoURL;
+					console.log('videoURL', videoURL);
+
+					// Multiple vid fragments?
+					// Seems to add multiple chunks to the array and size matches but 
+					// played/downloaded vids are for the first one only. If you need this
+					// feature use `mediaRecorder.pause()/resume()` instead (:144).
+
 				}
 			})
 			.catch(err => {
