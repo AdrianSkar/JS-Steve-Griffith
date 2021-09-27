@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5 Fullscreen API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		.big {
+			background-color: darkkhaki;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>HTML5 Fullscreen API</h1>
+	</header>
+	<main>
+		<video id="vid" controls></video>
+		<audio id="aud" controls></audio>
+		<div></div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API" target="_blank"
+					rel="noopener noreferrer">"Fullscreen API" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=aEpQxlKDbwU&list=PLyuRouwmQCjmQTKvgqIgah03HF1wrYkA9&index=115"
+				target="_blank" rel="noopener noreferrer">"HTML5 Fullscreen API." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		// Prefix example (currently not needed):
+		// let fschange = document.onfullscreenchange ? 'onfullscreenchange' :
+		// 	document.onmozfullscreenchange ? 'onmozfullscreenchange' :
+		// 		document.onwebkitfullscreenchange ? 'onwebkitfullscreenchange' :
+		// 			document.MSFullscreenChange ? 'MSFullscreenChange' : null;
+		// if (fschange) {
+		// 	console.log(fschange);
+		// }
+
+		document.onfullscreenchange = toggleFull;
+
+		let h1 = document.querySelector('h1'),
+			vid = document.querySelector('#vid'),
+			aud = document.querySelector('#aud');
+		let testArr = [h1, vid, aud];
+
+		testArr.forEach(ele => {
+			ele.addEventListener('click', goBig);
+			ele.addEventListener('dblclick', goHome);
+		})
+
+		function goBig(ev) {
+			let element = ev.currentTarget;
+			console.dir(element);
+			// Check for already active fullscreen element:
+			if (!document.fullscreenElement) {
+				// Check for method availability:
+				if (element.requestFullScreen) {
+					element.requestFullScreen();
+				}
+				else {
+					console.log('This element cannot be fullscreened');
+				}
+			} else {
+				// Theres an active fullscreen element
+				console.log(document.fullscreenElement, 'is the fullscreened element');
+			}
+		}
+
+		function goHome(ev) {
+			let element = ev.target;
+			console.log(element);
+			element.classList.remove('big');
+			if (document.fullscreenEnabled) {
+				document.exitFullscreen();
+			}
+		}
+
+		function toggleFull(ev) {
+			let element = document.fullscreenElement;
+			if (element) {
+				element.classList.add('big');
+				console.log('Added class big');
+			}
+			else {
+				element = document.querySelector('.big');
+				element.classList.remove('big');
+			}
+		}
+	</script>
+</body>
+
+</html>
