@@ -13,6 +13,11 @@
 		.big {
 			background-color: darkkhaki;
 		}
+
+		#aud {
+			padding: 1rem;
+			border: 1px solid black;
+		}
 	</style>
 </head>
 
@@ -49,6 +54,7 @@
 
 		document.onfullscreenchange = toggleFull;
 
+		// h1 and aud won't work; not supported for h1, no dblclick for audio elements
 		let h1 = document.querySelector('h1'),
 			vid = document.querySelector('#vid'),
 			aud = document.querySelector('#aud');
@@ -61,7 +67,7 @@
 
 		function goBig(ev) {
 			let element = ev.currentTarget;
-			console.dir(element);
+			console.log(ev)
 			// Check for already active fullscreen element:
 			if (!document.fullscreenElement) {
 				// Check for method availability:
@@ -90,7 +96,7 @@
 			let element = document.fullscreenElement;
 			if (element) {
 				element.classList.add('big');
-				console.log('Added class big');
+				console.log(element, 'Added class big');
 			}
 			else {
 				element = document.querySelector('.big');
