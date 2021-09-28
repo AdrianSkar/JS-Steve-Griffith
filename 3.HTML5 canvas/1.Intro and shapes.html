@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Intro and shapes</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		#canvas {
+			border: 1px solid #999;
+			margin: 1rem auto;
+		}
+
+		/*
+		CSS width and height will stretch the display. If you need to have pixel
+		perfect positioning inside the canvas, then use JS width and height.
+		*/
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Intro and shapes</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Glossary/Canvas" target="_blank"
+					rel="noopener noreferrer">"Canvas" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=uh1Sgj2Gt70&list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp&index=1"
+				target="_blank" rel="noopener noreferrer">"Intro and shapes." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx;
+
+		document.addEventListener('DOMContentLoaded', ev => {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d'); // webgl, webgl2
+			canvas.width = 600;
+			canvas.height = 400;
+
+			drawRect();
+			drawEllipse();
+			// drawRect();
+		})
+
+		const drawRect = function () {
+			/*
+			 Draw rectangle: x, y, width, height
+			 Won't render anything until you use fill() or stroke() 
+			 */
+			ctx.rect(300, 100, 100, 50);
+
+			// Define the stroke:
+			ctx.strokeStyle = `red`;
+			ctx.lineWidth = 10;
+
+			// Define the fill:
+			ctx.fillStyle = `skyblue`;
+
+			// Fill and stroke:
+			// ctx.fill();
+			ctx.stroke();
+			ctx.fill();
+
+			// Draw a rectangle fill or stroke x, y, w, h:
+			ctx.fillRect(200, 300, 100, 50);
+			ctx.strokeRect(100, 100, 100, 50);
+
+			// Delete a rectangle:
+			// ctx.clearRect(x, y, w, h)
+			ctx.clearRect(150, 50, 100, 500)
+		}
+
+		const drawEllipse = function () {
+			ctx.beginPath();
+			// ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlock)
+			ctx.ellipse(200, 200, 100, 50, 15, 0, (Math.PI * 2), false);
+			ctx.fill();
+			ctx.stroke();
+
+			// Begin path again, otherwise it'll be like a pencil that never left the canvas
+			ctx.beginPath();
+			// ctx.arc(x, y, radius, startAngle, endAngle, anticlock)
+			ctx.arc(480, 300, 40, 0, (Math.PI * 1.5), false);
+			ctx.fill();
+			ctx.stroke()
+			ctx.beginPath();
+			ctx.arc(520, 300, 40, 0, (Math.PI * 1.5), true);
+			ctx.fill();
+			ctx.stroke();
+		}
+	</script>
+</body>
+
+</html>
