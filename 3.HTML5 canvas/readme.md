@@ -1,0 +1,3 @@
+- [Youtube playlist](https://www.youtube.com/playlist?list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp)
+- ["Canvas", _MDN_](https://developer.mozilla.org/en-US/docs/Glossary/Canvas)
+- ["Canvas cheatsheet", _devhints.io_](https://devhints.io/canvas)
