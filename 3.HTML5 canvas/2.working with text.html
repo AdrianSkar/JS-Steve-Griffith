@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Working with text</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		/* @import url('https://fonts.googleapis.com/css?family=Allerta+Stencil'); */
+
+		footer {
+			font-size: small;
+		}
+
+		#canvas {
+			border: 1px solid #999;
+			margin: 1rem auto;
+			display: block;
+		}
+
+		p {
+			/* font-family: 'Allerta Stencil', 'monospace'; */
+			margin: 1rem auto;
+			text-align: center;
+		}
+
+		input {
+			width: 800px;
+			font-size: 1.2rem;
+			padding: 0.2rem 1rem;
+			box-sizing: border-box;
+		}
+
+		.fonts-loaded,
+		input {
+			/* MDN example */
+			font-family: 'Allerta Stencil', 'monospace';
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Working with text</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+		<p><input type="text" id="msg" placeholder="Write your message here."></p>
+	</main>
+	<footer>
+		<p class='fonts-loaded'>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@import" target="_blank"
+					rel="noopener noreferrer">"@import" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFace" target="_blank"
+					rel="noopener noreferrer">"FontFace" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D" target="_blank"
+					rel="noopener noreferrer">"CanvasRenderingContext2D" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics" target="_blank"
+					rel="noopener noreferrer">"TextMetrics" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/fonts" target="_blank"
+					rel="noopener noreferrer">"Document.fonts" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet" target="_blank"
+					rel="noopener noreferrer">"FontFaceSet" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=qMPifeAMo7k&list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp&index=2"
+				target="_blank" rel="noopener noreferrer">"Working with text." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx, oldTxt, f;
+		window.addEventListener('load', ev => {
+
+			// Load fonts (MDN example)
+			// async function loadFonts() {
+			// 	const font = new FontFace('Allerta Stencil', 'url(https://fonts.gstatic.com/s/allertastencil/v8/HTx0L209KT-LmIE9N7OR6eiycOe1_Db29XP-vA.woff2)');
+			// 	// Wait for font to be loaded
+			// 	await font.load();
+			// 	// Add font to document
+			// 	document.fonts.add(font);
+			// 	// Enable font with CSS class
+			// 	// document.body.classList.add('fonts-loaded');
+			// }
+			// loadFonts();
+			//______________________________________________________________________________
+
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			canvas.width = 800;
+			canvas.height = 600;
+
+			drawText();
+			document.getElementById('msg').addEventListener('input', drawText);
+
+			// FontFace (Steve's example)
+			f = new FontFace('Allerta Stencil', 'url(https://fonts.gstatic.com/s/allertastencil/v8/HTx0L209KT-LmIE9N7OR6eiycOe1_Db29XP-vA.woff2)');
+
+			f.load()
+				.then(function (fnt) {
+					console.log(`loaded ${fnt.family}`, fnt);
+					document.fonts.add(fnt);
+
+				})
+				.catch(err => console.error(err));
+
+		})
+		const drawText = function () {
+
+			/// Text settings:
+			let fontFamily = 'Allerta Stencil';
+			// DOMString passed as CSS font value/shorthand:
+			ctx.font = `normal 40px nonExistingFontFamily, ${fontFamily}, Arial`;
+			ctx.fillStyle = 'cornflowerblue';
+			ctx.strokeStyle = 'green';
+			// textAlign: (start), end, left, right, center
+			ctx.textAlign = 'start';
+			// textBaseline: top, hanging, middle, (alphabetic), ideographic, bottom
+			ctx.textBaseline = 'alphabetic';
+			// direction: ltr, rtl, (inherit)
+			ctx.direction = 'ltr';
+
+			let txt = document.getElementById('msg').value,
+				metrics = ctx.measureText(oldTxt),
+				w = metrics.width;
+
+			/// Clear previous text considering top/bottom hanging glyphs:
+			// x, y, width, height
+			ctx.clearRect(50, 120, w, -70);
+
+			if (txt === '') {// Default text
+				txt = 'Please give me a message.';
+			}
+
+			// Draw and  give style:
+			ctx.strokeText(txt, 50, 100);
+			oldTxt = txt;
+
+			ctx.font = 'italic 20px Arial';
+
+			// Update metrics:
+			let m = `Message is ${w}px wide`;
+			ctx.clearRect(50, 310, 500, -30);
+			ctx.fillText(m, 50, 300);
+		}
+	</script>
+</body>
+
+</html>
