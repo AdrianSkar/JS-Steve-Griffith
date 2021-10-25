@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Lines and curves</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		#canvas {
+			border: 1px solid #999;
+			margin: 1rem auto;
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Lines and curves</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D" target="_blank" rel="noopener noreferrer">"CanvasRenderingContext2D (ctx)" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap" target="_blank" rel="noopener noreferrer">"ctx.lineCap" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/beginPath" target="_blank" rel="noopener noreferrer">"ctx.beginPath()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/moveTo" target="_blank" rel="noopener noreferrer">"ctx.moveTo()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineTo" target="_blank" rel="noopener noreferrer">"ctx.lineTo()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/quadraticCurveTo" target="_blank" rel="noopener noreferrer">"ctx.quadraticCurveTo()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/bezierCurveTo" target="_blank" rel="noopener noreferrer">"ctx.bezierCurveTo()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank" rel="noopener noreferrer">"MouseEvent API" - <em>MDN</em>.</a>
+			</li>
+			
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=-Guz9o-GiB0&list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp&index=3"
+				target="_blank" rel="noopener noreferrer">"Lines and curves." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx, midX, midY, midX1, midY1, midX2, midY2;
+
+		document.addEventListener('DOMContentLoaded', ev => {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			canvas.width = 800;
+			canvas.height = 600;
+
+			canvas.addEventListener('mousedown', start);
+			// canvas.addEventListener('mouseup', end);
+			// canvas.addEventListener('mouseup', endQC);
+			canvas.addEventListener('mouseup', endBC);
+
+			// Mid points
+			midX = canvas.width / 2;
+			midY = canvas.height / 2;
+			midX1 = canvas.width / 4;
+			midY1 = canvas.height / 4;
+			midX2 = canvas.width - midX1;
+			midY2 = canvas.height - midY1;
+
+			// Draw control/mid points
+			ctx.lineWidth = 5;
+			ctx.beginPath();
+			ctx.arc(midX, midY, 5, 0, 2 * Math.PI, false);
+			ctx.strokeStyle = 'red';
+			ctx.stroke();
+
+			ctx.beginPath();
+			ctx.arc(midX1, midY1, 5, 0, 2 * Math.PI, false);
+			ctx.strokeStyle = 'orange';
+			ctx.stroke();
+
+			ctx.beginPath();
+			ctx.arc(midX2, midY2, 5, 0, 2 * Math.PI, false);
+			ctx.strokeStyle = 'skyblue';
+			ctx.stroke();
+
+			ctx.lineCap = 'round'; // butt, square
+			ctx.lineWidth = 10;
+
+		});
+
+		const start = function (ev){
+			ctx.beginPath();
+			ctx.strokeStyle = '#999999';
+			console.log(`from ${ev.offsetX}, ${ev.offsetY}`);
+			ctx.moveTo(ev.offsetX, ev.offsetY);
+		};
+
+		const end = function(ev){
+			// lineTo -> straight line
+			console.log(`to ${ev.offsetX}, ${ev.offsetY}`);
+			// Trace the line:
+			ctx.lineTo(ev.offsetX, ev.offsetY);
+			// Draw the line:
+			ctx.stroke();
+		};
+
+		// Quadratic curve:		
+		const endQC = ev =>{
+			console.log(`to ${ev.offsetX}, ${ev.offsetY}`);
+			// (control_point, end_point)
+			ctx.quadraticCurveTo(midX, midY, ev.offsetX, ev.offsetY);
+			ctx.stroke();
+		};
+
+		// Bezier curve:
+		const endBC = ev => {
+			console.log(`to ${ev.offsetX}, ${ev.offsetY}`);
+			// (control_point1, control_point2, end_point)
+			ctx.bezierCurveTo(midX1, midY1, midX2, midY2, ev.offsetX, ev.offsetY);
+			ctx.stroke();
+		};
+	</script>
+</body>
+
+</html>
