@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Images and image data</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		#canvas {
+			border: 1px solid #999;
+			margin: 1rem auto;
+			display: block;
+		}
+
+		img {
+			max-height: 50vh;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Images and image data</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+		<img src="https://images.unsplash.com/photo-1633467702519-1acdbe0267a1" alt="Nature">
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement" target="_blank"
+					rel="noopener noreferrer">"HTMLImageElement" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData" target="_blank"
+					rel="noopener noreferrer">"CanvasRenderingContext2D.getImageData()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/ImageData/data" target="_blank"
+					rel="noopener noreferrer">"ImageData.data" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL" target="_blank"
+					rel="noopener noreferrer">"HTMLCanvasElement.toDataURL()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=HjxrSMgQLQU&list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp&index=4"
+				target="_blank" rel="noopener noreferrer">"Images and image data." YouTube, by Steve Griffith.</a>
+		</cite><br>
+		<cite>
+			- <a href="https://images.unsplash.com/photo-1633467702519-1acdbe0267a1">Unsplash
+				image</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx,
+			// Use a local image or you'll get a 'DOMException: The operation is insecure.'
+			// error due to CORS when trying to modify it.
+			imgSrc = './sample_image.avif';
+
+		document.addEventListener('DOMContentLoaded', ev => {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			canvas.width = 400;
+			canvas.height = 600;
+
+			let imgObj = new Image();
+			imgObj.src = imgSrc;
+
+			imgObj.onload = function () {
+				let w = canvas.width,
+					nw = imgObj.naturalWidth,
+					nh = imgObj.naturalHeight,
+					aspect = nw / nh,
+					h = w / aspect;
+				console.log(`Canvas: ${canvas.width}x${canvas.height}`);
+				console.log(`Image res: ${nw}x${nh}, ratio: ${aspect}`);
+				console.log(`New res: ${w}x${h}`);
+				canvas.height = h;
+				ctx.drawImage(imgObj, 0, 0, w, h);
+			};
+
+			// canvas.addEventListener('click', grayscale);
+			canvas.addEventListener('click', colorChannel);
+		});
+
+		// Modify image:
+		const grayscale = function (ev) {
+			// Extract image data from canvas at x/y sizing w,h and put it into an
+			// ImageData object:
+			let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height),
+				// Image in array format ([R,G,B,A,R,G,B,A,...]):
+				arr = imgData.data;
+			for (let i = 0; i < arr.length; i = i += 4) {//loop through each pixel values
+				let ttl = arr[i] + arr[i + 1] + arr[i + 2],
+					avg = parseInt(ttl / 3);
+				arr[i] = avg;
+				arr[i + 1] = avg;
+				arr[i + 2] = avg;
+			}
+			imgData.data = arr;
+			// Paint image from imgData at x/y coords:
+			ctx.putImageData(imgData, 0, 0);
+		};
+
+		const colorChannel = function (ev) {
+			let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height),
+				arr = imgData.data;
+			for (let i = 0; i < arr.length; i += 4) {
+				// arr[i] = 0;  	 // Red channel
+				arr[i + 1] = 0;  // Green channel
+				// arr[i + 2] = 0;  // Blue channel
+				// arr[i + 3] = 150; 	 // Alpha channel
+			}
+			imgData.data = arr;
+			ctx.putImageData(imgData, 0, 0);
+
+			/// Substitute current img element with modified image:
+
+			// Generate data URI containing the image (format, quality encode opts):
+			let moddedImg = canvas.toDataURL('image/jpg', 1.0);
+
+			console.log(moddedImg);
+			document.querySelector('img').src = moddedImg;
+		};
+	</script>
+</body>
+
+</html>
