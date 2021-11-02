@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Pie charts</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		canvas {
+			border: 2px solid #333;
+			margin: 2rem auto;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Pie charts</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc" target="_blank"
+					rel="noopener noreferrer">"ctx.arc()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://www.youtube.com/watch?v=ihe5yeEAeHg&list=PLyuRouwmQCjlqieGcZgsDlGHtHFar-ZOp&index=5"
+				target="_blank" rel="noopener noreferrer">"Pie charts." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let data = [
+			{ 'name': 'Targaryen', 'troops': 90200, 'color': '222222' },
+			{ 'name': 'Tully', 'troops': 15000, 'color': '7C868E' },
+			{ 'name': 'Stark', 'troops': 50500, 'color': '393939' },
+			{ 'name': 'Lannister', 'troops': 120800, 'color': '6B1207' },
+			{ 'name': 'Mormont', 'troops': 16000, 'color': '67923D' },
+		];
+
+		const randomHexColorCode = () => {
+			return '#' + Math.random().toString(16).slice(2, 8);
+		};
+
+		document.addEventListener('DOMContentLoaded', () => {
+			let canvas = document.getElementById('canvas'),
+				ctx = canvas.getContext('2d');
+			canvas.width = 800;
+			canvas.height = 600;
+
+			let totalTroops = data.reduce((ttl, house) => {
+				return ttl + house.troops;
+			}, 0),
+				// Pie center angle, radius and coords:
+				startAngle = 0,
+				radius = 100,
+				cx = canvas.width / 2,
+				cy = canvas.height / 2;
+
+			data.forEach(house => {
+				// Set styles:
+				// ctx.fillStyle = '#' + house.color;
+				ctx.fillStyle = randomHexColorCode();
+				ctx.strokeStyle = '#666';
+				ctx.beginPath();
+
+				console.log(totalTroops, house.troops, house.troops / totalTroops);
+
+				// Draw pie edges:
+				// Percentage * radius + startAngle:
+				let endAngle = ((house.troops / totalTroops) * Math.PI * 2) + startAngle;
+				ctx.moveTo(cx, cy);
+				ctx.arc(cx, cy, radius, startAngle, endAngle, false);
+				ctx.lineTo(cx, cy);
+				ctx.fill();
+				ctx.stroke();
+				// Not needed since we begin a new path later but good practice:
+				ctx.closePath();
+
+				// Add labels:
+				ctx.beginPath();
+				ctx.font = '20px Helvetica, Calibri';
+				ctx.textAlign = 'center';
+				ctx.fillStyle = 'rebeccapurple';
+
+				// Midpoint between the two angles
+				// (extraDistance * radius) is the length of the hypotenuse
+				let theta = (startAngle + endAngle) / 2,
+					deltaY = Math.sin(theta) * 1.5 * radius,
+					deltaX = Math.cos(theta) * 1.5 * radius;
+				console.log(house.name, theta, deltaY, deltaX);
+				/* 
+				SOH - sin(angle) = opposite / hypotenuse
+												 = opposite / 1px/100px/our unit/measure
+				CAH - cos(angle) = adjacent / hypotenuse
+												 = adjacent / 1px/100px/our unit/measure
+				TOA - tan(angle) = opposite / adjacent
+				*/
+				// Draw text from center or circle:
+				ctx.fillText(house.name, deltaX + cx, deltaY + cy);
+				ctx.closePath();
+
+				startAngle = endAngle;
+			});
+		});
+	</script>
+</body>
+
+</html>
