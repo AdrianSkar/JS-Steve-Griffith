@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Transforms</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		html {
+			background-color: rgb(243, 243, 243);
+		}
+
+		#canvas {
+			background-color: #fff;
+			border: 1px solid #333;
+			height: 50%;
+			margin: 1rem auto;
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1> Canvas transforms</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate" target="_blank"
+					rel="noopener noreferrer">"ctx.translate()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rotate" target="_blank"
+					rel="noopener noreferrer">"ctx.rotate()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/scale" target="_blank"
+					rel="noopener noreferrer">"ctx.scale()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/save" target="_blank" rel="noopener noreferrer">"ctx.save()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/restore" target="_blank" rel="noopener noreferrer">"ctx.restore()" - <em>MDN</em>.</a>
+			</li>
+			
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/5vxygxshTQ4" target="_blank" rel="noopener noreferrer">"Transforms." YouTube, by Steve
+				Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx;
+
+		document.addEventListener('DOMContentLoaded', () => {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			canvas.width = 600;
+			canvas.height = 800;
+			ctx.fillStyle = 'cornflowerblue';
+			ctx.strokeStyle = '#ccc';
+			ctx.lineWidth = 2;
+			ctx.textAlign = 'start';
+			ctx.font = 'normal 16px Arial';
+			drawGrid(100);
+
+			let x = 100, y = 100;
+			ctx.save(); // Save current state to stack
+			ctx.beginPath();
+			ctx.translate(200, 200); // Move canvas' origin to x,y
+			ctx.fillText('translate', 10, 30);
+			// ctx.fill();
+			ctx.closePath();
+			ctx.restore(); // Restores/pops latest state from the history stack
+
+			ctx.save(); 
+			ctx.beginPath();
+			// Circle on starting point
+			ctx.arc(0,0,10,0,Math.PI * 2);
+			ctx.rotate(Math.PI / 4); // 3.14 radians = 180 deg
+			ctx.fillText('rotate', 200, 0);
+			ctx.fill();
+			ctx.closePath();
+			ctx.restore();
+
+			ctx.beginPath();
+			ctx.translate(100, 500);
+			ctx.scale(1,-1); // Apply scale x,y 
+			ctx.fillText('scale', x, y);
+			ctx.fill();
+			ctx.closePath();
+		});
+
+		function drawGrid(gap) {
+			ctx.beginPath();
+			const cWidth = canvas.width,
+				cHeight = canvas.height;
+			for (let x = gap; x < cWidth; x += gap) {
+				// Move to next gap
+				ctx.moveTo(x, 0);
+				// Draw a line to bottom (x, 800)
+				ctx.lineTo(x, cHeight);
+			}
+			for (let y = gap; y < cHeight; y += gap) {
+				// Move to next gap
+				ctx.moveTo(0, y);
+				// Draw a line to right/end (600, y)
+				ctx.lineTo(cWidth, y);
+			}
+			ctx.stroke();
+			ctx.closePath();
+		};
+	</script>
+</body>
+
+</html>
