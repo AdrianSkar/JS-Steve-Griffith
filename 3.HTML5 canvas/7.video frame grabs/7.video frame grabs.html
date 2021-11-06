@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Video frame grabs and image uploads</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		video {
+			border: 4px solid cornflowerblue;
+		}
+
+		canvas {
+			border: 4px solid gold;
+		}
+
+		section {
+			padding: 1rem;
+			font-family: Helvetica, sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Video frame grabs and image uploads</h1>
+	</header>
+	<main>
+		<section id="vid">
+			<ol>
+				<li>How to do a frame grab from video on to canvas.</li>
+				<li>Hot to convert the frame grab to grayscale.</li>
+				<li>How to extract a binary image from the canvas.</li>
+				<li>How to load the binary image into an image element.</li>
+				<li>How to upload the binary image via fetch.</li>
+				<li>How to use the binary image as the poster for a new video element.</li>
+			</ol>
+			<!--
+        remote = https://github.com/prof3ssorSt3v3/media-sample-files/blob/master/lion-sample.mp4?raw=true
+        local = ./lion-sample.mp4
+
+				Muted is required for `autoplay` on mobile devices.
+				`controls` would enable controls but override the click listener.
+        -->
+			<video id="player" muted>
+				<source src="./lion-sample.mp4" type="video/mp4">
+			</video>
+		</section>
+		<section id="can">
+			<canvas id="canvas"></canvas>
+		</section>
+		<section id="image">
+
+		</section>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/autoplay" target="_blank"
+					rel="noopener noreferrer">"HTMLMediaElement.autoplay" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/muted" target="_blank"
+					rel="noopener noreferrer">"HTMLMediaElement.muted" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source" target="_blank"
+					rel="noopener noreferrer">"HTML &lt;source&gt;" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="noopener noreferrer">"Event
+					reference" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement" target="_blank"
+					rel="noopener noreferrer">"HTMLMediaElement" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement" target="_blank"
+					rel="noopener noreferrer">"HTMLVideoElement" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth" target="_blank"
+					rel="noopener noreferrer">"Element.clientWidth" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight" target="_blank"
+					rel="noopener noreferrer">"Element.clientHeight" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D#drawing_images"
+					target="_blank" rel="noopener noreferrer">"CanvasRenderingContext2D - Drawing images" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob" target="_blank"
+					rel="noopener noreferrer">"HTMLCanvasElement.toBlob()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData" target="_blank"
+					rel="noopener noreferrer">"FormData" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/URL#static_methods" target="_blank"
+					rel="noopener noreferrer">"URL - Static methods" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#attributes" target="_blank"
+					rel="noopener noreferrer">"&lt;video&gt; attributes" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/_2SvAepbCSg" target="_blank" rel="noopener noreferrer">"Video frame grabs and image
+				uploads." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		const grabScreen = () => {
+			let player = document.getElementById('player'),
+				canvas = document.getElementById('canvas'),
+				ctx = canvas.getContext('2d');
+			canvas.width = player.videoWidth;
+			canvas.height = player.videoHeight;
+
+			// Grab a frame from the video:
+			ctx.drawImage(player, 0, 0);
+
+			// Get image from canvas to convert it to grayscale image 
+			// (works only if image is not tainted by CORS)
+			let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height),
+				len = imgData.data.length;
+
+			for (let i = 0; i < len; i += 4) {
+				let red = imgData.data[i],
+					green = imgData.data[i + 1],
+					blue = imgData.data[i + 2];
+				// Methods for grayscaling:
+				// let lum = .2126 * red + .7152 * green +  0.722 * blue;
+				let lum = (red + green + blue) / 3; // avg
+
+				// Substitute pixels:
+				imgData.data[i] = lum;
+				imgData.data[i + 1] = lum;
+				imgData.data[i + 2] = lum;
+			}
+
+			// Paint CONVERTED image in the canvas:
+			ctx.putImageData(imgData, 0, 0);
+
+			// Export as image file to be saved/uploaded/used:
+			let blob = canvas.toBlob(blob => {
+				// This runs after the Blob is extracted
+				// fake create form, append file and submit:
+				// let fd = new FormData();
+				// fd.append('fieldName', blob, 'image-filename.png');
+				// let req = new Request('https://jasonplaceholder.typicode.com/posts', {
+				// 	method: 'POST',
+				// 	body: fd
+				// });
+				// fetch(req)
+				// 	.then(response => response.json())
+				// 	.then(data => console.log('Response from server after uploading image'))
+				// 	.catch(err => console.error(err));
+
+				// Load blob into img tag:
+				let img = document.createElement('img'),
+					url = URL.createObjectURL(blob);
+				img.addEventListener('load', ev => {
+					console.log('Image from createObjectURL loaded');
+					// player.pause(); // Stop playback when capturing if desired
+
+					// Append vid using poster:
+					// let vid = document.createElement('video');
+					// vid.src = './lion-sample.mp4';
+					// // Set img blob as video poster:
+					// vid.poster = url;
+					// vid.setAttribute('controls', '');
+					// document.body.appendChild(vid);
+
+					// Clear memory used to create Object URL (data no longer available):
+					window.URL.revokeObjectURL(url);
+				});
+
+				img.src = url; // Use the canvas binary png blob
+				document.getElementById('image').appendChild(img);
+
+			}, 'image/png');// Create binary png from canvas: img/png default
+		};
+
+		document.addEventListener('DOMContentLoaded', () => {
+			let player = document.getElementById('player');
+			player.addEventListener('canplay', ev => { // can play but not w/o stop
+				// console.log('canplay, video dimensions:', ev.target.videoWidth, ev.target.videoHeight);
+				// console.log('clientW/H', ev.target.clientWidth, ev.target.clientHeight);
+				// console.log('.currentSrc, .duration, .currentTime', ev.target.currentSrc, ev.target.duration, ev.target.currentTime);
+				player.addEventListener('click', ev => {
+					// Screenshot on click:
+					grabScreen();
+				});
+			});
+			player.addEventListener('canplaythrough', ev => {// can play w/o stop
+				// This is our own autoplay
+				// console.log('Enough content loaded to play');
+				player.play();
+			});
+			player.addEventListener('load', ev => {
+				// Video has loaded entirely
+				console.log('Video fully loaded.');
+			});
+			player.addEventListener('error', err => {
+				console.log('Failed to load video', err);
+			});
+		});
+	</script>
+</body>
+
+</html>
