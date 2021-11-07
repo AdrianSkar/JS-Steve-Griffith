@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Image thumbnails</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			min-height: 100vh;
+		}
+
+		canvas {
+			border: 3px solid #333;
+			width: 90%;
+			height: auto;
+		}
+
+		img {
+			max-width: 50vw;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Image thumbnails</h1>
+	</header>
+	<main>
+		<canvas id="canvas"></canvas>
+		<p><img src="./img/image1.jpg" alt="demo image"></p>
+		<p><img src="./img/image2.jpg" alt="demo image"></p>
+		<p><img src="./img/image3.jpg" alt="demo image"></p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement#properties" target="_blank"
+					rel="noopener noreferrer">"HTMLImageElement - Properties" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage" target="_blank"
+					rel="noopener noreferrer">"ctx.drawImage()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/JId538COVW4" target="_blank" rel="noopener noreferrer">"Image thumbnails." YouTube, by
+				Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let canvas, ctx, img1, img2, img3, images = [];
+
+		document.addEventListener('DOMContentLoaded', () => {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			canvas.width = 1200;
+			canvas.height = 600;
+			img1 = document.createElement('img');
+			img2 = document.createElement('img');
+			img3 = document.createElement('img');
+			[img1, img2, img3].forEach(image => {
+				image.addEventListener('load', trackLoads);
+			});
+			img1.src = './img/image1.jpg';
+			img2.src = './img/image2.jpg';
+			img3.src = './img/image3.jpg';
+		});
+
+		function trackLoads(ev) {
+			let imgObj = {
+				sw: ev.target.naturalWidth,
+				sh: ev.target.naturalHeight,
+				img: ev.target
+			};
+			images.push(imgObj);
+			console.log(imgObj);
+			if (images.length === 3) { addThumbnails() }
+		}
+
+		function addThumbnails() {
+			// Image has been loaded do the document. Add 12 copies of the images to
+			// the canvas (4cols, 3rows). Each thumbnail will be 300x200 px.
+			// Calculate the part of the image to use as thumbnail:
+			let dx = 0, dy = 0, imgCount = 0;
+			for (let row = 0; row < 3; row++) {
+				for (let col = 0; col < 4; col++) {
+					// Establish destination coords:
+					dx = col * 300; // 0, 300, 600, 900
+					dy = row * 200; // 0, 200, 400
+					// Reminder of imgCount/3 will tell you the position within the arr.
+					let imgObj = images[Math.floor(imgCount % 3)]; // 0, 1, 2
+					imgCount++;
+					ctx.drawImage(
+						imgObj.img, // source image
+						0, 0, imgObj.sw, imgObj.sh, // source coords and size
+						dx, dy, 300, 200 // destination coords and size
+					);
+				}	
+			}
+		}
+	</script>
+</body>
+
+</html>
