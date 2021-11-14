@@ -132,7 +132,8 @@
 			// direction: ltr, rtl, (inherit)
 			ctx.direction = 'ltr';
 
-			let txt = document.getElementById('msg').value,
+			let txt = document.querySelector('input#msg').value,
+			// let txt = document.getElementById('msg').value,
 				metrics = ctx.measureText(oldTxt),
 				w = metrics.width;
 
@@ -150,9 +151,10 @@
 
 			ctx.font = 'italic 20px Arial';
 
-			// Update metrics:
-			let m = `Message is ${w}px wide`;
+			// Clear old metrics:
 			ctx.clearRect(50, 310, 500, -30);
+			// Update metrics:
+			let m = `Message is ${w.toFixed(2)}px wide`;
 			ctx.fillText(m, 50, 300);
 		}
 	</script>

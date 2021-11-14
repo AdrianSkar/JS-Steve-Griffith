@@ -33,7 +33,7 @@
 		<section id="vid">
 			<ol>
 				<li>How to do a frame grab from video on to canvas.</li>
-				<li>Hot to convert the frame grab to grayscale.</li>
+				<li>How to convert the frame grab to grayscale.</li>
 				<li>How to extract a binary image from the canvas.</li>
 				<li>How to load the binary image into an image element.</li>
 				<li>How to upload the binary image via fetch.</li>
@@ -152,8 +152,8 @@
 
 			// Export as image file to be saved/uploaded/used:
 			let blob = canvas.toBlob(blob => {
-				// This runs after the Blob is extracted
-				// fake create form, append file and submit:
+				// This runs after the Blob is extracted.
+				// Fake create form, append file and submit:
 				// let fd = new FormData();
 				// fd.append('fieldName', blob, 'image-filename.png');
 				// let req = new Request('https://jasonplaceholder.typicode.com/posts', {
@@ -168,6 +168,9 @@
 				// Load blob into img tag:
 				let img = document.createElement('img'),
 					url = URL.createObjectURL(blob);
+				img.src = url; // Use the canvas binary png blob
+				document.getElementById('image').appendChild(img);
+
 				img.addEventListener('load', ev => {
 					console.log('Image from createObjectURL loaded');
 					// player.pause(); // Stop playback when capturing if desired
@@ -183,10 +186,6 @@
 					// Clear memory used to create Object URL (data no longer available):
 					window.URL.revokeObjectURL(url);
 				});
-
-				img.src = url; // Use the canvas binary png blob
-				document.getElementById('image').appendChild(img);
-
 			}, 'image/png');// Create binary png from canvas: img/png default
 		};
 

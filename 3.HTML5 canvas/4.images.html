@@ -120,14 +120,13 @@
 			}
 			imgData.data = arr;
 			ctx.putImageData(imgData, 0, 0);
-
-			/// Substitute current img element with modified image:
-
+			
 			// Generate data URI containing the image (format, quality encode opts):
 			let moddedImg = canvas.toDataURL('image/jpg', 1.0);
-
-			console.log(moddedImg);
+			
+			/// Substitute current img element with modified image:
 			document.querySelector('img').src = moddedImg;
+			console.log(moddedImg);
 		};
 	</script>
 </body>

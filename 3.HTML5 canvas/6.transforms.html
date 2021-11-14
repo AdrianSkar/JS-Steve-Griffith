@@ -30,7 +30,6 @@
 	</header>
 	<main>
 		<canvas id="canvas"></canvas>
-
 	</main>
 	<footer>
 		<p>Refs:</p>
@@ -85,11 +84,11 @@
 
 			ctx.save(); 
 			ctx.beginPath();
-			// Circle on starting point
+			// Circle on starting point:
 			ctx.arc(0,0,10,0,Math.PI * 2);
+			ctx.fill();
 			ctx.rotate(Math.PI / 4); // 3.14 radians = 180 deg
 			ctx.fillText('rotate', 200, 0);
-			ctx.fill();
 			ctx.closePath();
 			ctx.restore();
 

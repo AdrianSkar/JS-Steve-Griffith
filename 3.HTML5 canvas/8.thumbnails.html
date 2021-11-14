@@ -67,12 +67,13 @@
 			img1 = document.createElement('img');
 			img2 = document.createElement('img');
 			img3 = document.createElement('img');
-			[img1, img2, img3].forEach(image => {
-				image.addEventListener('load', trackLoads);
-			});
 			img1.src = './img/image1.jpg';
 			img2.src = './img/image2.jpg';
 			img3.src = './img/image3.jpg';
+			
+			[img1, img2, img3].forEach(image => {
+				image.addEventListener('load', trackLoads);
+			});
 		});
 
 		function trackLoads(ev) {
