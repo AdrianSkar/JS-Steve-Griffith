@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Color extraction tool</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="main.css">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Color extraction tool</h1>
+	</header>
+	<main>
+		<p>
+			<span class="box" id="pixelColor" data-label="Current pixel"></span>
+			<!-- Photo by stein egil liland from Pexels 
+			https://www.pexels.com/photo/scenic-view-of-snow-capped-mountains-during-night-3408744/-->
+			<canvas data-src="./night.jpg" width="900"></canvas>
+		</p>
+		<section class="colors">
+			<!-- saved colors here -->
+		</section>
+
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*" target="_blank"
+					rel="noopener noreferrer">"data-*" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/qgKwXZSnSdY" target="_blank" rel="noopener noreferrer">"Color extraction tool."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script src="./main.js">	</script>
+</body>
+
+</html>

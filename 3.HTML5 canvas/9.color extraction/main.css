@@ -1,0 +1,67 @@
+*, *::before, *::after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-family: 'Helvetica Neue', Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+	min-height: 100vh;
+	background-color: #222;
+	color: #eee;
+}
+
+header, main, footer {
+	background-color: #333;
+	width: 95vw;
+	/* min-height: 100vh; */
+	padding: 1rem 2rem;
+	margin: 0 auto;
+}
+
+header h1 {
+	color: orange;
+}
+
+header h2 {
+	color: orangered;
+}
+
+p {
+	line-height: 1.7;
+	margin: 1.5rem 0;
+}
+
+main p canvas {
+	border: 1px solid white;
+}
+
+.box {
+	width: 150px;
+	height: 150px;
+	border: 1px solid #fff;
+	display: inline-block;
+	/* background-color: attr('data-color'); */
+	position: relative;
+	margin: 5px;
+}
+
+.box::before, .box::after {
+	color: #fff;
+	width: 150px;
+	left: 5px;
+	position: absolute;
+}
+
+.box::before {
+	content: attr(data-label);
+	top: 5px;
+}
+
+.box::after {
+	content: attr(data-color);
+	bottom: 5px;
+}

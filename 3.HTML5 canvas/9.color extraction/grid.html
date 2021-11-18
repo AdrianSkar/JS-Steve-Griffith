@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Grid demo - canvas</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		.grid {
+			border: 1px solid #333;
+			width: 50vw;
+			height: 50vh;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.pixel {
+			width: 100px;
+			height: 100px;
+			border: 1px solid #111;
+			/* position: relative; */
+			padding: 20px 5px;
+		}
+
+		.pixel::before {
+			/* position: absolute; */
+			/* top: 5px;
+			left: 5px; */
+			content: '('attr(data-coord) ')';
+		}
+
+		.pixel:hover {
+			outline: 2px solid orangered;
+		}
+
+		.highlight {
+			background-color: gold;
+		}
+
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Grid demo - canvas</h1>
+	</header>
+	<main>
+		<section class="grid" data-cols="4" data-rows="4"></section>
+		<p>
+			The above grid represents an image that is <span id="cols"></span> by <span id="rows"></span> pixels.
+		</p>
+		<section>
+			<p id="coords"></p>
+			<p id="pixelPos"></p>
+			<p id="arrayPos"></p>
+			<p id="arraySize"></p>
+		</section>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining"
+					target="_blank" rel="noopener noreferrer">"Optional chaining (?.)" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/qgKwXZSnSdY" target="_blank" rel="noopener noreferrer">"Color extraction tool."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let grid = document.querySelector('.grid'),
+			cols = grid.getAttribute('data-cols'),
+			rows = grid.getAttribute('data-rows');
+		// Display the grid info in the paragraph below the grid
+		document.getElementById('cols').innerHTML = cols;
+		document.getElementById('rows').innerHTML = rows;
+		// Size the grid:
+		grid.style.width = `${cols * 100 + 2}px`;
+		grid.style.height = `${rows * 100 + 2}px`;
+
+		// Build the grid based on data-cols and data-rows attributes
+		for (let r = 0; r < rows; r++) {
+			for (let c = 0; c < cols; c++) {
+				let div = document.createElement('div');
+				div.className = 'pixel';
+				div.setAttribute('data-coord', `${r}, ${c}`); //Shown as :before content
+				grid.append(div);
+			}
+		}
+
+		document.querySelector('.grid').addEventListener('mousemove', getPixel);
+
+		function getPixel(ev) {
+			let pixel = ev.target;
+			// Remove old highlight class (optional chaining):
+			document.querySelector('.highlight')?.classList.remove('highlight');
+			// Add it to the current pixel div:
+			pixel.classList.add('highlight');
+
+			let pCoords = document.getElementById('coords'),
+				pPixel = document.getElementById('pixelPos'),
+				pPos = document.getElementById('arrayPos'),
+				pSize = document.getElementById('arraySize');
+
+			let coords = pixel.getAttribute('data-coord');
+			pCoords.textContent = `Selected pixel (${coords})`;
+
+			let pixelPos = coords.split(', '),
+				row = Number(pixelPos[0]), col = Number(pixelPos[1]),
+				pixelIndex = (cols * row) + col;
+			pPixel.innerHTML = `Pixel index ((total columns * row/y) + col/x): (${cols} * ${row}) + ${col} = ${pixelIndex}`;
+
+			let arrayPos = pixelIndex * 4;
+			pPos.innerHTML = `Pixel [r,g,b,a] values in array positions (index*4): [${arrayPos}, ${arrayPos + 1}, ${arrayPos + 2}, ${arrayPos + 3}].`;
+
+			pSize.innerHTML = `There are ${rows * cols} pixels in the grid and ${rows * cols * 4} elements in the array.`;
+		}
+	</script>
+</body>
+
+</html>
