@@ -118,6 +118,17 @@ const APP = {
 		pixel.style.backgroundColor = APP.pixel;
 		average.style.backgroundColor = APP.average;
 		colors.append(pixel, average);
+
+		// Paste color to clipboard
+		navigator.clipboard.writeText(APP.pixel).then(
+			function () {
+				/* clipboard successfully set */
+				console.log('copied to clipboard:', APP.pixel);
+			},
+			err => {
+				console.log(err);
+			}
+		);
 	},
 };
 
