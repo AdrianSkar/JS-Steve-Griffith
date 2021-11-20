@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>JS debugger keyword</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>JS debugger keyword</h1>
+	</header>
+	<main>
+		Body content.
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger"
+					target="_blank" rel="noopener noreferrer">"debugger" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/fs8PwQAx_Tw" target="_blank" rel="noopener noreferrer">"JS debugger keyword." YouTube,
+				by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let x = 1;
+		const doClick = () => {
+			x = 4;
+			debugger;
+			console.log('Debugger enabled.');
+			x = 7;
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.body.addEventListener('click', doClick);
+		})
+	</script>
+</body>
+
+</html>

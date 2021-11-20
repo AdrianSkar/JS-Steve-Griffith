@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>load vs DOMContentLoaded event</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		img {
+			max-width: 50vw;
+		}
+	</style>
+	<link rel="shortcut icon" href="https://github.githubassets.com/favicons/favicon-dark.svg" />
+
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata|Noto+Sans+SC" rel="stylesheet" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+	<script>
+		let startTime = performance.now();
+	</script>
+</head>
+
+<body>
+	<header>
+		<h1>load vs DOMContentLoaded event</h1>
+	</header>
+	<main>
+		<p><strong>load</strong> won't fire until all resources are loaded while <strong>DOMContentLoaded</strong> will fire
+			when the initial HTML doc. has been loaded and parsed without waiting for stylesheets, images, subframes, etc.</p>
+		<p><img
+				src="https://cdnb.artstation.com/p/assets/images/images/003/551/979/large/anton-fedotov-the-gone-in-the-void-2-1800.jpg"
+				alt="https://cdnb.artstation.com/p/assets/images/images/003/551/979/large/anton-fedotov-the-gone-in-the-void-2-1800.jpg">Lorem,
+			ipsum dolor sit amet consectetur adipisicing elit. Repudiandae esse doloremque, obcaecati unde, beatae quae autem
+			incidunt, voluptatem sed hic cupiditate voluptas maxime labore aut iste ratione in. Aut, at.</p>
+		<p><img src="https://cdna.artstation.com/p/assets/images/images/020/966/580/large/maena-paillet-stavanger.jpg"
+				alt="https://cdna.artstation.com/p/assets/images/images/020/966/580/large/maena-paillet-stavanger.jpg">Lorem,
+			ipsum dolor sit amet consectetur adipisicing elit. Repudiandae esse doloremque, obcaecati unde, beatae quae autem
+			incidunt, voluptatem sed hic cupiditate voluptas maxime labore aut iste ratione in. Aut, at.</p>
+		<p><img src="https://cdna.artstation.com/p/assets/images/images/002/150/420/large/mr-bian-54-2.jpg"
+				alt="https://cdna.artstation.com/p/assets/images/images/002/150/420/large/mr-bian-54-2.jpg">Lorem, ipsum dolor
+			sit amet consectetur adipisicing elit. Repudiandae esse doloremque, obcaecati unde, beatae quae autem incidunt,
+			voluptatem sed hic cupiditate voluptas maxime labore aut iste ratione in. Aut, at.</p>
+		<p><img
+				src="https://cdna.artstation.com/p/assets/images/images/012/116/098/4k/leon-tukker-cratercity-finished-brookejasonas.jpg?"
+				alt="https://cdna.artstation.com/p/assets/images/images/012/116/098/4k/leon-tukker-cratercity-finished-brookejasonas.jpg?">Lorem,
+			ipsum dolor sit amet consectetur adipisicing elit. Repudiandae esse doloremque, obcaecati unde, beatae quae autem
+			incidunt, voluptatem sed hic cupiditate voluptas maxime labore aut iste ratione in. Aut, at.</p>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event" target="_blank"
+					rel="noopener noreferrer">"Document: DOMContentLoaded event" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event" target="_blank"
+					rel="noopener noreferrer">"Window: load event" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Performance" target="_blank"
+					rel="noopener noreferrer">"Performance API" - <em>MDN</em>.</a>
+			</li>
+
+
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/8rc0zaTn2ew" target="_blank" rel="noopener noreferrer">"load vs DOMContentLoaded
+				event." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', ev => {
+			console.log(ev.type);
+			let endTime = performance.now(),
+				diff = endTime - startTime;
+			console.log(ev.type, diff);
+		});
+
+		window.addEventListener('load', ev => {
+			console.log(ev.type);
+			let endTime = performance.now(),
+				diff = endTime - startTime;
+			console.log(ev.type, diff);
+		});
+
+	</script>
+</body>
+
+</html>
