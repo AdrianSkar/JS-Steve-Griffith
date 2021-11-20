@@ -57,8 +57,10 @@ const APP = {
 		// Square width:
 		const inset = 20;
 		// Inset by 20px as our workable range (between 20 and 880)
-		offsetX = Math.min(offsetX, cols - inset); // (pointer, 880)
-		offsetX = Math.max(inset, offsetX); // (20, pointer)
+		// offsetX = Math.min(offsetX, cols - inset); // (pointer, 880)
+		// offsetX = Math.max(inset, offsetX); // (20, pointer)
+		// Or just using ternary: 
+		offsetX = offsetX < inset ? inset: offsetX > (cols-inset)? cols-inset: offsetX;
 		offsetY = Math.min(offsetY, rows - inset); // (pointer, 580)
 		offsetY = Math.max(inset, offsetY); // (20, pointer)
 
@@ -76,11 +78,16 @@ const APP = {
 			}
 		}
 		let boxWidth = inset * 2 + 1,
-			dims = boxWidth * boxWidth, // Box's total num of pixels
-			red = Math.round(reds / dims), // avg color
-			green = Math.round(greens / dims),
-			blue = Math.round(blues / dims),
-			clr = `rgb(${red}, ${green}, ${blue})`;
+			dims = boxWidth * boxWidth; // Box's total num of pixels
+		// red = Math.round(reds / dims), // avg color
+		// green = Math.round(greens / dims),
+		// blue = Math.round(blues / dims),
+		let [red, green, blue] = [
+			Math.round(reds / dims),
+			Math.round(greens / dims),
+			Math.round(blues / dims),
+		];
+		let clr = `rgb(${red}, ${green}, ${blue})`;
 		// Save avg color for later?:
 		APP.average = clr;
 		// Square props and drawing:
