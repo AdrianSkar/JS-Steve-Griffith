@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Saving user input in JS objects</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		.formBox {	
+			padding: 0.5rem 2rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Saving user input in JS objects</h1>
+	</header>
+	<main>
+		<form>
+			<div class="formBox"><label for="title">Movie</label><input type="text" id="title" placeholder="Title"></div>
+			<div class="formBox"><label for="yr">Year</label><input type="number" id="yr" placeholder="Year"></div>
+			<div class="formBox"><button id="btn">Add movie</button></div>
+		</form>
+		<div id="msg">
+			<pre></pre>
+		</div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input" target="_blank"
+					rel="noopener noreferrer">"&lt;input&gt;" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/forms" target="_blank"
+					rel="noopener noreferrer">"Document.forms" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset" target="_blank"
+					rel="noopener noreferrer">"HTMLFormElement.reset()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage" target="_blank"
+					rel="noopener noreferrer">"Window.localStorage" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/NxVCq4p0Kb0" target="_blank" rel="noopener noreferrer">"Saving user input in JS
+				objects." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let movies = [];
+		const addMovie = ev => {
+			ev.preventDefault(); // Avoid form submission
+			let movie = {
+				id: Date.now(),
+				title: document.getElementById('title').value,
+				year: document.getElementById('yr').value
+			}
+
+			document.forms[0].reset(); // Clear form. Or you can also:
+			//document.querySelector('form').reset();
+
+			console.warn('movies: ', movies);
+
+			if (movie.title && movie.year) {
+				movies.push(movie);
+				localStorage.setItem('Movie list', JSON.stringify(movies))
+
+				let pre = document.querySelector('#msg pre');
+				pre.textContent = `\n${JSON.stringify(movies, '\t', 2)}`;
+			}
+			else { alert('Please complete the form.') }
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('btn').addEventListener('click', addMovie);
+		})
+	</script>
+</body>
+
+</html>
