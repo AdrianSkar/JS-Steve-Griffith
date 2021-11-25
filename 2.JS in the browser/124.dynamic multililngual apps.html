@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dynamic multilingual apps</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		button {
+			cursor: pointer;
+			padding: 0.25 rem;
+			margin: 1rem;
+		}
+
+		html [lang] {
+			margin: 1rem;
+			display: inline;
+			padding: 1rem;
+		}
+
+		[lang="en-CA"] {
+			border: 1px solid red;
+		}
+
+		[lang="fr-CA"] {
+			border: 1px solid limegreen;
+		}
+
+		[lang="de"] {
+			border: 1px solid gold;
+		}
+
+		/* div[lang]{display:none} */
+		div[lang].lang-match {
+			background-color: cornflowerblue;
+			/* display: block; */
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Dynamic multilingual apps</h1>
+	</header>
+	<main>
+		<div lang="en-CA"><button data-key="btn-yes">Default</button><button data-key="btn-no">Default</button></div>
+		<div lang="es-ES"><button data-key="btn-yes">Default</button><button data-key="btn-no">Default</button></div>
+		<div lang="fr-CA"><button data-key="btn-yes">Default</button><button data-key="btn-no">Default</button></div>
+		<div lang="de"><button data-key="btn-yes">Default</button><button data-key="btn-no">Default</button></div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language" target="_blank"
+					rel="noopener noreferrer">"Navigator.language" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement" target="_blank"
+					rel="noopener noreferrer">"Document.documentElement" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/getCanonicalLocales"
+					target="_blank" rel="noopener noreferrer">"Intl.getCanonicalLocales()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors" target="_blank"
+					rel="noopener noreferrer">"CSS - Attribute selectors" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/OKU08dWK8BA" target="_blank" rel="noopener noreferrer">"Dynamic multilingual apps."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		// Data for each language (could come from .json/external)
+		let langData = {
+			"languages": {
+				"en": {
+					"strings": {
+						"btn-yes": "yes",
+						"btn-no": "no"
+					}
+				},
+				"fr": {
+					"strings": {
+						"btn-yes": "oui",
+						"btn-no": "non"
+					}
+				},
+				"de": {
+					"strings": {
+						"btn-yes": "ja",
+						"btn-no": "nein"
+					}
+				}
+			}
+		};
+
+		document.addEventListener('DOMContentLoaded', () => {
+			// Apply strings/langData to all elements with a `[lang]` attr.
+			let zones = document.querySelectorAll('html [lang]');
+			applyStrings(zones);
+
+			// Get user language and apply style to container if found:
+			let lang = findLocaleMatch(),
+				container = document.querySelector(`html [lang^=${lang}]`);
+			container.className = 'lang-match';
+		})
+
+		function applyStrings(elements) {
+			elements.forEach(element => { // For each element/div with a lang attr:
+				// Get lang:
+				let locale = element.getAttribute('lang');
+				// Get all `[data-key]` buttons:
+				element.querySelectorAll('[data-key]').forEach(button => {
+					let key = button.getAttribute('data-key'),
+						lang = locale.substr(0, 2); // E.g.: `en` from `en-US`
+					// if (key) {
+					if (lang in langData.languages) {// If we have lang data for that lang
+						// Put corresponding langData string for that key:
+						button.textContent = langData.languages[lang].strings[key];
+					}
+				})
+			})
+		};
+
+		function findLocaleMatch() {
+			let keys = Object.keys(langData.languages), // From our data;
+				locales = Intl.getCanonicalLocales(keys); // From our data validated
+			console.log(locales);
+
+			let lang = navigator.language, // From browser
+				locale = Intl.getCanonicalLocales(lang); // From browser validated
+
+			//  console.log('browser language', lang);
+			console.log('locales from browser', locale);
+			console.log('locales from data file', locales);
+
+			// Find the match for locale inside locales:
+			let langMatch = document.documentElement.getAttribute('lang'); // <html lang>: default
+			//  let langMatchB = document.children[0].lang;
+			locales = locales.filter(l => locale === l);
+			langMatch = (locales.length > 0) ? locales[0] : langMatch;
+			return langMatch;
+		}
+	</script>
+</body>
+
+</html>
