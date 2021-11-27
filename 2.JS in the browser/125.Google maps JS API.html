@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Setting up Google Maps JS API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+		}
+
+		#map {
+			border: 2px solid #333;
+			width: 80vw;
+			height: 80vh;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Setting up Google Maps JS API</h1>
+	</header>
+	<main id="map">
+
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/head" target="_blank"
+					rel="noopener noreferrer">"Document.head" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://console.cloud.google.com/home/dashboard" target="_blank" rel="noopener noreferrer">"Dashboard"
+					- <em>Google cloud platform</em>.</a>
+			</li>
+			<li>
+				<a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank"
+					rel="noopener noreferrer">"Using API Keys, Maps JS API" - <em>Google maps platform</em>.</a>
+			</li>
+			<li>
+				<a href="https://developers.google.com/maps/documentation/javascript/overview" target="_blank"
+					rel="noopener noreferrer">"Maps JS API" - <em>Google maps platform</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/EwZUQuPjakg" target="_blank" rel="noopener noreferrer">"Setting up Google Maps JS
+				API." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script type="module">
+		import { MAPS_KEY } from '../apiKey.js';
+		console.log(MAPS_KEY);
+
+		let map;
+		document.addEventListener('DOMContentLoaded', () => {
+			let s = document.createElement('script');
+			document.head.appendChild(s);
+			s.addEventListener('load', () => {
+				console.log('Script loaded');
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: {
+						lat: 45.34,
+						lng: -75.74
+					},
+					zoom: 16,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				});
+			});
+			s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}`;
+		});
+
+	</script>
+</body>
+
+</html>
