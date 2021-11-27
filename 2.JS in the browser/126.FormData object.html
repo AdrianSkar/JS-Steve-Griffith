@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>FormData object</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>FormData object</h1>
+	</header>
+	<main id="output">
+		<pre></pre>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData" target="_blank"
+					rel="noopener noreferrer">"FormData" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/9mhyo1wQGeI" target="_blank" rel="noopener noreferrer">"FormData object." YouTube, by
+				Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let fd = new FormData();
+			fd.append('name', 'Bubba');
+			fd.append('id', 1234);
+			fd.append('new Date()', new Date());
+			fd.append('Date.now()', Date.now());
+
+			console.log('fd',fd);
+			console.log('Array.from(fd)', Array.from(fd));
+			console.log('Object.fromEntries(fd)', Object.fromEntries(fd));
+
+			for (const obj of fd) {
+				console.log(obj);
+			}
+			
+			// document.querySelector('#output').textContent = JSON.stringify(Array.from(fd), '\t', 2);
+			document.querySelector('#output pre').textContent = JSON.stringify(Object.fromEntries(fd), '\t', 2);
+
+			// Fake send:
+			// let url = 'URL', req = new Request({
+			// 	url: url,
+			// 	body: fd
+			// });
+			// fetch(req).then(res => res.json()).then(data => { }).catch(err => { })
+		})
+	</script>
+</body>
+
+</html>
