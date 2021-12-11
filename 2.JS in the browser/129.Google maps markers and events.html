@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Google maps markers and events</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 50vh;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Google maps markers and events</h1>
+	</header>
+	<main id="map">
+
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition" target="_blank"
+					rel="noopener noreferrer">"Geolocation.getCurrentPosition()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developers.google.com/maps/documentation/javascript/markers" target="_blank" rel="noopener noreferrer">"Markers" - <em>Google maps JS API</em>.</a>
+			</li>
+			<li>
+				<a href="https://developers.google.com/maps/documentation/javascript/events" target="_blank" rel="noopener noreferrer">"Events" - <em>Google maps JS API</em>.</a>
+			</li>		
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/kUVKzZ1NKX0" target="_blank" rel="noopener noreferrer">"Google maps markers and
+				events." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script type="module">
+		import { MAPS_KEY } from '../apiKey.js';
+		console.log(MAPS_KEY);
+
+		let app = {
+			map: null,
+			currentMarker: null,
+			defaultPos: {
+				coords: {
+					latitude: 51.5074,
+					longitude: 0.1278
+				}
+			},
+			init: function () {
+				document.addEventListener('DOMContentLoaded', app.ready);
+			},
+			ready: function () {
+				// Load Google maps script:
+				let script = document.createElement('script');
+				document.head.appendChild(script);
+				script.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}`;
+				script.addEventListener('load', app.mapScriptReady);
+			},
+			mapScriptReady: function () {
+				// Loaded script. Now get geolocation or load default:
+				if (navigator.geolocation) {
+					let options = {
+						enableHighAccuracy: true,
+						timeout: 20000,
+						maximumAge: 1000 * 60 * 60
+					};
+					navigator.geolocation.getCurrentPosition(
+						app.gotPosition,
+						app.failPosition,
+						options
+					);
+				} else {
+					// No geolocation support. Load default:
+					app.gotPosition(app.defaultPos);
+				}
+			},
+			gotPosition: function (position) {
+				console.log('Got position:', position);
+				// Build the map:
+				app.map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 12,
+					center: {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					},
+					disableDoubleClickZoom: true
+				});
+				// Add map event listeners:
+				app.addMapListeners();
+			},
+			addMapListeners: function () {
+				console.log('Adding map listeners');
+				app.map.addListener('dblclick', app.addMarker);
+			},
+			addMarker: function (ev) {
+				console.log('Adding marker', ev);
+				let marker = new google.maps.Marker({
+					map: app.map,
+					draggable: false,
+					position: {
+						lat: ev.latLng.lat(),
+						lng: ev.latLng.lng()
+					}
+				});
+				marker.addListener('click', app.markerClick);
+				marker.addListener('dblclick', app.markerDblClick);
+			},
+			markerClick: function (ev) {
+				console.log('Marker clicked', ev);
+				console.log(this);
+				let marker = this; // To use the marker locally
+				app.currentMarker = marker || this; // To use the marker globally
+				app.map.panTo(marker.getPosition()); // Maps method to move the map to the marker 
+			},
+			markerDblClick: function (ev) {
+				console.log('Marker double clicked', ev);
+				console.log(this);
+				let marker = this; // To use the marker locally
+				// app.currentMarker = marker || this; // To use the marker globally
+				// Remove the marker from the map:
+				marker.setMap(null);
+				// Remove the marker from global value:
+				app.currentMarker = null;
+			},
+			failPosition: function (err) {
+				console.log('Failed to get position:', err);
+				// Load default
+				app.gotPosition(app.defaultPos);
+			}
+		};
+
+		app.init();
+	</script>
+</body>
+
+</html>
