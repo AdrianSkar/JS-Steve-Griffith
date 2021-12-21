@@ -1,0 +1,27 @@
+{
+  "name": "js-seteve-griffith",
+  "version": "1.0.0",
+  "description": "Following his tutorials on YT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdrianSkar/JS-Steve-Griffith.git"
+  },
+  "keywords": [
+    "js",
+    "html"
+  ],
+  "author": "AdrianSkar",
+  "bugs": {
+    "url": "https://github.com/AdrianSkar/JS-Steve-Griffith/issues"
+  },
+  "homepage": "https://github.com/AdrianSkar/JS-Steve-Griffith#readme",
+  "devDependencies": {
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-prettier": "^4.0.0"
+  }
+}
