@@ -116,21 +116,45 @@
 					position: {
 						lat: ev.latLng.lat(),
 						lng: ev.latLng.lng()
-					}
+					},
+					title: 'test marker'
 				});
-				marker.addListener('click', app.markerClick);
-				marker.addListener('dblclick', app.markerDblClick);
+				// marker.addListener('click', (ev) => {
+				// 	console.log(this);
+				// 	app.markerClick(ev).bind(marker);
+				// });
+
+				// click/dblclick workaround as in https://css-tricks.com/snippets/javascript/bind-different-events-to-click-and-double-click/
+				let timer = 0, delay = 200, prevent = false;
+
+				marker.addListener('click', ()=>{
+					// Bind the marker so the function gets the correct `this` object:
+					let callClick = app.markerClick.bind(marker);
+					// Add a delay to prevent click event from firing when it shouldn't:
+					timer = setTimeout(()=>{
+						if (!prevent) callClick();
+						prevent = false;
+					}, delay);
+					console.log('one', timer, delay, prevent);
+				});
+				marker.addListener('dblclick', ()=>{
+					let callDblClick = app.markerDblClick.bind(marker);
+					clearTimeout(timer);
+					prevent = true;
+					callDblClick();
+					console.log('double', timer, delay, prevent);
+				});
 			},
 			markerClick: function (ev) {
 				console.log('Marker clicked', ev);
-				console.log(this);
+				console.log('this', this);
 				let marker = this; // To use the marker locally
 				app.currentMarker = marker || this; // To use the marker globally
 				app.map.panTo(marker.getPosition()); // Maps method to move the map to the marker 
 			},
 			markerDblClick: function (ev) {
 				console.log('Marker double clicked', ev);
-				console.log(this);
+				console.log('this', this);
 				let marker = this; // To use the marker locally
 				// app.currentMarker = marker || this; // To use the marker globally
 				// Remove the marker from the map:
