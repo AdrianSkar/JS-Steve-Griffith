@@ -51,6 +51,7 @@
 		let app = {
 			map: null,
 			currentMarker: null,
+			markers: [],
 			defaultPos: {
 				coords: {
 					latitude: 51.5074,
@@ -97,12 +98,16 @@
 					disableDoubleClickZoom: true
 				});
 				// Add map event listeners:
-				app.addMapListeners();
-			},
-			addMapListeners: function () {
+				// app.addMapListeners();
+
+				// Enough with this instead:
 				console.log('Adding map listeners');
 				app.map.addListener('dblclick', app.addMarker);
+
 			},
+			// addMapListeners: function () {
+			// 	app.map.addListener('dblclick', app.addMarker);
+			// },
 			addMarker: function (ev) {
 				console.log('Adding marker', ev);
 				let marker = new google.maps.Marker({
