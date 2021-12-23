@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>DOM methods insertBefore and insertAdjacentElement</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main section {
+			border: 1px solid cornflowerblue;
+			padding: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>DOM methods insertBefore and insertAdjacentElement</h1>
+	</header>
+	<main>
+		<section id='before'>
+			<h2>Node.insertBefore(newNode, refNode)</h2>
+			<p class="original">The original existing paragraph inside the main element. Click here.</p>
+		</section>
+		<section id='adjacent'>
+			<h2>Element.insertAdjacentElement(position, element)</h2>
+			<p class="original">The original existing paragraph inside the main element. Click here.</p>
+		</section>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/insertBefore" target="_blank"
+					rel="noopener noreferrer">"Node.insertBefore" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement" target="_blank"
+					rel="noopener noreferrer">"Element.insertAdjacentElement" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/x199b3C15bA" target="_blank" rel="noopener noreferrer">"DOM methods insertBefore and
+				insertAdjacentElement." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let count = 0;
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('before').addEventListener('click', ev => {
+				let section = document.querySelector('#before'),
+					originalPara = document.querySelector('#before .original'),
+					p = document.createElement('p');
+				count++;
+				p.textContent = `This is paragraph ${count}, created with .insertBefore().`;
+				// Node.insertBefore(newNode, referenceNode);
+				// 'Counterpart' of .appendChild()
+				section.insertBefore(p, originalPara);
+			});
+
+			// Element.insertAdjacentElement(position, element);
+			// 'beforebegin', 'afterbegin', 'beforeend', 'afterend'
+			let positions = ['beforebegin', 'afterbegin', 'beforeend', 'afterend'];
+			document.getElementById('adjacent').addEventListener('click', ev => {
+				let section = document.querySelector('#adjacent');
+				positions.forEach(position => {
+					let p = document.createElement('p');
+					p.textContent = `section.insertAdjacentElement(${position}, p)`;
+					section.insertAdjacentElement(position, p);
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
