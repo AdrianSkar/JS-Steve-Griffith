@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>clientX vs pageX vs screenX vs offsetX</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main {
+			padding: 1rem;
+			margin: 3rem;
+			border: 1px solid #333;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>clientX vs pageX vs screenX vs offsetX</h1>
+	</header>
+	<main>
+		Click on this text or on any element within the box.
+		<figure><img src="image.png"
+				alt="Depiction of distances from element to clientX/Y, pageX/Y, screenX/Y and offsetX/Y">
+			<figcaption> <a href="https://stackoverflow.com/a/63611994/3383507" target="_blank"
+					rel="noopener noreferrer">"What is the difference between screenX/Y, clientX/Y and pageX/Y?; answer with
+					visual representation" - <em>Stack Overflow</em>.</a></figcaption>
+		</figure>
+		<ul>
+			<li><code>offsetX:</code> Distance from pointer to the padding edge of the node (element).</li>
+			<li><code>clientX:</code> Distance from pointer to the viewport.</li>
+			<li><code>pageX:</code> Distance from pointer to the edge of the document/page.</li>
+			<li><code>screenX:</code> Distance from pointer to the edge of the screen (element).</li>
+		</ul>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/clientX" target="_blank"
+					rel="noopener noreferrer">"MouseEvent.clientX" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/pageX" target="_blank"
+					rel="noopener noreferrer">"MouseEvent.pageX" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/screenX" target="_blank"
+					rel="noopener noreferrer">"MouseEvent.screenX" - <em>MDN</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/offsetX" target="_blank"
+					rel="noopener noreferrer">"MouseEvent.offsetX" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/dxADq_DlS-w" target="_blank" rel="noopener noreferrer">"clientX vs pageX vs screenX vs
+				offsetX." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.querySelector('main').addEventListener('click', fun);
+		});
+		function fun(ev) {
+			console.log(ev.target.tagName, 'clicked');
+			console.log('clientX', ev.clientX);
+			console.log('pageX', ev.pageX);
+			console.log('screenX', ev.screenX);
+			console.log('offsetX', ev.offsetX);
+		}
+	</script>
+</body>
+
+</html>
