@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Parent elements in the DOM</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		html,
+		body,
+		main,
+		p {
+			padding: 1rem;
+		}
+
+		html {
+			background-color: #aaa;
+		}
+
+		body {
+			background-color: #bbb;
+		}
+
+		main {
+			background-color: #ccc;
+		}
+
+		p {
+			background-color: #ddd;
+		}
+
+		span {
+			background-color: #eee;
+			padding: 0 1rem;
+		}
+
+		#footerP {
+			padding: 0;
+			background-color: transparent;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Parent elements in the DOM</h1>
+	</header>
+	<main class='main'>
+		<p>Lorem ipsum, dolor sit <a href="#"><span>Span inside an anchor</span></a> consectetur adipisicing elit. Iusto,
+			minima aperiam? Porro neque molestias sit amet cum alias, soluta nobis error in nulla. Numquam,
+			<span>regular span</span>
+			alias vero voluptatibus eius quasi suscipit?
+		</p>
+	</main>
+	<footer>
+		<p id='footerP'>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/parentElement" target="_blank"
+					rel="noopener noreferrer">"Node.parentElement" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/f5pJlpKGc3k" target="_blank" rel="noopener noreferrer">"Parent elements in the DOM."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let spans = document.querySelectorAll('span');
+			spans.forEach(span => {
+				span.addEventListener('click', findElement);
+			})
+		})
+		function findElement(ev) {
+			ev.preventDefault(); // Stop def. behavior
+			let toFind = 'sdf'; // Name of the tag/class/id/element to search for.
+
+			let currentElement = ev.target;
+			console.log(currentElement);
+
+			// while (toFind !== currentElement.tagName.toLowerCase() &&
+			while (toFind !== currentElement.tagName.toLowerCase() &&
+				currentElement.tagName.toLowerCase !== 'html') {
+				// Last check might not be necessary as, if the element is not found, 
+				// it'll eventually evaluate to `null` either way.
+
+				console.log('Not', currentElement.tagName);
+				// Search for parent then:
+				currentElement = currentElement.parentElement;
+			}
+			console.log('Found at', currentElement);
+		}
+	</script>
+</body>
+
+</html>
