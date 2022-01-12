@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Browser cookies</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main {
+			display: flex;
+			flex-direction: column;
+		}
+
+		#output {
+			padding: 2rem;
+			border: 1px solid #333;
+			margin: 1rem;
+		}
+
+		button {
+			margin: 1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Browser cookies</h1>
+	</header>
+	<main>
+		<div id="output"></div>
+
+		<button id="btnAdd">Add a cookie</button>
+		<button id="btnDel">Delete a cookie</button>
+		<button id="btnFind">Check a cookie</button>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie" target="_blank"
+					rel="noopener noreferrer">"Document.cookie" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent"
+					target="_blank" rel="noopener noreferrer">"encodeURIComponent()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim"
+					target="_blank" rel="noopener noreferrer">"String.prototype.trim()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith"
+					target="_blank" rel="noopener noreferrer">"String.prototype.startsWidth()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://stackoverflow.com/questions/2144386/how-to-delete-a-cookie/2144404#2144404" target="_blank" rel="noopener noreferrer">"How to delete a cookie?" - <em>StackOverflow</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/j0PpT96EFeg" target="_blank" rel="noopener noreferrer">"Browser cookies." YouTube, by
+				Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.body.addEventListener('click', (ev) => {
+				// Each time you click on a button inside this body, the event will bubble 
+				// up and also trigger this listener;
+				// Display the current cookie/s:
+				if (document.cookie) {
+					document.getElementById('output').textContent = document.cookie;
+				} else {
+					document.getElementById('output').textContent = 'No cookies currently';
+				}
+				console.log(document.cookie.split(';'));
+			});
+
+			// Add cookie (one at a time)
+			document.getElementById('btnAdd').addEventListener('click', ev => {
+				let key = 'score', value = encodeURIComponent('test%^^&'), thirtyDays = 60 * 60 * 24 * 30;
+				document.cookie = `${key}=${value};path=/;max-age=${thirtyDays}`;
+				/*
+				;path = Absolute path. Current path by default.
+				;domain = sub.example.com. Default: current domain
+				;max-age  = seconds (var thirtyDays)
+				;expires = UTC date. Default: end of current session.
+				;secure = true
+				;same-site = Strict | Lax | None
+				*/
+			});
+
+			// Delete cookie:
+			document.getElementById('btnDel').addEventListener('click', ev => {
+				let key = 'score';
+				document.cookie = `${key}=;path=/;expires=Thu, 01 Jan 1970T00:00:00Z;`
+			})
+
+			// Find a cookie:
+			document.getElementById('btnFind').addEventListener('click', ev => {
+				let key = 'score', val = '';
+				if (document.cookie.split(';').filter(item => item.trim().startsWith(`${key}=`)).length) {
+					// Match found
+					document.getElementById('output').textContent = `${key} found`;
+				} else {
+					document.getElementById('output').textContent = `${key} not found`;
+				}
+				ev.stopPropagation(); // Avoid body.eventListener from overwriting output.
+			})
+		})
+	</script>
+</body>
+
+</html>
