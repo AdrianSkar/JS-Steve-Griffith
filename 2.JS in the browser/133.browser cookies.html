@@ -21,9 +21,10 @@
 			margin: 1rem;
 		}
 
-		button {
+		button, input {
 			margin: 1rem;
 		}
+		input { margin-bottom:0}
 	</style>
 </head>
 
@@ -36,7 +37,8 @@
 
 		<button id="btnAdd">Add a cookie</button>
 		<button id="btnDel">Delete a cookie</button>
-		<button id="btnFind">Check a cookie</button>
+		<input type="text" placeholder='check cookie'>
+		<button id="btnFind">Check cookie</button>
 	</main>
 	<footer>
 		<p>Refs:</p>
@@ -101,7 +103,8 @@
 
 			// Find a cookie:
 			document.getElementById('btnFind').addEventListener('click', ev => {
-				let key = 'score', val = '';
+
+				let key = document.querySelector('input').value, val = '';
 				if (document.cookie.split(';').filter(item => item.trim().startsWith(`${key}=`)).length) {
 					// Match found
 					document.getElementById('output').textContent = `${key} found`;
