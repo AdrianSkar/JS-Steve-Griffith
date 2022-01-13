@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX requests with token authentication</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>AJAX requests with token authentication</h1>
+	</header>
+	<main>
+		<h2>Bearer token authentication</h2>
+		<p>Whe working with tokens, like JWT, you need to send the token to the web server along with each HTTP Request.</p>
+		<p><button id="btnFetch">Click to send a request</button></p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://jwt.io/" target="_blank" rel="noopener noreferrer">"JWT web tokens" - <em>JWT.io</em>.</a>
+			</li>
+			<li>
+				<a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener noreferrer">"JSON placeholder" - <em>typicode.com</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Headers" target="_blank" rel="noopener noreferrer">"Headers API" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization" target="_blank" rel="noopener noreferrer">"HTTP headers authorization" - <em>MDN</em>.</a>
+			</li>
+			
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/Ju5FGcyifEA" target="_blank" rel="noopener noreferrer">"AJAX requests with token
+				authentication." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('btnFetch').addEventListener('click', sendReq);
+			// Pretend to get a token after logging in (local or sessionStorage):
+			sessionStorage.setItem('MyUniqueUserToken',
+				JSON.stringify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'));
+
+		});
+
+		let sendReq = ev => {
+			let url = 'https://jsonplaceholder.typicode.com/posts',
+				token = JSON.parse(sessionStorage.getItem('MyUniqueUserToken'));
+
+			let h = new Headers();
+			// Then we include that token in the request:
+			h.append('Authorization', `Bearer ${token}`);
+
+			let req = new Request(url, {
+				method: 'GET',
+				mode: 'cors',
+				headers: h
+			});
+			fetch(req)
+				.then(resp => resp.json())
+				.then(data => {
+					console.log(data[0]);
+				})
+				.catch(err => console.error(err));
+		};
+	</script>
+</body>
+
+</html>
