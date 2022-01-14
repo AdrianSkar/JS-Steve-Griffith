@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Using regular expressions in JavaScript</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		form,
+		main {
+			padding: 1rem 2rem;
+		}
+
+		input {
+			outline: none;
+			padding: 0 0.5rem;
+		}
+		.output{font-weight: bold;}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Using regular expressions in JavaScript</h1>
+	</header>
+	<main>
+		<form>
+			<fieldset>
+				<p class="formbox"><label for="find">Pattern: </label>/<input type="text" id="find">/g</p>
+				<p class="formbox"><label for="replace">Replacement text: </label><input type="text" id="replace"></p>
+				<p class="formbox">
+					<button id="btnSearch">Do search</button>
+					<button id="btnReplace">Do replace</button>
+				</p>
+			</fieldset>
+		</form>
+		<p class="content">
+			Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years,
+			ever since his remarkable disappearance and unexpected return. The riches he had brought back from his
+			travels had now become a local legend, and it was popularly believed, whatever the old folk might say, that
+			the Hill at Bag End was full of tunnels stuffed with treasure. And if that was not enough for fame, there
+			was also his prolonged vigour to marvel at. Time wore on, but it seemed to have little effect on Mr.
+			Baggins. At ninety he was much the same as at fifty. At ninety-nine they began to call him well-preserved;
+			but unchanged would have been nearer the mark. There were some that shook their heads and thought this was
+			too much of a good thing; it seemed unfair that anyone should possess (apparently) perpetual youth as well
+			as (reputedly) inexhaustible wealth.
+		</p>
+		<p class="output"></p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset" target="_blank"
+					rel="noopener noreferrer">"&lt;fieldset&gt;" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test"
+					target="_blank" rel="noopener noreferrer">"Regexp.prototype.test()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/@@match"
+					target="_blank" rel="noopener noreferrer">"Regexp.prototype[@@match]()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/@@replace"
+					target="_blank" rel="noopener noreferrer">"Regexp.prototype[@@replace]()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match"
+					target="_blank" rel="noopener noreferrer">"String.prototype.match()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"
+					target="_blank" rel="noopener noreferrer">"String.prototype.replace()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search"
+					target="_blank" rel="noopener noreferrer">"String.prototype.search()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/kUMA1d1Sqto" target="_blank" rel="noopener noreferrer">"Using regular expressions in
+				JavaScript." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document.getElementById('btnSearch').addEventListener('click', doSearch);
+			document.getElementById('btnReplace').addEventListener('click', doReplace);
+		});
+		/*
+		re.test(txt)							Boolean
+		re[Symbol.match](txt)			null or Arr
+		re[Symbol.replace](txt)		new String
+
+		str.match(re)							null or Arr
+		str.replace(re)						new String
+		str.search(re)						-1 or 1st match
+		*/
+
+		let txt = document.querySelector('.content'), // Don't use .textContent here 
+		// as it'll just assign the content to the variable instead of referring 
+		// to the element later as expected.
+			output = document.querySelector('.output');
+		function doSearch(ev) {
+			ev.preventDefault();
+			let re = new RegExp(document.getElementById('find').value, 'g');
+			// if (re.test(txt)) {
+			// if (txt.search(re)>-1) {
+			if (re[Symbol.match](txt.textContent)) {
+				let match = re[Symbol.match](txt.textContent)
+				output.textContent = 'Found ' + match.length + ': ' + match;
+			} else {
+				output.textContent = 'No matches found.';
+			}
+		}
+		function doReplace(ev) {
+			ev.preventDefault();
+			let re = new RegExp(document.getElementById('find').value, 'g'),
+				replace = document.getElementById('replace').value;
+			if (re.test(txt.textContent)) {
+				txt.textContent = txt.textContent.replace(re, replace);
+				output.textContent = 'Done';
+			} else {
+				output.textContent = 'No matches found.';
+			}
+		}
+	</script>
+</body>
+
+</html>
