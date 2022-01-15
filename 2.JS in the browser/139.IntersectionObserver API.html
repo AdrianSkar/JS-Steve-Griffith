@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>IntersectionObserver API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		.container {
+			margin: 150px;
+		}
+
+		.container p {
+			color: #666;
+			padding: 1rem;
+			border: 1px solid #eee;
+			margin: 1rem 0;
+			transform: translateX(-100%);
+			transition: transform 0.5s linear;
+		}
+
+		.container p.active {
+			transform: translateX(0);
+		}
+
+		.container p:nth-child(5n) {
+			color: cornflowerblue;
+		}
+
+		.cover {
+			position: fixed;
+			top: 250px;
+			right: 50px;
+			bottom: 250px;
+			left: 50px;
+			/* hue, saturation, lightness, alpha */
+			background-color: hsla(30deg, 40%, 80%, 0.5);
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>IntersectionObserver API</h1>
+	</header>
+	<main>
+		<div class="container">
+			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, numquam! Quisquam dolore soluta,
+				excepturi amet quaerat nostrum culpa? Pariatur assumenda perspiciatis, alias dolor culpa ratione facere nostrum
+				corrupti deserunt vitae.</p>
+			<p>Laborum excepturi ratione nostrum officia corporis enim perferendis delectus molestiae deserunt ea, optio
+				magnam reiciendis reprehenderit possimus dolor est harum libero ducimus quod a dolore fugit neque. Modi, cumque
+				cum.</p>
+			<p>Hic corporis delectus vel, exercitationem architecto, quam quia voluptate velit obcaecati ducimus quasi libero
+				ipsa facere harum nobis atque consequuntur cupiditate placeat aspernatur ipsam. Id distinctio voluptatum dolorum
+				similique iure.</p>
+			<p>Ab vitae rerum tenetur animi labore ad a similique, dolor consequatur dolore aliquam deleniti illo officiis
+				nisi unde non excepturi, commodi neque, repellendus praesentium soluta fuga quae? Hic, et reiciendis.</p>
+			<p>Porro animi est id commodi neque nobis aspernatur doloremque atque quia sapiente voluptates vitae distinctio
+				odit blanditiis recusandae, quas reprehenderit illo aperiam ab sequi totam eius, molestias itaque similique!
+				Ratione.</p>
+			<p>Hic dignissimos quae corrupti ratione sequi atque voluptatibus ipsa facilis minus ipsam debitis fuga
+				perferendis vero qui, cumque non voluptatum beatae unde officiis numquam est quibusdam dolores. Qui, iure ullam?
+			</p>
+			<p>Labore quae debitis sunt, velit aperiam perferendis recusandae cum totam veritatis minus minima sequi alias
+				harum accusantium magni esse quisquam reiciendis, perspiciatis ex, amet provident fugit! Officiis distinctio
+				accusamus placeat!</p>
+			<p>Perspiciatis dolore aspernatur dicta consectetur doloremque ex magnam. Fugit at nam voluptates facilis cumque
+				itaque beatae suscipit impedit minus alias sunt, voluptatibus hic porro ratione eaque accusamus rem sit
+				asperiores?</p>
+			<p>Ut, nemo. Repellat amet incidunt dolores consequuntur hic sit ratione totam nemo. Reprehenderit nulla labore
+				modi, nemo dolore delectus quas ab cupiditate saepe excepturi! Esse iure perspiciatis dolor dignissimos
+				suscipit?</p>
+			<p>Tempora repudiandae, possimus velit minima id, repellendus eveniet cupiditate soluta explicabo ipsum atque eum.
+				Suscipit natus iure ipsum officia vel facilis deserunt consequuntur fugit fugiat velit, in deleniti repudiandae
+				cupiditate.</p>
+			<p>Reprehenderit quod quia voluptate eaque architecto, numquam doloribus odio labore omnis quaerat voluptatem
+				accusamus eos aspernatur qui nulla, ullam explicabo, eum eius sed illo. Veniam et omnis nesciunt inventore aut.
+			</p>
+			<p>Officia sequi nam similique aspernatur consectetur saepe distinctio dolore atque molestias, mollitia
+				reprehenderit vel harum, necessitatibus facilis repudiandae. Ipsum magni ab porro impedit? Maxime quam sequi
+				consectetur eveniet, similique commodi.</p>
+			<p>Laborum dignissimos veniam sequi distinctio totam. Autem perspiciatis qui laborum laboriosam quas reiciendis!
+				Corporis inventore vitae alias voluptas non laudantium optio culpa, accusamus quo quae aperiam error?
+				Architecto, odio! Officia?</p>
+			<p>Veniam tempora in animi voluptatibus laboriosam at ab ut iusto minus dolores distinctio expedita molestiae ex
+				odio officia ratione cumque et illum tenetur explicabo fugiat, neque quae! Facilis, blanditiis tenetur!</p>
+			<p>Quod nobis iste fugit, deleniti dolores sit debitis iusto eum aliquid voluptate ipsum fugiat recusandae
+				incidunt id atque reprehenderit mollitia deserunt consequatur impedit numquam ipsa voluptatibus. Officiis vel
+				facilis natus!</p>
+			<p>Cumque, eius sint. Sit nostrum eaque consectetur, amet ipsam error soluta fuga nemo quod magni repellat quae
+				culpa iusto velit est excepturi. Qui omnis, labore numquam magni cupiditate beatae dolores?</p>
+			<p>Porro ab vel ad maiores nesciunt distinctio odio quam dolorem, nulla qui ullam, sequi, eum libero! At cum illum
+				quae nihil ipsum, vel amet perferendis nesciunt non aspernatur facere. Animi?</p>
+			<p>Quibusdam repellendus vitae ad tempore iusto rem porro odit, magnam debitis numquam perspiciatis optio! Placeat
+				sint recusandae impedit possimus, laboriosam earum praesentium dolores. Quia a quaerat totam soluta magnam?
+				Obcaecati!</p>
+			<p>Dolorum non consequatur magni voluptate laborum voluptates recusandae iste explicabo eveniet veritatis neque
+				inventore fugit ut quidem perspiciatis dolorem vitae minus dicta, sint optio eos unde voluptatibus. Dolorum,
+				corrupti suscipit!</p>
+			<p>Soluta reprehenderit velit labore suscipit magnam quia vero? Dolor quia maiores enim, facilis fugiat rerum rem
+				ut commodi exercitationem animi odio corporis sapiente eum repellendus odit sint consequuntur voluptates
+				eligendi!</p>
+			<p>Facilis, tempora exercitationem corrupti, consectetur, sint vel ad assumenda non incidunt perspiciatis saepe
+				quia. Quibusdam minus necessitatibus quidem impedit blanditiis, aliquam ex, aperiam adipisci consequuntur omnis
+				repellat fugiat itaque sed.</p>
+			<p>Deserunt temporibus eaque dicta nostrum, enim voluptatem alias magnam impedit saepe provident quo! Corrupti,
+				voluptates iusto! Perferendis asperiores illum incidunt beatae earum pariatur modi, adipisci tenetur magnam quae
+				esse nemo.</p>
+			<p>Obcaecati, eveniet. Ad aspernatur itaque nam labore, officiis aliquid, nihil ipsa suscipit, error perspiciatis
+				nesciunt assumenda officia tenetur fugit ipsam ipsum quam? Labore incidunt sapiente consequatur, quam voluptate
+				voluptatem illum!</p>
+			<p>Ullam eligendi dolor nulla hic temporibus error consequuntur doloremque libero labore quaerat id quos minima
+				voluptatibus eos ducimus aliquid amet quibusdam reiciendis a ipsam neque, perferendis minus corporis soluta!
+				Eligendi.</p>
+			<p>Nam, magni velit animi architecto sunt repellat unde, ullam eveniet qui quod consequatur doloribus iure,
+				tempora veniam magnam neque odio quasi. Quia, dolores maiores quasi consequuntur inventore ab repellat
+				doloribus!</p>
+			<p>Molestias dolorum nostrum suscipit necessitatibus dolores optio ex ea accusamus. Animi aliquam maxime veniam
+				nesciunt similique eveniet, accusantium odio reiciendis libero aperiam eos voluptate excepturi et debitis
+				obcaecati reprehenderit id!</p>
+			<p>Dolorem beatae, eius totam aspernatur obcaecati molestiae voluptates amet consequatur nulla quidem. Quibusdam
+				corporis voluptate, enim dolores dignissimos voluptatibus odio, facilis laborum soluta voluptates numquam aut
+				adipisci, earum hic qui!</p>
+			<p>Eos dolore eius quos labore impedit est corrupti sapiente aliquam? Maxime, debitis ea iure officia omnis cumque
+				quod, sed mollitia eaque nostrum voluptate dicta obcaecati sapiente eius accusantium velit ipsa.</p>
+			<p>Quaerat modi facilis molestiae suscipit est. Voluptates cupiditate natus, laborum expedita minima inventore rem
+				deserunt earum. Nisi quaerat possimus nesciunt quia, cum quam reiciendis eos ipsa sit doloribus, odit facere.
+			</p>
+			<p>Officia earum sapiente vero ipsam perspiciatis. Quisquam doloribus cupiditate illum earum illo, incidunt quis
+				nostrum ipsum necessitatibus temporibus totam quo eligendi maiores maxime esse nihil! Enim cumque nulla corrupti
+				possimus!</p>
+		</div>
+		<div class="cover">&nbsp;</div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver" target="_blank"
+					rel="noopener noreferrer">"IntersectionObserver API" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform" target="_blank"
+					rel="noopener noreferrer">"CSS transform" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition" target="_blank"
+					rel="noopener noreferrer">"CSS transition" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/gQ8WggeHoJU" target="_blank" rel="noopener noreferrer">"IntersectionObserver API."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let observerOpts = {
+				root: null,
+				// Viewport margin:
+				rootMargin: "-250px -50px",
+				// % at which the observer takes an action
+				threshold: 0.05
+			};
+			let observer = new IntersectionObserver(beTouching, observerOpts);
+			document.querySelectorAll('.container p').forEach(p =>{
+				observer.observe(p);
+				// console.log('watching', p.textContent);
+			});
+		});
+		function beTouching(entries, obs){
+			// Entries: All 30 paragraphs
+			entries.forEach(entry =>{
+			if (entry.isIntersecting) {
+				
+				console.log('Intersecting');
+				// console.log(entry.target);
+				// console.log(entry.time, entry.intersectionRatio);
+				entry.target.classList.add('active');
+				obs.unobserve(entry.target);
+			} else {
+				entry.target.classList.remove('active');
+			}
+			})
+
+		}
+	</script>
+</body>
+
+</html>
