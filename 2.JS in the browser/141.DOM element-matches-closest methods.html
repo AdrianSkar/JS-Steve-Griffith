@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>DOM element, matches and closest methods</title>
+		<meta name="viewport" content="width=device-width">
+		<style>
+				footer {
+						font-size: small;
+				}
+				.para span{
+					font-weight: bold;
+				}
+				.first {
+					background-color: aqua;
+				}
+				.second{
+					background-color: bisque;
+				}
+				.active{
+					background-color: lightgreen;
+				}
+		</style>
+</head>
+
+<body>
+		<header>
+				<h1>DOM Element matches(), closest() and queryElector(</h1>
+		</header>
+		<main class="content">
+			<p class="para first">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita facere inventore <span>perferendis laborum doloribus</span> rerum incidunt! Incidunt accusamus quaerat, voluptatibus, tempora dignissimos, quo eum suscipit molestias sint beatae rerum ut?</p>
+			<p class="para second">Modi, necessitatibus sint, et hic velit voluptatem dolorum officia nam ullam at dolore, <span>quam molestias</span> omnis soluta harum in aperiam? Expedita blanditiis incidunt, consectetur eaque rem alias nam quas at!</p>
+			<p class="output"></p>
+		</main>
+		<footer>
+				<p>Refs:</p>
+				<ul>
+						<li><a href="Document.querySelector()" target="_blank" rel="noopener noreferrer">"Document.querySelector()" - <em>MDN</em>.</a>
+						</li>
+						<li>
+							<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest" target="_blank" rel="noopener noreferrer">"Element.closest()" - <em>MDN</em>.</a>
+						</li>
+						<li>
+							<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/matches" target="_blank" rel="noopener noreferrer">"Element.matches()" - <em>MDN</em>.</a>
+						</li>
+				</ul>
+				<cite>
+						- <a href="https://youtu.be/sfBmS-Rk_Xw" target="_blank" rel="noopener noreferrer">"DOM element, matches and closest methods." YouTube, by Steve Griffith.</a>
+				</cite>
+		</footer>
+		<script>
+			document.addEventListener("DOMContentLoaded", ()=>{
+				let target1 = document.querySelector('.para'),
+					target2 = document.querySelector('.second');
+				[target1, target2].forEach(tar => tar.addEventListener('click', clicked));
+			});
+
+			function clicked(ev){
+				ev.preventDefault();
+				msg(ev.target + ' ' + ev.target.closest('.first'), true);
+				let targetObj = ev.target.closest('.first');
+				if (targetObj){
+					targetObj.classList.add('active')
+				}
+				// if (ev.target === document.querySelector('body main p.first'))
+				if (ev.target.matches('body main p.first')) {
+					msg('Matches', true);
+				} else{
+					msg('No match', true);
+				}
+			}
+
+			function msg(txt, append=false){
+				let out = document.querySelector('.output');
+				if(append){
+					out.innerHTML += " " + txt + '<br>';
+				}else{
+					out.innerHTML = txt + '<br>';
+				}
+
+			}
+		</script>
+</body>
+</html>
