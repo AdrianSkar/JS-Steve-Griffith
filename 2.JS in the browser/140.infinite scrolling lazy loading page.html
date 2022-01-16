@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Infinite scrolling, lazy loading</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		header {
+			margin: 3rem;
+		}
+
+		header h1 {
+			font-size: 3rem;
+			color: #999
+		}
+
+		header h2 {
+			font-size: 1.5rem;
+			color: cornflowerblue
+		}
+
+		main {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-gap: 1rem;
+			width: 80vw;
+			margin: 3rem;
+			/* grid-template-rows: auto; */ /* Not needed? */
+		}
+
+		main img {
+			width: 100%;
+			height: auto;
+		}
+
+		#foot {
+			background-color: beige;
+			color: #666;
+			padding: 1rem;
+			margin-top: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Infinite scrolling, lazy loading</h1>
+		<h2>Loading images gradually as needed</h2>
+	</header>
+	<main>
+		<!-- Images will be loaded here with figure and figcaption -->
+	</main>
+	<section id='foot'>
+		<p>The footer. &copy; 2022 Adskar Inc.</p>
+	</section>
+	<footer>
+		<li>
+			<a href="https://picsum.photos/" target="_blank" rel="noopener noreferrer">"Random images" - <em>Lorem Picsum</em>.</a>
+		</li>
+		<cite>
+			- <a href="https://youtu.be/1EeVzn02grw" target="_blank" rel="noopener noreferrer">"Infinite scrolling, lazy
+				loading." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		// const URL = 'https://gist.githubusercontent.com/prof3ssorSt3v3/1944e7ba7ffb62fe771c51764f7977a4/raw/c58a342ab149fbbb9bb19c94e278d64702833270/infinite.json';
+		// Typicode url:
+		const URL = 'https://jsonplaceholder.typicode.com/albums/1/photos';
+		document.addEventListener('DOMContentLoaded', ()=>{
+			// Setup observer to load more images if footer is visible:
+			let  obsOpts = {
+				root: null,
+				rootMargins: "0px",
+				threshold: 0.5 // 50% visible
+			}
+			const observer = new IntersectionObserver(handleIntersect, obsOpts);
+			observer.observe(document.querySelector('#foot'));
+			// Load some data initially:
+			getData();
+		})
+		function handleIntersect(entries){
+			if (entries[0].isIntersecting) {
+				console.warn('Intersecting')
+				getData();
+			}
+		}
+		function getData(){
+			let main = document.querySelector('main');
+			console.log('fetch some JSON data');
+			fetch(URL)
+				.then(response => response.json())
+				.then(data => {
+					// Steve's JSON: data.items[].img & data.items[].name
+					// data.items.forEach(item=>{
+					// 	let fig = document.createElement('figure'),
+					// 		fc = document.createElement('figcaption'),
+					// 		img = document.createElement('img');
+					// 	img.src = item.img;
+					// 	img.alt = item.name;
+					// 	fc.textContent = item.name;
+
+					// 	// Instead of 2 .appendChild():
+					// 	fig.append(img, fc);
+					// 	main.appendChild(fig);
+					// })
+
+					// Typicode JSON data:
+					data.forEach(item=>{
+						let fig = document.createElement('figure'),
+							fc = document.createElement('figcaption'),
+							img = document.createElement('img');
+						img.src = item.url;
+						img.alt = item.title;
+						fc.textContent = item.title;
+
+						// Instead of 2 .appendChild():
+						fig.append(img, fc);
+						main.appendChild(fig);
+					})
+				})
+				.catch(err=> console.error(err))
+		}
+	</script>
+</body>
+
+</html>
