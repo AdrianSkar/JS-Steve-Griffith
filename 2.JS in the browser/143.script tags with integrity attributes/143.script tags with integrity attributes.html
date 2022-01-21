@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Script tags with integrity attributes</title>
+	<meta name="viewport" content="width=device-width">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self';
+	script-src 'sha384-2R9OjGrANORCVI9RlBytWZ+1oXfJCOoBVTZtjgnsNDcxdy2MnGYO/hY4tL8xYeed'
+	'sha256-7OwCquHbsQrtKcC4qq2jgqTtmpkWxlUzy8iTeuwro0E='
+	'sha256-PWcYZbOrZ2aYGNde42PWpshMbX0mDUnZcF6x+r8CohA='
+	'sha256-6APfEdxGWTt2t5OcVK5LdLSP7UvU0UYqTgvNUleseTk='
+	" />
+	<!-- 'sha384-PLFwiDF+Buoqqsdt7CIRfJhJHPI9zoP4NaF1gqC18kL9eXJI2FbMM0LCfml4hh+1'; -->
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Script tags with integrity attributes</h1>
+	</header>
+	<main>
+		You can do so using the <code>integrity</code> attribute in the <code>script</code> tag or specifying it on
+		<code>meta</code>'s content security policy.
+
+		Both script files will generate and log random characters if allowed to run. <br><br>
+
+		Note: as per Jan2022, only inline scripts will run on Firefox when specifying CSP hashes in the <code>&lt;meta&gt;</code>
+		tag but external ones will work properly on Chrome. <br><br>
+		External and internal ones work properly on both when using the <code>integrity</code> attribute.
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://www.srihash.org/" target="_blank" rel="noopener noreferrer">"SRI hash generator" -
+					<em>srihash.org</em>.</a>
+			</li>
+			<li>
+				<a href="https://content-security-policy.com/" target="_blank" rel="noopener noreferrer">"Quick reference guide"
+					- <em>content-security-policy.com</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script" target="_blank"
+					rel="noopener noreferrer">"&lt;script&gt;" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity" target="_blank"
+					rel="noopener noreferrer">"Subresource Integrity" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank"
+					rel="noopener noreferrer">"Content-Security-Policy" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/5a3LthQ2xCI" target="_blank" rel="noopener noreferrer">"Script tags with integrity
+				attributes." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script src="./143.rand chars one.js"></script>
+	<!-- <script>
+		let rangeText = 'RANGE TEXT: ';
+
+		for (let i = 0; i < 61; i++) {
+			rangeText += String.fromCharCode(65 + i);
+		}
+
+		console.log(rangeText);
+
+		let randText = 'RAND TEXT ONE: ';
+
+		for (let i = 0; i < 1000; i++) {
+			// Chars from 65 to 125 (those on rangeText)
+			randText += String.fromCharCode(Math.floor(Math.random() * 60) + 65);
+		}
+
+		console.log(randText);
+	</script> -->
+	<!-- <script src="./143.rand chars one.js"
+		integrity="sha384-2R9OjGrANORCVI9RlBytWZ+1oXfJCOoBVTZtjgnsNDcxdy2MnGYO/hY4tL8xYeed"></script>
+	<script src="./143.rand chars two.js" integrity="sha256-7OwCquHbsQrtKcC4qq2jgqTtmpkWxlUzy8iTeuwro0E="></script> -->
+</body>
+
+</html>
