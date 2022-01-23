@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Formatting with the Intl.ListFormat object</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Formatting with the Intl.ListFormat object</h1>
+		<h3>Enables language-sensitive list format</h3>
+	</header>
+	<main>
+		Input data: <ul>
+			<li><code>[One, two, three, four]</code></li>
+			<li><code>["7 mm", "2 kg", "300 km", "26 ml"]</code></li>
+		</ul>
+		<div id="output">
+	Output: <br>	
+	<ul></ul>	
+		</div>
+
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat" target="_blank" rel="noopener noreferrer">"Intl.ListFormat" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/liFsIJ7_yeA" target="_blank" rel="noopener noreferrer">"Formatting with the
+				Intl.ListFormat object." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let data = [
+			['one', 'two', 'three', 'four'],
+			['7 mm', '2 kg', '300 km', '26ml']
+		];
+		let output = document.querySelector('#output ul');
+		const formatter = new Intl.ListFormat('en-GB', {
+			style: 'long', // long | short | narrow
+			type: 'conjunction' // conjunction(and) | disjunction(or) | unit
+		});
+		const formatterB = new Intl.ListFormat('es-ES', {
+			style: 'long', // long | short | narrow
+			type: 'unit' // conjunction | disjunction | unit
+		});
+		output.innerHTML += `<li>en-GB: ${formatter.format(data[0])}</li>`; 
+		output.innerHTML += `<li>es-ES: ${formatterB.format(data[1])}</li>`; 
+		</script>
+</body>
+
+</html>
