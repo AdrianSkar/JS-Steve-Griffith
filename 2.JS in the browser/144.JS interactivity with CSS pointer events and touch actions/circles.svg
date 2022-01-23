@@ -1,0 +1,6 @@
+<svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<a xlink:href="#">
+		<circle id="five" cx="30" cy="30" r="25" fill="transparent" stroke="#bada55" />
+		<circle id="six" cx="85" cy="30" r="25" fill="#bada55" stroke="#999999" />
+	</a>
+</svg>

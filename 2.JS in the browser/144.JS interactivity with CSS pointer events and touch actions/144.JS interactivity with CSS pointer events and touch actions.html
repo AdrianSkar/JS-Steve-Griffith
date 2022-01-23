@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>JS interactivity with CSS pointer events and touch actions</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		button {
+			width: 40vw;
+		}
+
+		/*
+			touch-action: none (disable) Used for gestures like pan, pinch zoom.
+				none | auto | pan-x | pan-y | pinch-zoom | manipulation | others
+
+			pointer-events: none (disable). Used for finger/mouse/stylus events like click, hover and drag
+				auto | visiblePainted | painted | visible | fill | stroke | all | others
+			*/
+
+			button {
+				pointer-events: none;
+			}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>JS interactivity with CSS pointer events and touch actions</h1>
+	</header>
+	<main>
+		<div id="one">
+			<p>
+				<a href="#">Anchor inside a paragraph</a>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis modi reprehenderit veniam quibusdam omnis
+				quisquam! Omnis placeat enim tempore nostrum odit earum laborum est ea, reiciendis quis quasi, corrupti iste!
+			</p>
+		</div>
+		<div id="two">
+			<a href="#">
+				<p>
+					Paragraph inside an anchor.
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis neque error magni? Aliquid qui esse quis vel
+					reprehenderit harum minus beatae repellendus, totam et. Eligendi veritatis labore adipisci obcaecati ea.
+				</p>
+			</a>
+		</div>
+		<div id="three">
+			<span>Inline SVG</span>
+			<button>
+				<svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<a xlink:href="#">
+						<circle id="five" cx="30" cy="30" r="25" fill="transparent" stroke="#bada55" />
+						<circle id="six" cx="85" cy="30" r="25" fill="#bada55" stroke="#999999" />
+					</a>
+				</svg>
+			</button>
+		</div>
+		<div id="four">
+			<span>SVG inside <code>img</code></span>
+			<button><img src="./circles.svg" alt="svg circles" /></button>
+		</div>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action" target="_blank"
+					rel="noopener noreferrer">"touch-action" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events" target="_blank"
+					rel="noopener noreferrer">"pointer-events" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/rhqeN10bK10" target="_blank" rel="noopener noreferrer">"JS interactivity with CSS
+				pointer events and touch actions." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// // Alias querySelector:
+			// let $  = document.querySelector.bind(document);
+			// let [div1, div2, div3, div4] = [$('#one'), $('#two'), $('#three'), $('#four')];
+
+			//OR:
+			let [div1, div2, div3, div4] = document.querySelectorAll('#one, #two, #three, #four');
+		
+			let p1 = div1.querySelector('p'),
+				a1 = div1.querySelector('a'),
+				p2 = div2.querySelector('p'),
+				a2 = div2.querySelector('a'),
+				a3 = div3.querySelector('button'),
+				a4 = div4.querySelector('button'),
+				svg3 = div3.querySelector('svg'),
+				svg3a = svg3.querySelector('a'),
+				svg4 = div4.querySelector('img');
+			// svg4a = svg4.querySelector('a');
+
+			[div1, div2, div3, div4, p1, a1, p2, a2, a3, a4, svg3, svg3a, svg4].forEach(ele => {
+				// svg4a cannot be accessed (svg inside <img>)
+				ele.addEventListener('click', clicked);
+			});
+
+		});
+
+		function clicked(ev) {
+			// console.clear();
+
+			console.log(
+				'clicked: ', ev.target,
+				'which triggered listener on: ', ev.currentTarget
+			);
+			// console.log(ev);
+			// ev.stopPropagation()
+		}
+
+	</script>
+</body>
+
+</html>
