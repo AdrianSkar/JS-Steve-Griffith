@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Reverse geocoding with the Google Maps API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Reverse geocoding with the Google Maps API</h1>
+	</header>
+	<main>
+		<!-- Content goes here. -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<a href="https://developers.google.com/maps/documentation/javascript/overview" target="_blank"
+					rel="noopener noreferrer">"Maps JS API" - <em>Google maps platform</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/H7gZ2hEjwuI" target="_blank" rel="noopener noreferrer">"Reverse geocoding with the
+				Google Maps API." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script type="module">
+		import { MAPS_KEY } from '../apiKey.js';
+
+		const LAT = 40.72011145742533,
+			LNG = -3.6023383628661723;
+		let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${LAT},${LNG}&key=${MAPS_KEY}`;
+
+		fetch(url)
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				let parts = data.results[0].address_components;
+				document.body.insertAdjacentHTML('beforeend',
+					`<p>Formatted: ${data.results[0].formatted_address}</p>`);
+				parts.forEach(part => {
+					if (part.types.includes('country')) {
+						// We found "country" inside the data.results[0].address_components[x].types array
+						document.body.insertAdjacentHTML('beforeend', `<p>Country: ${part.long_name}`);
+					}
+					if (part.types.includes('administrative_area_level_1')) {
+						document.body.insertAdjacentHTML('beforeend', `<p>Province: ${part.long_name}`);
+					}
+					if (part.types.includes('administrative_area_level_3')) {
+						document.body.insertAdjacentHTML('beforeend', `<p>Level 3: ${part.long_name}`);
+					}
+				});
+			})
+			.catch(console.error);
+	</script>
+</body>
+
+</html>
