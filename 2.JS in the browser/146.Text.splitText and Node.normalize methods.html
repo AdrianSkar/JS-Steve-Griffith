@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Text.splitText() and Node.normalize() methods</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Text.splitText() and Node.normalize() methods</h1>
+	</header>
+	<main>
+		<p>
+			<code>Text.splitText(offset)</code> breaks text into 2 nodes at <code>offset</code>. <br>
+			<code>Node.normalize()</code> puts the specified node and all of its sub-tree into a normalized form.
+		</p>
+		<p>
+			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint, delectus soluta. Deleniti culpa aut quidem unde
+			optio distinctio ducimus alias. Nesciunt quibusdam eaque laudantium quos distinctio nam fugiat officia optio!
+		</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof"
+					target="_blank" rel="noopener noreferrer">"instanceof" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Text/splitText" target="_blank"
+					rel="noopener noreferrer">"Text.splitText()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/normalize" target="_blank"
+					rel="noopener noreferrer">"Node.normalize()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/WbN7XfkPzpU" target="_blank" rel="noopener noreferrer">"Text.splitText() and
+				Node.normalize() methods." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let paras = document.querySelectorAll('p');
+			paras.forEach(p => {
+				p.addEventListener('click', splitText);
+				p.addEventListener('dblclick', normalize);
+			});
+		});
+
+		function splitText(ev) {
+			let p = ev.target,
+				txt = p.firstChild,
+				len = txt.length,
+				rand = Math.floor(Math.random() * len);
+
+			// Log instances:
+			// console.log('txt instanceof Node: ', txt instanceof Node);
+			// console.log('txt instanceof Text: ', txt instanceof Text);
+			// console.log('txt instanceof Element: ', txt instanceof Element);
+			// console.log('p instanceof Element: ', p instanceof Element);
+
+			// Split into text nodes at `rand`:
+			txt.splitText(rand);
+		}
+
+		function normalize(ev){
+			let p = ev.target;
+			p.normalize();
+		}
+	</script>
+</body>
+
+</html>
