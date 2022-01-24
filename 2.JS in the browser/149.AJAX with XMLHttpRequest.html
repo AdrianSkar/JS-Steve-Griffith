@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX with XMLHttpRequest</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>AJAX with XMLHttpRequest</h1>
+	</header>
+	<main>
+		<!-- Injected content -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener noreferrer">"{JSON Placeholder}"
+					- <em>typicode.com</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest" target="_blank"
+					rel="noopener noreferrer">"XMLHttpRequest" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank"
+					rel="noopener noreferrer">"HTTP response status codes" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/mLL5pdIbqWc" target="_blank" rel="noopener noreferrer">"AJAX with XMLHttpRequest."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script defer>
+		// Run the script after loading DOM
+
+		let url = 'https://jsonplaceholder.typicode.com/users',
+			xhr = new XMLHttpRequest();
+
+		// Initialize the request:
+		xhr.open('GET', url, true); // (method, url, [async, user, pass]);
+
+		// Define data if method is POST:
+		let fd = new FormData();
+		fd.append('firstName', 'Adrian');
+		fd.append('lastName', 'Skar');
+
+		xhr.onreadystatechange = function (ev) {
+			// 2: request sent, 3: something back, 4: transaction complete
+			console.log(xhr.readyState);
+			if (xhr.readyState === 4) {
+				console.log(xhr);
+				switch (xhr.status) {
+					case 200:
+					case 304:
+						console.log('Ok or not modified (cached)', xhr.status);
+						outputUsers(xhr.responseText);
+						break;
+					case 201: { // Created response after PUT.
+						// {} to create a block to avoid main 'escaping' this case's scope:
+						console.log('Created', xhr.status);
+						let main = document.querySelector('main');
+						main.textContent = xhr.responseText;
+					}
+						break;
+					case 403:
+					case 401:
+						console.log('Not authorized or forbidden', xhr.status);
+						break;
+					case 404:
+						console.log('Not found', xhr.status);
+						break;
+					case 500:
+						console.log('Server side error', xhr.status);
+						break;
+					default:
+						console.log('Some other code: ', xhr.status);
+						break;
+				}
+			}
+		};
+
+		// If there's a problem with the network:
+		xhr.onerror = function (err) { console.warn(err); };
+
+		// Send the request:
+		xhr.send(fd);
+
+		// Show users info:
+		function outputUsers(data) {
+			let info = JSON.parse(data);
+			let main = document.querySelector('main'), 
+				frag = new DocumentFragment();
+			info.forEach(user => {
+				let p = document.createElement('p');
+				p.textContent = `${user.name}, ${user.email}`;
+				frag.appendChild(p);
+			});
+			main.appendChild(frag);
+		}
+	</script>
+</body>
+
+</html>
