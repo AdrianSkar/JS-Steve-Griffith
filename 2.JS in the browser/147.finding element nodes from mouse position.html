@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Finding element nodes from mouse position</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		header {
+			padding: 1rem;
+			margin: 1rem;
+		}
+
+		body.clicked {
+			background-color: #eee;
+		}
+
+		header.clicked,
+		main.clicked {
+			background-color: #ccc;
+		}
+
+		h1.clicked,
+		p.clicked {
+			background-color: #aaa;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Finding element nodes from mouse position</h1>
+	</header>
+	<main>
+		<p>
+		<ul>
+			<li><code>elementFromPoint(x,y)</code> returns the topmost element at coords.</li>
+			<li><code>elementsFromPoint(x,y)</code> returns an array of all elements at coords.</li>
+			<li><code>caretPositionFromPoint(x,y)</code>returns a CaretPosition object including the node along with the caret
+				and caret's character offset within that node.</li>
+		</ul>
+		</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio laboriosam quae tenetur veniam earum, quasi
+			officiis accusamus fugiat impedit deserunt vitae numquam, quibusdam ex distinctio sapiente aut exercitationem
+			illum doloribus.</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio laboriosam quae tenetur veniam earum, quasi
+			officiis accusamus fugiat impedit deserunt vitae numquam, quibusdam ex distinctio sapiente aut exercitationem
+			illum doloribus.</p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio laboriosam quae tenetur veniam earum, quasi
+			officiis accusamus fugiat impedit deserunt vitae numquam, quibusdam ex distinctio sapiente aut exercitationem
+			illum doloribus.</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/elementFromPoint" target="_blank" rel="noopener noreferrer">"Document.elementFromPoint()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/elementsFromPoint" target="_blank" rel="noopener noreferrer">"Document.elementsFromPoint()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/caretPositionFromPoint" target="_blank" rel="noopener noreferrer">"Document.caretPositionFromPoint()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/hrYhX3KEQTc" target="_blank" rel="noopener noreferrer">"Finding element nodes from
+				mouse position." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Select all targeted elements:
+			let elems = document.querySelectorAll('header h1, main p');
+			elems.forEach(ele => {
+				ele.addEventListener('click', clicked);
+			});
+		});
+
+		function clicked(ev) {
+			console.log(`ev.clientX: ${ev.clientX}, ev.x: ${ev.x}, ev.pageX: ${ev.pageX}, ev.screenX: ${ev.screenX}`);
+			console.log(`ev.clientY: ${ev.clientY}, ev.Y: ${ev.Y}, ev.pageY: ${ev.pageY}, ev.screenY: ${ev.screenY}`);
+
+			// Clear previously highlighted elements:
+			clearHighlight();
+
+			// let elem = document.elementFromPoint(ev.x, ev.y);
+			// elem.classList.add('clicked');
+
+			// let elems = document.elementsFromPoint(ev.x, ev.y);
+			// elems.forEach(ele => {
+			// 	ele.classList.add('clicked');
+			// });
+
+			let caretPosition = document.caretPositionFromPoint(ev.x, ev.y); // FF only
+			console.log(caretPosition);
+			let el = caretPosition.offsetNode; // Target node
+			if (el.nodeType === 3){ // If text node, select parent element:
+				el = el.parentElement;
+			}
+			el.classList.add('clicked');
+		}
+
+		function clearHighlight() {
+			let targets = document.querySelectorAll('.clicked');
+			targets.forEach(target => {
+				target.classList.remove('clicked');
+			});
+		}
+	</script>
+</body>
+
+</html>
