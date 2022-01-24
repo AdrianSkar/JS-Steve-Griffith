@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Injecting strings as HTML on the DOM</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Injecting strings as HTML on the DOM</h1>
+	</header>
+	<main>
+		<!-- Injected HTML -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://gomakethings.com/converting-a-string-into-markup-with-vanilla-js/" target="_blank"
+					rel="noopener noreferrer">Ferdinandi, Chris. "Converting a string into markup with vanilla JS." - <em>Go make
+						things</em>. </a>
+			</li>
+			<li><a href="https://gomakethings.com/testing-dom-injection-performance-with-vanilla-js/" target="_blank"
+					rel="noopener noreferrer">Ferdinandi, Chris. "Testing DOM injection performance with vanilla JS." - <em>Go
+						make things</em>. </a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML" target="_blank"
+					rel="noopener noreferrer">"Element.innerHTML" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment" target="_blank"
+					rel="noopener noreferrer">"DocumentFragment" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser" target="_blank"
+					rel="noopener noreferrer">"DOMParser" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Range" target="_blank"
+					rel="noopener noreferrer">"Range" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML" target="_blank"
+					rel="noopener noreferrer">"Element.insertAdjacentHTML()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/D2zCYNsb36c" target="_blank" rel="noopener noreferrer">"Injecting strings as HTML on
+				the DOM." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let main = document.querySelector('main');
+
+		let strHTML1 = '<p>1. This is the <a href="#">string</a> with HTML.</p>',
+			strHTML2 = '<p>2. This is the <a href="#">string</a> with HTML.</p>',
+			strHTML3 = '<p>3. This is the <a href="#">string</a> with HTML.</p>',
+			strHTML4 = '<p>4. This is the <a href="#">string</a> with HTML.</p>',
+			strHTML5 = '<p>5. This is the <a href="#">string</a> with HTML.</p>',
+			strHTML6 = '<p>6. This is the <a href="#">string</a> with HTML.</p>';
+
+		/// Version 1: Element.innerHTML Best for 'once-use' elements, affects performance and causes repaint.
+		main.innerHTML = strHTML1;
+
+		/// Version 2: DocumentFragment(). Great if you have/create nodes and/use loops. Won't parse HTML.
+		// `innerHTML` not available on a document fragment. Need to create actual 
+		// nodes to append. We can do pattern matching on the string to create the 
+		// nodes or use the DOMParser method below to convert and append the HTML.
+		// let frag = document.createDocumentFragment();
+		let frag = new DocumentFragment();
+		frag.append(strHTML2);
+		main.appendChild(frag);
+
+		/// Version 3: DOMParser(). Returns a whole Document object.
+		let parser = new DOMParser(),
+			doc = parser.parseFromString(strHTML3, 'text/html');
+		console.log('DOMParser document: ', doc);
+		main.appendChild(doc.body.firstChild);
+
+		/// Version 4a: range.createContextualFragment(str) w/o setting the range (default: document).
+		let frag2 = document.createRange().createContextualFragment(strHTML4);
+		main.appendChild(frag2);
+
+		/// Version 4b: range.createContextualFragment(str) defining range values.
+		let range = document.createRange();
+		range.setStart(main, 4); // 4 is the offset node/char depending on nodeType
+		range.setEnd(main, 4);
+		let frag3 = range.createContextualFragment(strHTML5);
+		range.insertNode(frag3);
+
+		/// Version 5 insertAdjacentHTML(pos, str);
+		main.insertAdjacentHTML('beforeEnd', strHTML6);
+
+	</script>
+</body>
+
+</html>
