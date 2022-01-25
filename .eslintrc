@@ -1,0 +1,47 @@
+// SyncT/web
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"plugins": [
+		"html",
+		"prettier"
+	],
+	"extends": [
+		"eslint:recommended",
+		"prettier"
+	],
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"sourceType": "module"
+	},
+	"rules": {
+		"indent": [
+			"warn",
+			"tab",
+			{"SwitchCase": 1}
+		],
+		"quotes": [
+			"warn",
+			"single",
+			{
+				"avoidEscape": true,
+				"allowTemplateLiterals": true
+			}
+		],
+		"semi": [
+			"warn",
+			"always"
+		],
+		"no-unused-vars": [
+			"warn",
+			{
+				"vars": "local",
+				// Allow `const arrow = ev => {...}`
+				"args": "none",
+				"ignoreRestSiblings": false
+			}
+		]
+	}
+}
