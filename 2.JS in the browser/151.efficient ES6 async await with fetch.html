@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Efficient ES6 async await with fetch</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Efficient ES6 async await with fetch</h1>
+	</header>
+	<main>
+		<!-- content here -->
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/fetch" target="_blank"
+					rel="noopener noreferrer">"fetch()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function"
+					target="_blank" rel="noopener noreferrer">"async function" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank"
+					rel="noopener noreferrer">"JSON" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch"
+					target="_blank" rel="noopener noreferrer">"Promise.prototype.catch()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/ycJOZp_wWak" target="_blank" rel="noopener noreferrer">"Efficient ES6 async await with
+				fetch." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		(async function f() {
+			let badURL = 'http://',
+				goodURL = 'https://jsonplaceholder.typicode.com/users',
+				url = Math.round(Math.random()) ? badURL : goodURL;
+
+			// let data = await(fetch(url).then(response => response.json()));
+			// or:
+			// let data = await (await fetch(url).catch(console.warn)).json();
+			let data = await (await fetch(url).catch(handleErr)).json(),
+				main = document.querySelector('main');
+			console.log(data);
+
+			if (data.code === 400) { // If error:
+				main.textContent = `Error> ${data.code}, ${data.message}`;
+			} else { // If good content:
+				let fg = new DocumentFragment();
+				data.forEach(item => {
+					let p = document.createElement('p');
+					p.textContent = item.name;
+					fg.appendChild(p);
+				});
+				main.appendChild(fg);
+			}
+		})();
+
+		function handleErr(err) {
+			console.warn(err);
+			// Return a response that .catch and .json() can handle.
+			let resp = new Response(
+				JSON.stringify({ 
+					code: 400, message: 'Some network error.'
+				})
+			);
+			return resp;
+		}
+	</script>
+</body>
+
+</html>
