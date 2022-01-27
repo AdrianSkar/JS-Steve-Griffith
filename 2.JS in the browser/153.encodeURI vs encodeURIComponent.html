@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>What is the difference between encodeURI and encodeURIComponent</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		label {
+			display: block;
+			margin: 1rem 0 0.5rem;
+		}
+
+		textarea {
+			padding: 1rem;
+		}
+
+		.text_input:nth-child(3) {
+			margin-bottom: 1rem;
+		}
+
+		button {
+			padding: 0.5rem;
+			background-color: rgb(226, 255, 220);
+			border-radius: 4px;
+		}
+
+		.highlight{
+			padding: 0.2rem;
+			background-color: rgb(255, 255, 200);
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>What is the difference between encodeURI and encodeURIComponent</h1>
+	</header>
+	<main>
+		<div class="text_input">
+			<label for="input">Input:</label>
+			<textarea name="input" id="input" cols="60" rows="5"></textarea>
+		</div>
+		<div class="text_input">
+			<label for="encoded">encodeURI()/decodeURI():</label>
+			<textarea name="encoded" id="encoded" cols="60" rows="5"></textarea>
+		</div>
+		<div class="text_input">
+			<label for="encoded_comp">encodeURIComponent()/decodeURIComponent():</label>
+			<textarea name="encoded_comp" id="encoded_comp" cols="60" rows="5"></textarea>
+		</div>
+
+		<button id="btn_encode">encode</button>
+		<button id="btn_decode">decode</button>
+
+		<a href="#" id="link" target="_blank" rel="noopener noreferrer">Generated link</a>
+
+		<p>
+			<code>encodeURIComponent()</code> encodes all chars except: <code class="highlight">A-Z a-z 0-9 - _ . ! ~ * ' ( )</code>
+			<br>
+			<code>encodeURI()</code> also omits: <code class="highlight">; , / ? : @ & - + $ #</code> (keeps URLs usable).
+		</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI"
+					target="_blank" rel="noopener noreferrer">"encodeURI()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent"
+					target="_blank" rel="noopener noreferrer">"encodeURIComponent()" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/tmgMWWNRTp0" target="_blank" rel="noopener noreferrer">"What is the difference between
+				encodeURI and encodeURIComponent." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let $ = document.querySelector.bind(document);
+		
+		document.addEventListener('DOMContentLoaded', () => {
+			let [encodeBtn, decodeBtn] = [$('#btn_encode'), $('#btn_decode')];
+			encodeBtn.addEventListener('click', encodeFn);
+			decodeBtn.addEventListener('click', decodeFn);
+		});
+
+		let [lnk, inputArea, encodedArea, encodedCompArea] = [$('#link'), $('#input'), $('#encoded'), $('#encoded_comp')];
+
+		function encodeFn() {
+			let txt = inputArea.value;
+			encodedArea.value = encodeURI(txt);
+			encodedCompArea.value = encodeURIComponent(txt);
+			lnk.href = encodeURI(txt);
+		}
+
+		function decodeFn() {
+			let txt = inputArea.value;
+			encodedArea.value = decodeURI(txt);
+			encodedCompArea.value = decodeURIComponent(txt);
+		}
+	</script>
+</body>
+
+</html>
