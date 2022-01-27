@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>animated CSS hamburger menu icon with no SVG</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		.header {
+			background-color: hsl(220, 50%, 40%);
+			color: #fff;
+			position: relative;
+			box-shadow: 0 2px 4px #333;
+		}
+
+		.header h1 {
+			font-size: 2rem;
+			padding: 0.5rem 1rem;
+			margin: 0;
+		}
+
+		main {
+			padding: 2rem;
+		}
+
+		main h2 {
+			margin: 0;
+		}
+
+		p {
+			color: #555;
+			padding: 0;
+			margin: 2rem 0;
+		}
+
+		/****** Nav menu ***********/
+		.main-nav {
+			display: none;
+			flex-direction: row;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: center;
+			background-color: hsl(30, 30%, 90%);
+		}
+
+		.expanded .main-nav {
+			display: flex;
+		}
+
+		.main-nav a {
+			color: #333;
+			flex-basis: 25%;
+			text-align: center;
+			width: 100%;
+			padding: 2rem 0;
+			font-size: 1.2rem;
+			line-height: 1;
+		}
+
+		/********** The burger ************/
+		/* Create a centered horizontal white line: */
+		.burger {
+			position: absolute;
+			top: 34px;
+			right: 20px;
+			height: 4px;
+			line-height: 0;
+			width: 44px;
+			background-color: white;
+			border: 0;
+			border-radius: 1px;
+			padding: 0;
+			margin: 0;
+			cursor: pointer;
+			transition: all 0.3s linear;
+		}
+
+		.burger:active {
+			/* outline: none; */
+		}
+
+		/* Create top and bottom white lines using borders: */
+		.burger::before,
+		.burger::after {
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			width: 40px;
+			height: 0;
+			border: 2px solid white;
+			border-radius: 1px;
+			padding: 0;
+			margin: 0;
+			transition: all 0.3s linear;
+		}
+
+		.burger::before {
+			/* upper one */
+			top: 0;
+			/* from where to transform */
+			transform-origin: left center;
+			/* what to transform, trying w/o rotate(0deg) */
+			transform: translate(0, -16px)
+		}
+
+		.burger::after {
+			/* lower one */
+			bottom: 0;
+			/* from where to transform */
+			transform-origin: right center;
+			/* what to transform, trying w/o rotate(0deg) */
+			transform: translate(0, 16px)
+		}
+
+		.expanded .burger {
+			/* Hide the center line */
+			/* Can't use opacity: 0 nor display:none as it would hide top/bottom ones too */
+			background-color: transparent;
+			border-radius: 4px;
+		}
+
+		.expanded .burger::before {
+			/* Animate movement */
+			transform: translate(6px, 16px) rotate(-45deg);
+			border-radius: 4px;
+		}
+
+		.expanded .burger::after {
+			/* Animate movement */
+			transform: translate(-6px, 16px) rotate(45deg);
+			border-radius: 4px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="header">
+		<button class="burger" aria-controls="main-nav" aria-label="Toggle menu" aria-expanded="false">&nbsp;</button>
+		<h1>Website</h1>
+	</header>
+	<nav class="main-nav" id='main-nav'>
+		<a href="#" class="navlink">Link 1</a>
+		<a href="#" class="navlink">Link 2</a>
+		<a href="#" class="navlink">Link 3</a>
+		<a href="#" class="navlink">Link 4</a>
+	</nav>
+	<main>
+		<h2>animated CSS hamburger menu icon with no SVG</h2>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint enim quasi nemo sapiente distinctio dolores
+			voluptatibus facere magni repellendus, non ipsam blanditiis perferendis optio nulla assumenda nam delectus culpa
+			saepe!</p>
+		<p>Minus culpa optio accusantium, velit aliquam corporis ullam laborum quo fugit rem quia facilis cum aut suscipit
+			et facere quasi pariatur hic non, laudantium earum perferendis debitis fugiat? Nobis, minus!</p>
+		<p>Accusamus vitae fugiat quibusdam, ad ipsam vel ex quae repellat velit sequi laudantium, hic voluptates aperiam
+			inventore obcaecati incidunt voluptatum! Maiores laboriosam non, dolor sit itaque architecto vero unde repellat!
+		</p>
+		<p>Porro eveniet blanditiis praesentium? Autem, adipisci. Quaerat aspernatur porro soluta vitae distinctio placeat
+			corrupti, in nobis libero harum quam ex voluptas, voluptatum totam possimus adipisci tempora dolorum? Officiis,
+			blanditiis at?</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia" target="_blank"
+					rel="noopener noreferrer">"window.matchMedia()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver" target="_blank"
+					rel="noopener noreferrer">"ResizeObserver" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry/contentRect" target="_blank"
+					rel="noopener noreferrer">"ResizeObserverEntry.contentRect" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform" target="_blank"
+					rel="noopener noreferrer">"CSS transform" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA" target="_blank"
+					rel="noopener noreferrer">"ARIA" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes" target="_blank"
+					rel="noopener noreferrer">"ARIA attributes" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/9qYkK_9KjOE" target="_blank" rel="noopener noreferrer">"animated CSS hamburger menu
+				icon with no SVG." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		// Need this flag because checking on `aria-expanded` only would make the click listener not work:
+		// the Observer gets triggered when repainting the element too (body.classList.add/remove()).
+		// https://drafts.csswg.org/resize-observer/#intro
+		let IS_EXPANDED = true;
+
+		document.addEventListener('DOMContentLoaded', () => {
+			let body = document.body,
+				burger = document.querySelector('.burger');
+
+			// Handle as the button is clicked:
+			burger.addEventListener('click', ev => {
+				// If content is expanded, collapse it. Otherwise, expand it:
+				if (burger.getAttribute('aria-expanded') === 'true') {
+					burger.setAttribute('aria-expanded', 'false');
+					body.classList.remove('expanded');
+				} else {
+					burger.setAttribute('aria-expanded', 'true');
+					body.classList.add('expanded');
+				}
+			});
+
+			// Handle media query when the page loads:
+			let query = window.matchMedia('(min-width:700px)'); // Inner () needed
+			if (query.matches) {
+				console.log('matches');
+				burger.setAttribute('aria-expanded', 'true');
+				body.classList.add('expanded');
+				IS_EXPANDED = true;
+			} else {
+				console.log('does not match');
+				burger.setAttribute('aria-expanded', 'false');
+				body.classList.remove('expanded');
+				IS_EXPANDED = false;
+			}
+
+			// Handle as the page resizes:
+			const resObserver = new ResizeObserver(entries => {
+				// entries.forEach(entry => {
+				for (let entry of entries) {
+					// console.log(entry);
+					if (entry.contentRect.width > 700 && !IS_EXPANDED) {
+						console.log(burger.getAttribute('aria-expanded'));
+						// if (entry.contentRect.width > 700 && burger.getAttribute('aria-expanded') === 'false') {
+						burger.setAttribute('aria-expanded', 'true');
+						body.classList.add('expanded');
+						IS_EXPANDED = true;
+					} else if (entry.contentRect.width < 700 && IS_EXPANDED) {
+						// } else if (entry.contentRect.width < 700 && burger.getAttribute('aria-expanded') === 'true') {
+						burger.setAttribute('aria-expanded', 'false');
+						body.classList.remove('expanded');
+						IS_EXPANDED = false;
+					}
+				}
+				// });
+			});
+			resObserver.observe(body);
+		});
+
+
+
+	</script>
+</body>
+
+</html>
