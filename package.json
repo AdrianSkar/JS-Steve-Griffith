@@ -23,6 +23,12 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "jsdom": "^19.0.0"
+  },
+  "quokka": {
+    "plugins": [
+      "jsdom-quokka-plugin"
+    ]
   }
 }
