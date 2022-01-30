@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>JS methods for scrolling</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		section {
+			min-height: 20vh;
+			border: 1px solid #ccc;
+			padding: 2rem;
+		}
+
+		p {
+			padding: 1rem;
+		}
+
+		#scroll_to {
+			background-color: rgb(250, 225, 215);
+			/* height: 900px */
+		}
+
+		#scroll_by {
+			background-color: rgb(250, 235, 215);
+		}
+
+		#scroll_into_view {
+			background-color: rgb(250, 245, 215);
+		}
+
+		#scroll_to_options {
+			background-color: rgb(250, 255, 215);
+		}
+
+		.small {
+			font-size: 0.8rem;
+		}
+
+		.pre {
+			white-space: pre-line
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>JS methods for scrolling</h1>
+	</header>
+	<main role="main">
+		<section id="scroll_to">
+			<code>Element.scrollTo(x,y)</code>
+			<p>Scrolls/moves top-left corner to x,y</p>
+			<p class="small">Down to 0,250 in this case.</p>
+		</section>
+		<section id="scroll_by">
+			<code>Element.scrollBy(x, y | opts)</code>
+			<p>Scrolls Element by the given amount.</p>
+			<p class="small">Up by 250px in this case.</p>
+		</section>
+		<section id="scroll_to_options">
+			<code>Element.scrollTo(opts)</code>
+			<code>const opts = {
+				top: 100,
+				left: 100,
+				behavior: "smooth"}
+			</code>
+			<p class='small'>*Safari does not have support for the smooth scroll behavior.</p>
+		</section>
+		<section id="scroll_into_view">
+			<code>Element.scrollIntoView(alignToTop | opts)</code>
+			<p>Scrolls the element's parent container so Element is visible.</p>
+			<p class="small">*Not supported in Safari.</p>
+			<code>alignToTop: <strong>true</strong> | false</code>: Top/bottom alignment of Element with ancestor.
+			<br>
+			<code class="pre">
+				const opts = {
+				behavior: <strong>auto</strong> | smooth,
+				block (vertical): <strong>start</strong> | center | end | nearest 
+				inline (horizontal): start | center | end | <strong>nearest</strong>
+			</code>
+			<p>In this case, the target Element is the top block. Options are more clear when using a greater container height.</p>
+			<button id="b_start" data-block='start'>block: start</button>
+			<button id="b_center" data-block='center'>block: center</button>
+			<button id="b_end" data-block='end'>block: end</button>
+		</section>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollTo" target="_blank"
+					rel="noopener noreferrer">"Element.scrollTo()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollBy" target="_blank"
+					rel="noopener noreferrer">"Element.scrollBy()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView" target="_blank"
+					rel="noopener noreferrer">"Element.scrollIntoView()" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/HIWWBHB3xHY" target="_blank" rel="noopener noreferrer">"JS methods for scrolling."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let $ = document.querySelector.bind(document);
+		let [to, by, toOpts, into] = [$('#scroll_to'), $('#scroll_by'), $('#scroll_to_options'), $('#scroll_into_view')];
+		to.addEventListener('click', () => {
+			document.documentElement.scrollTo(0, 250);
+		});
+		by.addEventListener('click', () => {
+			document.documentElement.scrollBy(0, -250);
+		});
+		toOpts.addEventListener('click', () => {
+			let opts = {
+				top: 200,
+				left: 200,
+				behavior: 'smooth'
+			};
+			document.documentElement.scrollTo(opts);
+		});
+		into.addEventListener('click', () => {
+			let opts = {
+				behavior: 'smooth',
+				block: 'end',
+				inline: 'nearest'
+			};
+			to.scrollIntoView(opts);
+		});
+		// Add scroll behavior to buttons:
+		let [btnStart, btnCenter, btnEnd] = [$('#b_start'), $('#b_center'), $('#b_end')];
+		[btnStart, btnCenter, btnEnd].forEach(btn => {
+			let opts = {
+				behavior: 'smooth',
+				block: btn.dataset.block,
+				inline: 'nearest'
+			};
+			btn.addEventListener('click', (ev) => {
+				ev.stopPropagation();
+				to.scrollIntoView(opts);
+			});
+		});
+	</script>
+</body>
+
+</html>
