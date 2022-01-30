@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>How to use parseInt() and parseFloat()</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		main ul {
+			list-style: square;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>How to use parseInt() and parseFloat()</h1>
+	</header>
+	<main>
+		<p><code>parseInt(string [,radix])</code> converts its first argument to a string, parses that string, then returns
+			an integer or <code>NaN</code>.</p>
+		<ul id="parse_int"></ul>
+		<p><code>parseFloat(string)</code> does the same with floating numbers.</p>
+		<ul id="parse_float"></ul>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt"
+					target="_blank" rel="noopener noreferrer">"parseInt()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat"
+					target="_blank" rel="noopener noreferrer">"parseFloat()" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/OXpTBQtL4nY" target="_blank" rel="noopener noreferrer">"How to use parseInt() and
+				parseFloat()." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let $ = document.querySelector.bind(document),
+			[intList, floatList] = [$('#parse_int'), $('#parse_float')];
+		let dfInt = new DocumentFragment(),
+			dfFloat = new DocumentFragment();
+		[123, '123 Main Ave.', 123.456, '123.456.789', '12.99 per unit'].forEach(value => {
+			let intLi = document.createElement('li'),
+				floatLi = document.createElement('li');
+			intLi.textContent = `parseInt(${value}): ${parseInt(value)}`;
+			dfInt.appendChild(intLi);
+			floatLi.textContent = `parseFloat(${value}): ${parseFloat(value)}`;
+			dfFloat.appendChild(floatLi);
+		});
+		intList.appendChild(dfInt);
+		floatList.appendChild(dfFloat);
+	</script>
+</body>
+
+</html>
