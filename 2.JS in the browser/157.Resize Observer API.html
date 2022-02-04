@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Resize Observer API</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			background-color: antiquewhite;
+			padding: 1rem;
+			margin: 1rem;
+		}
+
+		.container section {
+			padding: 1rem;
+			margin: 1rem;
+			border: 1px solid black;
+			flex-basis: 100%;
+		}
+
+		#one {
+			background-color: rgb(203, 255, 238);
+		}
+
+		#two {
+			background-color: rgb(251, 219, 224);
+		}
+
+		/* > 900px */
+		.big {
+			flex-direction: row;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Resize Observer API</h1>
+		<h3>Using the Resize Observer to change layout and add content on resize</h3>
+	</header>
+	<main class="container">
+		<section id="one">
+			<p>one</p>
+		</section>
+		<section id="two">
+			<p>two</p>
+		</section>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver" target="_blank"
+					rel="noopener noreferrer">"Resize Observer" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining"
+					target="_blank" rel="noopener noreferrer">"Optional chaining (?.)" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/jxcoo5oM_oQ" target="_blank" rel="noopener noreferrer">"Resize Observer API." YouTube,
+				by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		let $ = document.querySelector.bind(document);
+		document.addEventListener('DOMContentLoaded', () => {
+			let observer = new ResizeObserver(resizeHandler);
+			observer.observe($('.container'));
+			// observer.observe($('.anotherElement'));
+		});
+
+		function resizeHandler(entries) {
+			// console.log(entries[0].contentRect.width);
+			// console.log(entries[0].target);
+
+
+			if (entries[0].contentRect.width > 900) {
+				entries[0].target.classList.add('big');
+				// $('main').classList.add('big');
+				addPhoto();
+			} else {
+				$('main').classList.remove('big');
+				removePhoto();
+			}
+		}
+		function addPhoto() {
+			// Check to see if there's an img already; otherwise we'd be putting
+			// new ones on each resize event.
+			if (!$('#two img')) {
+				// Rand value between 0 and 1000 for Lorem Picsum id:
+				let rand = Math.floor(Math.random() * 1000);
+
+				let img = document.createElement('img');
+				img.src = `https://picsum.photos/id/${rand}/200/300.jpg`;
+				img.alt = 'Random image from picsum';
+				$('#two').appendChild(img);
+			}
+		}
+		function removePhoto() {
+			// Optional chaining (if img -> remove it):
+			$('#two img')?.remove();
+			// Older version: if(img){img.remove()}
+		}
+	</script>
+</body>
+
+</html>
