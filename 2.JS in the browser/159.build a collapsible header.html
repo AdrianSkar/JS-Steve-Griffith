@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Build a collapsible header (scroll events + debounce)</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			margin-top: 6rem;
+			box-sizing: border-box;
+		}
+
+		header {
+			width: 100vw;
+			position: fixed;
+			top: 0;
+			height: 6rem;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-evenly;
+			background-color: antiquewhite;
+			transition: all 0.4s linear;
+		}
+
+		header h1 {
+			font-size: 2rem;
+			transition: all 0.4s linear;
+		}
+
+		header nav {
+			display: flex;
+			padding: 1rem;
+		}
+
+		nav a {
+			font-size: 1.5rem;
+			padding: 1rem;
+			transition: all 0.4s linear;
+		}
+
+		/* Small header styles */
+		.up header {
+			height: 3rem;
+		}
+
+		.up header h1 {
+			font-size: 1.5rem;
+			padding: 0;
+		}
+
+		.up nav a {
+			font-size: 1rem;
+			padding: 0.5rem 1rem;
+		}
+
+		/* main */
+		main {
+			padding: 2rem;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>WebSight</h1>
+		<nav>
+			<a href="#">Home</a>
+			<a href="#">Away</a>
+			<a href="#">Contact</a>
+		</nav>
+	</header>
+	<main>
+		<h2>Build a collapsible header (scroll events + debounce)</h2>
+		<h3>Scroll the page and watch the header bar shrink</h3>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, perspiciatis? Error maiores
+				distinctio cum dolor esse alias, iusto exercitationem rem veniam, rerum fuga dolores fugiat eligendi quasi
+				temporibus officiis aliquam!</span><span>Aliquam blanditiis quas doloremque veritatis rem laboriosam fugit a?
+				Omnis velit rem aliquam architecto vel autem ut deleniti alias quidem blanditiis. Unde modi necessitatibus
+				doloremque nobis veritatis corporis, enim quidem?</span></p>
+		<p><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci commodi ipsum ullam sequi libero numquam
+				vero provident ipsa, iure id quia excepturi doloremque pariatur molestias consequatur suscipit. Natus, minus
+				illo?</span><span>Maiores, illum, fuga officia nam expedita saepe enim earum minima dolor, nobis sunt
+				temporibus. Mollitia animi sapiente aspernatur, sit, alias quia fugit, reprehenderit provident nostrum facere
+				similique consequatur deleniti odit.</span></p>
+		<p><span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas adipisci quam fugit, quae iusto ipsum
+				maiores dolore necessitatibus deleniti nihil obcaecati rerum temporibus minima fuga labore soluta. Vitae,
+				blanditiis obcaecati!</span><span>In error a animi vitae ea numquam enim qui voluptatum repellat necessitatibus
+				cumque adipisci laboriosam reprehenderit dolore suscipit, ut quo repellendus, quidem voluptate cum libero! Eum
+				quam minima error ipsa!</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, reprehenderit voluptatibus voluptas
+				corrupti assumenda error exercitationem non. Adipisci, animi repellendus voluptates perspiciatis sit, iste
+				commodi earum necessitatibus inventore reprehenderit quo.</span><span>Itaque, ipsam, voluptatibus quam a
+				distinctio neque autem perferendis placeat enim eveniet dicta porro, molestiae culpa minima? Culpa, itaque non
+				cupiditate ex iure, magni quisquam nisi nulla voluptatum ea totam.</span></p>
+		<p><span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime voluptatum tempore sed tempora temporibus.
+				Cum, ex aut vel, commodi blanditiis, numquam soluta quas aliquam asperiores earum facere nostrum impedit
+				fugit.</span><span>Unde, debitis deserunt id delectus dolores beatae error voluptate reiciendis. Numquam
+				sapiente eum officia facilis minus iste, ducimus enim nobis est modi quia et! Aliquid modi dignissimos quas nam
+				possimus.</span></p>
+		<p><span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus mollitia animi delectus voluptate totam
+				corrupti beatae quos odit maxime praesentium sit tenetur soluta illum, vel provident possimus consequuntur ex
+				dignissimos?</span><span>Nam saepe dicta neque necessitatibus, consequuntur temporibus repellat rem quos, qui,
+				quisquam velit. Et est dolor explicabo quos dolores, reprehenderit quia soluta id modi voluptatibus nemo
+				deleniti quaerat earum vitae!</span></p>
+		<p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla consequatur velit natus modi dicta
+				laudantium porro ex ullam sunt eius, alias, quod voluptatum fugiat ipsum consequuntur, tenetur temporibus
+				corrupti cupiditate!</span><span>Illo, voluptas pariatur, cupiditate sequi accusamus laudantium alias aspernatur
+				blanditiis facere architecto ipsa sed necessitatibus. Nam suscipit exercitationem veritatis reiciendis odit quo
+				voluptas, iusto neque ipsam quod dolor quae iste.</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis facere, expedita minus excepturi
+				laudantium illo reiciendis culpa officia cupiditate. Praesentium voluptates provident sit ratione necessitatibus
+				deleniti quae, delectus voluptas commodi!</span><span>Cupiditate architecto numquam itaque nulla iusto error
+				iure aut similique? Obcaecati tenetur aliquam accusantium magni inventore? Nesciunt ratione, placeat esse est
+				doloribus aliquid eius sit exercitationem aperiam dolor repudiandae pariatur?</span></p>
+		<p><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem perspiciatis aspernatur, est vitae a
+				dicta laborum laudantium. Ducimus iure, velit maxime quod harum cupiditate quisquam? Libero, recusandae! Culpa,
+				dolores magni.</span><span>Recusandae odio quae sapiente at, ut optio! Saepe, aliquam officia dolore distinctio
+				nemo officiis deleniti beatae voluptatibus eos ut harum velit adipisci quibusdam cupiditate aut iure nisi minima
+				sunt ad.</span></p>
+		<p><span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error officia ducimus, nemo laboriosam nobis quod
+				omnis inventore accusamus animi ab minima qui eos non ipsum recusandae a, corrupti eveniet
+				quia.</span><span>Rerum porro nobis molestias eveniet culpa laudantium vitae repellendus minus beatae facere
+				repudiandae ullam delectus nostrum eaque ea, ratione saepe sit consequatur eius. Tempore modi debitis possimus
+				sed, libero laudantium.</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi doloremque possimus deserunt vel quo, culpa
+				aut ea maiores nam cumque, nesciunt, incidunt at modi eum! Perspiciatis voluptatum molestias aspernatur
+				harum.</span><span>Maiores molestias veniam incidunt ex minus iure doloremque atque, sit natus rerum deleniti,
+				delectus deserunt veritatis officia cumque quis. Animi, ad perferendis laborum rem in adipisci eius nam
+				recusandae saepe?</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Necessitatibus, exercitationem ipsum? Ducimus
+				voluptatem quae doloribus, odit quaerat officia unde aliquid hic possimus dolor aspernatur. Sit excepturi quo
+				doloribus commodi quidem!</span><span>Esse beatae asperiores blanditiis iusto sed, perspiciatis eligendi. Nam ea
+				sint quibusdam fugit recusandae voluptas iusto accusamus dolore qui. Ipsam, eos incidunt odit ut voluptates
+				voluptate. Est labore explicabo enim?</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam quisquam corrupti illum vitae aspernatur hic
+				rerum totam necessitatibus! Veniam aspernatur, quidem quasi ad sit eveniet impedit numquam omnis distinctio
+				dolorum?</span><span>Ut quam assumenda illo est distinctio voluptatum optio, voluptate officia dicta molestiae,
+				culpa iste non dolor voluptates rem id aliquam illum, dolore atque reiciendis maxime quos odit. Praesentium,
+				nobis dolore?</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis nihil dolorum vitae accusamus
+				voluptatibus hic magnam impedit totam debitis earum. Corporis sit perferendis voluptates fugit nostrum deleniti
+				laudantium non veritatis.</span><span>Ducimus eos, provident sequi, quasi, est ratione quaerat labore doloremque
+				dignissimos deserunt dolores placeat quidem! Labore natus, adipisci atque vero cupiditate nesciunt voluptate
+				ipsa pariatur debitis ipsam repellendus nulla libero!</span></p>
+		<p><span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, animi quod asperiores itaque voluptates
+				architecto fuga corrupti quos voluptate dicta quae, magni ab, quo neque doloremque saepe pariatur. Nostrum,
+				maxime.</span><span>Repellendus, dolorem! Sit labore minus dolor aliquam quibusdam cumque repellendus
+				reprehenderit saepe omnis rem aperiam similique quidem optio nostrum commodi delectus provident, facilis
+				aspernatur non esse, possimus repudiandae nemo magni.</span></p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout" target="_blank"
+					rel="noopener noreferrer">"setTimeout()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event" target="_blank"
+					rel="noopener noreferrer">"Element: scroll event" - <em>MDN</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/O-pQbcOykso" target="_blank" rel="noopener noreferrer">"Build a collapsible header
+				(scroll events + debounce)." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			window.addEventListener('scroll', debounce(rollup));
+		});
+		function rollup(ev) {
+			console.log(window.scrollY);
+			if (window.scrollY > 60) {
+				document.body.classList.add('up');
+			} else {
+				document.body.classList.remove('up');
+			}
+		};
+		// Use debounce to improve performance:
+		const debounce = func => {
+			let timer;
+			return event => {
+				if (timer) { // Clear previous timer:
+					clearTimeout(timer);
+				}
+				// Set timer/delay again:
+				// I.E.: run `rollup` in 100 ms
+				timer = setTimeout(func, 100);
+			};
+		};
+	</script>
+</body>
+
+</html>
