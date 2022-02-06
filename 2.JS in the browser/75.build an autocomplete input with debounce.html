@@ -9,17 +9,37 @@
 </head>
 
 <body>
-	<h1>Heading</h1>
-
-	<form action=""><input type="text" id="txt-search"></form>
-
-	<p id="output"></p>
-	<ul id="matches"></ul>
-
-	<h3>Full list (localStorage)</h3>
-	<pre>'apple', 'acorn', 'bee', 'beet', 'beef', 'bunny', 'cookie', 'corn', 'corndog', 'dog', 'dogma', 'echo', 'elephant'
-	</pre>
-
+	<main>
+		<h1>Heading</h1>
+		<form action=""><input type="text" id="txt-search"></form>
+		<p id="output"></p>
+		<ul id="matches"></ul>
+		<h3>Full list (localStorage)</h3>
+		<pre>'apple', 'acorn', 'bee', 'beet', 'beef', 'bunny', 'cookie', 'corn', 'corndog', 'dog', 'dogma', 'echo', 'elephant'
+						</pre>
+		<h3>On debouncing:</h3>
+		<p>Debouncing is limiting the execution of code to control its impact on performance. Like an elevator waiting for more
+			people instead of going up/down for each person.</p>
+		<p>In this case, the <code>debounce</code> function is a wrapper for the search function that puts it "on hold" by
+			clearing/creating timeouts. Ultimately, the <code>search</code> function won't run until the delay <em>from the last
+				function call</em> has passed.</p>
+		</main>
+		<footer>
+			<p>Refs:</p>
+			<ul>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout" target="_blank"
+						rel="noopener noreferrer">"setTimeout()" - <em>MDN</em>.</a>
+				</li>
+				<li>
+					<a href="https://javascript.info/task/debounce" target="_blank" rel="noopener noreferrer">"Debounce decorator" -
+						<em>javascript.info</em>.</a>
+				</li>
+			</ul>
+			<cite>
+				- <a href="https://youtu.be/2qRE071fWxw" target="_blank" rel="noopener noreferrer">"Build an autocomplete input with
+					debounce." YouTube, by Steve Griffith.</a>
+			</cite>
+		</footer>
 	<script>
 		const KEY = 'debounce-terms';
 
@@ -33,7 +53,7 @@
 			const terms = ['apple', 'acorn', 'bee', 'beet', 'beef', 'bunny', 'cookie', 'corn',
 				'corndog', 'dog', 'dogma', 'echo', 'elephant'];
 			localStorage.setItem(KEY, JSON.stringify(terms));
-		}
+		};
 
 		// Get input search, call getList to find matches, and display results
 		const search = function (ev) {
@@ -41,7 +61,7 @@
 			document.getElementById('output').textContent = `List matching ${text}`;
 			let ul = document.getElementById('matches');
 
-			// Call an async search to match what has been typed
+			// Call an async search to match what has been typed (simulate server calls)
 			getList(text)
 				.then(list => {
 					ul.innerHTML = '';
@@ -55,19 +75,20 @@
 							let li = document.createElement('li');
 							li.textContent = item;
 							ul.appendChild(li);
-						})
+						});
 					}
 				})
 				.catch(err => console.warn(err));
-		}
+		};
 
 		// Use a RegExp to find matches and filter the list; return promise
 		const getList = function (txt) {
 			return new Promise((resolve, reject) => {
-				// Use setTimeout with rand value to show what can happen (calls are not sequential)
+				// Use setTimeout with rand value to show what can happen (calls are not sequential),
+				// `getList` runs on each keystroke and responses take `r` (random) time.  
 				let r = Math.floor(Math.random() * 1000);
 				setTimeout((function () {
-					let pattern = new RegExp(`^${txt}`, 'i'),
+					let pattern = new RegExp(`^${this.toString()}`, 'i'),
 						terms = JSON.parse(localStorage.getItem(KEY)),
 						matches = terms.filter(term => pattern.test(term));
 					console.log('Matches:', matches);
@@ -83,29 +104,48 @@
 				// 	console.log('Matches:', matches);
 				// 	resolve(matches);
 				// }), r);
-			})
-		}
+			});
+				};
 
+		// const debounce = function (func, wait, immediate) {
+		// 	let timeout;
+		// 	return function () {
+		// 		// context is the input
+		// 		let context = this, args = arguments,
+		// 			later = function () {
+		// 				timeout = null;
+		// 				if (!immediate) func.apply(context, args); // run func(args) with context
+		// 			},
+		// 			callNow = immediate && !timeout;
+
+		// 		clearTimeout(timeout);
+		// 		timeout = setTimeout(later, wait);
+		// 		if (callNow) func.apply(context, args);
+		// 	};
+		// };
+
+		/// My version (based on https://javascript.info/task/debounce):
 		const debounce = function (func, wait, immediate) {
 			let timeout;
-			return function () {
-				// context = ev
-				let context = this, args = arguments,
-					later = function () {
-						timeout = null;
-						if (!immediate) func.apply(context, args);
-					},
-					callNow = immediate && !timeout;
+			if (immediate) return debounce(func, 0);
+			else {
+				return function () {
+					clearTimeout(timeout);
+					// timeout = setTimeout(func.apply(this, arguments), wait); WON'T WORK!
+					// The 1st param there is a function call, not a function object.
 
-				clearTimeout(timeout);
-				timeout = setTimeout(later, wait);
-				if (callNow) func.apply(context, args);
+					// console.log('inner', this, arguments);
 
-			};
+					// Run `func` using null/this (works either way) and arguments 
+					// I.E: run `search(ev)` after `wait`
+					timeout = setTimeout(() => func.apply(null, arguments), wait);
+				};
+			}
 		};
 
 		// Same as `search` but wrapping it into `debounce` and givin it 300ms wait arg
 		const efficientSearch = debounce(function (ev) {
+			// console.log(ev);
 			let text = ev.target.value;
 			document.getElementById('output').textContent = `List matching ${text}`;
 			let ul = document.getElementById('matches');
@@ -123,12 +163,12 @@
 							let li = document.createElement('li');
 							li.textContent = item;
 							ul.appendChild(li);
-						})
+						});
 					}
 				})
 				.catch(err => console.warn(err));
 
-		}, 300);
+		}, 300, false);
 
 		document.addEventListener('DOMContentLoaded', init);
 	</script>
