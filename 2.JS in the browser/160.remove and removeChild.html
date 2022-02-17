@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>remove and removeChild</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		p {
+			margin: 2rem 0;
+			padding: 0 1rem;
+		}
+
+		span {
+			font-weight: bold;
+		}
+
+		.small {
+			font-size: 0.8rem
+		}
+
+		a[href^='#'] {
+			text-decoration: none;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>remove and removeChild</h1>
+	</header>
+	<main>
+		<p>
+			The console will log <code>ev.target</code> and <code>ev.currentTarget</code> (click on elems, paddings and
+			margins to test). <br>
+			<code>remove()/parentElement.removeChild()</code> will be called on closest <code>.para</code> elements to remove
+			them.
+			<br>
+		<p class="small">You can assign the removed Element to a variable with <code>.removeChild()</code> , but not but not
+			with <code>.remove().</code><a href="#ref1" id="cite-ref1"><sup>[1]</sup></a></p>
+		</p>
+		<p class="para">Lorem ipsum dol<span>
+				or sit amet consectetur adipisicing elit. Hic, autem totam a commodi modi nam sint qui
+				facere animi repe
+			</span>llat nobis voluptatem officiis quod rerum. Repellat tempora commodi aperiam
+			sapiente!Ratione magnam vero soluta quidem laboriosam pariatur earum nesciunt recusandae accusamus
+			exercitationem maxime dignissimos natus, nulla eveniet repellendus ipsum totam cum. Incidunt, ipsum possimus
+			odit veritatis laboriosam quam asperiores neque?</p>
+		<p class="para">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam corrupti nobis nam eveniet
+			provident
+			nisi, voluptate aspernatur? Minus nostrum, magnam aperiam, porro modi officiis quasi labore iusto qua<span>
+				s expedita
+				atque.Quisquam, debiti
+			</span>s! Illo blanditiis rerum nemo tempore velit quaerat alias expedita
+			reprehenderit dolore veritatis voluptatem id quia quos minus, incidunt atque perspiciatis similique natus,
+			exercitationem nesciunt? Numquam molestiae pariatur quo.</p>
+		<p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores eaque exercitationem officiis
+			adipisci.
+			Quas labore ab exercitationem dignissimos soluta ullam? Possimus quos fugiat dolores natus ducimus totam
+			voluptates <span>nostrum</span> dolor.Cupiditate repellat suscipit, ab sunt pariatur tempore odit, in vero nam
+			totam iusto. Dicta quia perspiciatis amet veniam quis autem odit dolor soluta quos in. Fugit exercitationem
+			fugiat vitae adipisci?</p>
+		<p class="para">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus quibusdam illum vero temporibus
+			exercitationem. Laboriosam ab, consectetur nam minus ducimus sed fugit placeat quis magni hic ip<span>
+				sam quas, eum
+				cumque.Omnis, commodi. Quas animi repellat numquam beatae est quisquam aliquid atque reiciendis hic
+			</span>
+			autem. Dolores molestiae obcaecati corrupti magnam cum sint reiciendis est ut laudantium, eos, error in iusto
+			tenetur!</p>
+		<p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, aut nulla enim libero, nobis fuga
+			veniam
+			consequatur quos corporis voluptatibus inventore reprehenderit, eius blanditiis beatae cumque error dignissimos!
+			Maiores, itaque.Illo rem in quam quisquam voluptatem, ex neque ullam officia est recusandae non vel
+			eum delectus a<span> sit sapiente</span>, veniam ratione velit, alias ipsam. Iste eius magni alias itaque
+			perspiciatis.</p>
+	</main>
+	<footer>
+		<p>Refs:</p>
+		<ul>
+			<li>
+				<span id="ref1">1. </span><a href="#cite-ref1" aria-label="Jump up" title="Jump up">^</a>&nbsp;<a
+					href="https://medium.com/geekculture/removechild-and-remove-methods-in-javascript-4164325f97c9"
+					target="_blank" rel="noopener noreferrer">Figueroa, Rodrigo. "Differences between removeChild() and remove()
+					in JavaScript." - <em>Medium</em>.</a>
+			</li>
+			<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/remove" target="_blank"
+					rel="noopener noreferrer">"Element.remove()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild" target="_blank"
+					rel="noopener noreferrer">"Node.removeChild()" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/target" target="_blank"
+					rel="noopener noreferrer">"
+					Event.target" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget" target="_blank"
+					rel="noopener noreferrer">"Event.currentTarget" - <em>MDN</em>.</a>
+			</li>
+
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/wHVLIWifFxw" target="_blank" rel="noopener noreferrer">"remove and removeChild."
+				YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let main = document.querySelector('main');
+			main.addEventListener('click', ev => {
+				console.groupCollapsed('ev', 'Clicked on: ', ev.target);
+				console.log('ev.target: ', ev.target);
+				console.log('ev.currentTarget: ', ev.currentTarget);
+				console.groupEnd('ev');
+
+				// Remove .para elements
+				let p = ev.target.closest('.para');
+				/// Using remove
+				let removed = p?.remove();
+				console.log('remove stored on var?', removed);
+				// if (p) {
+				// 	console.log('Removing', p);
+				// 	p.remove();
+				// }
+
+				/// Using parentElement() and removeChild()
+				// p?.parentElement.removeChild(p);
+
+				// let main = ev.currentTarget;
+				// if (p) {
+				// 	// p.parentElement.removeChild(p);
+				// 	// or
+				// 	main.removeChild(p);
+				// }
+
+			});
+		});
+	</script>
+</body>
+
+</html>
