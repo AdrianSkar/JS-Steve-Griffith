@@ -2,12 +2,43 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 	<title>FormData objects</title>
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width" />
 	<style>
 		footer {
 			font-size: small;
+		}
+
+		html {
+			font-family: 'Monserrat', sans-serif;
+		}
+
+		form {
+			padding: 0 2rem;
+			margin: 1rem 0;
+		}
+
+		.formBox {
+			display: flex;
+			/* flex-direction: row; */
+		}
+
+		fieldset {
+			padding: 2rem;
+		}
+
+		fieldset>* {
+			padding: 0.5rem;
+		}
+
+		label {
+			padding-right: 0.5rem;
+		}
+
+		legend {
+			margin: 0 4rem;
+			padding: 0 1rem;
 		}
 	</style>
 </head>
@@ -17,21 +48,106 @@
 		<h1>FormData objects</h1>
 	</header>
 	<main>
-
+		<form action="#" id="myForm">
+			<fieldset>
+				<legend>Registration</legend>
+				<div class="formBox">
+					<label for="first">First name</label>
+					<input type="text" id="first" name="first" required />
+				</div>
+				<div class="formBox">
+					<label for="last">Last name</label>
+					<input type="text" id="last" name="last" />
+				</div>
+				<div class="formBox">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="email" required />
+				</div>
+				<div class="formBox">
+					<label for="pass">Password</label>
+					<input type="password" id="pass" name="pass" />
+				</div>
+				<div class="formBox">
+					<label for="spam">I'd like some spam</label>
+					<input type="checkbox" id="spam" name="spam" />
+				</div>
+				<div class="formBox">
+					<button type="submit" id="btnSubmit">Send</button>
+				</div>
+			</fieldset>
+		</form>
 	</main>
 	<footer>
 		<p>Refs:</p>
 		<ul>
-			<li><a href="" target="_blank" rel="noopener noreferrer">"" - <em>MDN</em>.</a>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData" target="_blank"
+					rel="noopener noreferrer">"FormData" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects" target="_blank"
+					rel="noopener noreferrer">"Using FormData objects" - <em>MDN</em>.</a>
+			</li>
+			<li>
+				<a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/development_environment"
+					target="_blank" rel="noopener noreferrer">"Setting up a Node development environment." - <em>MDN</em>.</a>
 			</li>
 		</ul>
 		<cite>
-			- <a href="https://youtu.be/GWJhE7Licjs" target="_blank" rel="noopener noreferrer">"FormData objects." YouTube, by
-				Steve Griffith.</a>
+			-
+			<a href="https://youtu.be/GWJhE7Licjs" target="_blank" rel="noopener noreferrer">"FormData objects." YouTube, by
+				Steve
+				Griffith.</a>
 		</cite>
 	</footer>
 	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			document
+				.getElementById('myForm')
+				.addEventListener('submit', handleForm);
+		});
+		function handleForm(ev) {
+			ev.preventDefault();
+			let myForm = ev.target,
+				fd = new FormData(myForm);
+			// Add something extra to the form
+			fd.append('api-key', '2345cfgd3');
 
+			// for (const key of fd.keys()) {
+			// 	console.log(key, fd.get(key));
+			// }
+			console.table(Object.fromEntries(fd));
+			let json = convertFD2JSON(fd);
+
+			// Send the request with the form data:
+			let url = 'http://localhost:3000/',
+				h = new Headers();
+			h.append('Content-Type', 'application/json');
+
+			let req = new Request(url, {
+				headers: h,
+				body: json,
+				method: 'POST'
+			});
+			console.log(req);
+			fetch(req)
+				.then(res => res.json())
+				.then(data => {
+					console.log('Response from server');
+					console.log(data);
+				})
+				.catch(console.error);
+		}
+
+		function convertFD2JSON(inputData) {
+			let obj = {};
+			for (const key of inputData.keys()) {
+				obj[key] = inputData.get(key);
+			}// Or just use Object.fromEntries(inputData);
+
+			console.log('obj', obj);
+			return JSON.stringify(obj);
+		}
 	</script>
 </body>
 
