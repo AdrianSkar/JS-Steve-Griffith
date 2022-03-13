@@ -2,7 +2,8 @@
 {
 	"env": {
 		"browser": true,
-		"es2021": true
+		"es2021": true,
+		"node": true
 	},
 	"plugins": [
 		"html",
@@ -20,7 +21,9 @@
 		"indent": [
 			"warn",
 			"tab",
-			{"SwitchCase": 1}
+			{
+				"SwitchCase": 1
+			}
 		],
 		"quotes": [
 			"warn",
