@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Register-login lifecycle with NodeJS</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		footer {
+			font-size: small;
+		}
+
+		form {
+			padding: 0 2rem;
+			margin-bottom: 2rem;
+		}
+
+		fieldset {
+			border-radius: 6px;
+			border-color: gray;
+			color: darkgreen;
+			font-weight: bold;
+		}
+
+		.formBox {
+			display: flex;
+			flex-direction: row;
+			margin: 1rem;
+		}
+
+		.formBox label {
+			text-align: end;
+			padding-right: 1rem;
+		}
+
+		.formBox input {
+			/* flex-basis: auto; */
+		}
+
+		.formBox button {
+			padding: 0.5rem;
+			text-align: center;
+			background-color: rgba(60, 185, 71, 0.198);
+			border: 1px solid #888;
+			border-radius: 6px;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Register-login lifecycle with NodeJS</h1>
+	</header>
+	<main>
+		<section>
+			<form action="#" method="post" id="regForm">
+				<legend>
+					<fieldset>Register</fieldset>
+					<div class="formBox">
+						<label for="email">Email:</label>
+						<input type="email" class="email">
+					</div>
+					<div class="formBox">
+						<label for="password">Password:</label>
+						<input type="password" class="pass">
+					</div>
+					<div class="formBox"><button>Register</button></div>
+				</legend>
+			</form>
+
+			<form action="#" method="post" id="loginForm">
+				<legend>
+					<fieldset>Login</fieldset>
+					<div class="formBox">
+						<label for="email">Email:</label>
+						<input type="email" class="email">
+					</div>
+					<div class="formBox">
+						<label for="password">Password:</label>
+						<input type="password" class="pass">
+					</div>
+					<div class="formBox"><button>Login</button></div>
+				</legend>
+			</form>
+
+
+		</section>
+	</main>
+	<footer>
+		<p>Notes:</p>
+		<ul>
+			<li>127.0.0.1 != localhost</li>
+		</ul>
+		<p>Refs:</p>
+		<ul>
+			<li><a href="https://www.npmjs.com/package/bcrypt" target="_blank" rel="noopener noreferrer">"bcrypt" -
+					<em>npm</em>.</a>
+			</li>
+			<li><a href="https://www.npmjs.com/package/cors" target="_blank" rel="noopener noreferrer">"cors" -
+					<em>npm</em>.</a>
+			</li>
+			<li><a href="https://www.npmjs.com/package/express" target="_blank" rel="noopener noreferrer">"express" -
+					<em>npm</em>.</a>
+			</li>
+			<li><a href="https://www.npmjs.com/package/nodemon" target="_blank" rel="noopener noreferrer">"nodemon" -
+					<em>npm</em>.</a>
+			</li>
+		</ul>
+		<cite>
+			- <a href="https://youtu.be/KJdD8pdZSo8" target="_blank" rel="noopener noreferrer">"Register-login lifecycle with
+				NodeJS." YouTube, by Steve Griffith.</a>
+		</cite>
+	</footer>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			let $ = document.querySelector.bind(document);
+			$('#regForm button').addEventListener('click', doReg);
+			$('#loginForm button').addEventListener('click', doLogin);
+
+			function doReg(ev) {
+				ev.preventDefault();
+				console.log('Send a register request');
+				// Get out em and pass so they can be accessed by both functions??
+				let em = $('#regForm .email').value,
+					pass = $('#regForm .pass').value;
+				// Add form validation:
+				let user = { email: em, password: pass },
+					endpoint = 'register';
+				sendData(user, endpoint, registerSuccess);
+			}
+
+			function doLogin(ev) {
+				ev.preventDefault();
+				console.log('Send a login request');
+				let em = $('#loginForm .email').value,
+					pass = $('#loginForm .pass').value;
+				console.log(em, pass);
+				// Add form validation:
+				let user = { email: em, password: pass },
+					endpoint = 'login';
+				sendData(user, endpoint, loginSuccess);
+			}
+			function sendData(user, endpoint, callback) {
+				let url = `http://localhost:4000/${endpoint}`,
+					h = new Headers();
+				h.append('Content-Type', 'application/json');
+				let req = new Request(url, {
+					method: 'POST',
+					headers: h,
+					body: JSON.stringify(user)
+				});
+				fetch(req)
+					.then(res => res.json())
+					.then(content => {
+						// We have a response
+						if ('error' in content) {// Bad attempt
+							failure(content.error);
+						}
+						if ('data' in content) {// It worked
+							callback(content.data);
+						}
+					})
+					.catch(failure);
+			}
+			function loginSuccess(data) {
+				// We have a token so put it in localStorage
+				console.log('token: ', data.token);
+				sessionStorage.setItem('myApp-token', data.token);
+				alert('You are now logged in');
+			}
+
+			function registerSuccess(data) {
+				console.log('New user created', data);
+				alert('You have been registered.');
+			}
+
+			function failure(err) {
+				alert(err.message);
+				console.warn(err.code, err.message);
+			}
+		});
+	</script>
+</body>
+
+</html>
